@@ -1,0 +1,19 @@
+{
+  "name": "allright",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/idoperach/finalproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/idoperach/finalproject/issues"
+  },
+  "homepage": "https://gitlab.com/idoperach/finalproject#readme"
+}
