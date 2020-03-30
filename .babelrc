@@ -2,5 +2,5 @@
   "presets": [
     "@babel/preset-env"
   ],
-  "plugins": ["lodash", "transform-object-rest-spread"]
+  "plugins": ["lodash", "@babel/plugin-proposal-object-rest-spread"]
 }

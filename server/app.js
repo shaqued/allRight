@@ -1,5 +1,7 @@
-import 'dotenv-extended/config';
-import createApp from './config/express';
+import dotEnvExtended from 'dotenv-extended';
+dotEnvExtended.load();
+
+import createApp from './config/express/index.js';
 import mongoose from 'mongoose';
 import logger from 'env-bunyan';
 
