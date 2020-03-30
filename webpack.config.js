@@ -3,19 +3,19 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
-    template: "./app/index.html",
+    template: "./client/index.html",
     filename: "./index.html"
 });
 
 module.exports = {
-    mode: 'development',
+    mode: process.env.NODE_ENV,
     resolve: {
         alias: {
             'react-dom': '@hot-loader/react-dom',
         },
     },
     entry: {
-        app: './app/client/index.js'
+        app: './client/index.js'
     },
     devtool: 'inline-source-map',
     devServer: {
@@ -25,7 +25,6 @@ module.exports = {
         port: 9000
     },
     plugins: [
-        // new CleanWebpackPlugin(['dist/*']) for < v2 versions of CleanWebpackPlugin
         new CleanWebpackPlugin(),
         htmlPlugin
     ],
