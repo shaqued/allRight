@@ -1,6 +1,5 @@
 {
   "extends": [
-    "sharongrossman",
     "sharongrossman/react"
   ]
 }

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client-dev": "process.env.NODE_ENV='development' && webpack-dev-server --open --config webpack.config.js",
+    "client-dev": "webpack-dev-server --open --config webpack.config.js",
     "server-dev": "nodemon --exec babel-node ./server/app.js"
   },
   "repository": {
@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.9.5",
+    "axios": "^0.19.2",
     "body-parser": "latest",
     "compression": "latest",
     "cookie-parser": "^1.4.5",
@@ -69,8 +70,10 @@
     "mobx-react": "^6.1.8",
     "mongoose": "^5.9.6",
     "morgan": "^1.10.0",
+    "node-sass": "^4.13.1",
     "passport": "^0.4.1",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "sass": "^1.26.3"
   }
 }
