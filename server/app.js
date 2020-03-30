@@ -1,6 +1,4 @@
-/* eslint-disable import/first */
-require('dotenv-extended').load();
-
+import 'dotenv-extended/config';
 import createApp from './config/express';
 import mongoose from 'mongoose';
 import logger from 'env-bunyan';

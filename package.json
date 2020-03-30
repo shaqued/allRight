@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "client-dev": "webpack-dev-server --open --config webpack.config.js",
-    "server-dev": "nodemon --exec babel-node ./server/app.js"
+    "client-dev": "webpack-dev-server --open --config webpack.config.js --define process.env.NODE_ENV=\\\"'development'\\\"\" ",
+    "server-dev": "nodemon --watch --exec babel-node ./server/app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/idoperach/finalproject.git"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -53,6 +54,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
     "@material-ui/core": "^4.9.5",
     "axios": "^0.19.2",
     "body-parser": "latest",
