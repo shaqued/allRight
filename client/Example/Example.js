@@ -13,5 +13,6 @@ export default observer(() => {
       <div>
         <TextField onChange={onChange} />
         <p>store value: {store.example}</p>
+        <p>this is a computed field exmample, lenght: {store.exampleLength}</p>
       </div>);
 });
