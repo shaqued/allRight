@@ -1,4 +1,4 @@
-import {join} from 'path';
+import {join, resolve} from 'path';
 import routes from './routes.js';
 import express from 'express';
 import morgan from 'morgan';
@@ -23,7 +23,7 @@ export default () => {
   app.use(methodOverride());
   app.use(cookieParser());
   app.use(passport.initialize());
-  app.use(staticGzip(join(__dirname, '..', '..', '..', 'client')));
+  app.use(staticGzip(join(resolve(), '..', '..', '..', 'client')));
   app.use(compression());
 
   if (!inProduction) {
