@@ -5,13 +5,12 @@
   "main": "index.js",
   "scripts": {
     "client-dev": "webpack-dev-server --open --config webpack.config.js --define process.env.NODE_ENV=\\\"'development'\\\"\" ",
-    "server-dev": "nodemon -r dotenv-extended/config --watch server --exec babel-node server/app.js"
+    "server-dev": "nodemon --watch server --exec babel-node server/app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@gitlab.com/idoperach/finalproject.git"
   },
-  "type": "module",
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -24,14 +23,10 @@
     "@babel/node": "^7.8.7",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.8.3",
     "@hot-loader/react-dom": "^16.12.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.6",
-    "babel-plugin-lodash": "^3.3.4",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.4.2",
     "env-bunyan": "^0.1.0",
@@ -54,14 +49,12 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
     "@material-ui/core": "^4.9.5",
     "axios": "^0.19.2",
     "body-parser": "latest",
     "compression": "latest",
     "cookie-parser": "^1.4.5",
     "dotenv-extended": "^2.8.0",
-    "esm": "^3.2.25",
     "express": "latest",
     "express-json-error-handler": "^3.0.0",
     "express-mongoose-errors": "^0.2.0",
