@@ -1,0 +1,1 @@
+// Here wer'e gonna put mongoose model for songs

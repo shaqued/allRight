@@ -1,8 +1,10 @@
 import {join} from 'path';
 import createError from 'http-errors';
 
-export default app => {
+import api from '../../api'
 
+export default app => {
+  api(app);
 
   // All undefined api routes should return a 404
   app.route('/:url(api|auth)/*')

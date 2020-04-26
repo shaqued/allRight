@@ -1,0 +1,1 @@
+// Here wer'e gonna put seed for mongoose to the collection
