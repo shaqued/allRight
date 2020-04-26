@@ -57,6 +57,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv-extended": "^2.8.0",
     "express": "latest",
+    "express-async-router": "^0.1.15",
     "express-json-error-handler": "^3.0.0",
     "express-mongoose-errors": "^0.2.0",
     "express-static-gzip": "^2.0.6",
