@@ -1,7 +1,9 @@
-import {StoreContext} from '../Store/StoreProvider';
-import React, {useContext} from 'react';
+import { StoreContext } from '../Store/StoreProvider';
+import React, { useContext } from 'react';
 import TextField from '@material-ui/core/TextField';
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
+import { Grid, Typography, Paper, Button } from '@material-ui/core';
+import TapePhoto from '../assets/photos/Tape.png';
 
 export default observer(() => {
     const store = useContext(StoreContext);
@@ -10,9 +12,19 @@ export default observer(() => {
     };
 
     return (
-      <div>
-        <TextField onChange={onChange} />
-        <p>store value: {store.example}</p>
-        <p>this is a computed field exmample, lenght: {store.exampleLength}</p>
-      </div>);
+        <Grid container 
+            spacing={16}
+            direction="row"
+            justify="center"
+            alignItems="center">
+            <Paper>
+                <TextField onChange={onChange} />
+                <Typography variant="h1">דגן המלכה</Typography>
+                <Typography>store value: {store.example}</Typography>
+                <Typography>this is a computed field exmample, lenght: {store.exampleLength}</Typography>
+                <Button variant="contained" color="primary">כפתור נחמד</Button>
+                <Button>כפתור נחמד</Button>
+            </Paper>
+        </Grid>
+    );
 });
