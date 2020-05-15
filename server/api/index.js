@@ -1,5 +1,10 @@
-import songs from './songs'
+import songs from './songs';
+import user from './user';
+import {AsyncRouter} from 'express-async-router';
 
-export default (app) => {
-    app.use('/song', songs);
-}
+const router = AsyncRouter();
+
+router.use('/song', songs);
+router.use('/users', user);
+
+export default router;
