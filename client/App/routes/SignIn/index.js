@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
-import { Avatar, Button, CssBaseline, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography } from '@material-ui/core';
+import React from 'react';
+import { Button, FormControlLabel, Checkbox, Link, Paper, Box, Grid, Typography } from '@material-ui/core';
 import useStyles from './SignIn.css'
-import Picture from '../assets/photos/Workspace.png';
-import TextField from '../components/TextField'
+import Picture from '../../../assets/photos/Workspace.png';
+import TextField from '../../../components/TextField/TextField'
 
 const Copyright = () => {
     return (

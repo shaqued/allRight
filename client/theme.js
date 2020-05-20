@@ -16,6 +16,7 @@ export default createMuiTheme({
         background: {
             default: "#FFFFFF",
             paper: "#FAFAFA",
+            dark: 'rgb(81,122,106)'
         },
     },
     overrides: {
