@@ -74,6 +74,7 @@
     "http-reject-empty": "^1.0.0",
     "in-production": "^1.0.1",
     "jss-rtl": "^0.3.0",
+    "lodash": "latest",
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
     "mongoose": "^5.9.6",
