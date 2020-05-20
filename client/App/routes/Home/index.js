@@ -1,12 +1,12 @@
-import React from 'react'
 import Header from '../../Shell/Header';
-import TopSection from '../Home/components/TopSection'
+import TopSection from './components/TopSection';
+import React from 'react';
 
 export default () => {
-    return (
-        <>
-            <Header />
-            <TopSection />
-        </>
-    );
-}
+  return (
+    <div style={{height: '100%'}}>
+      <Header />
+      <TopSection />
+    </div>
+  );
+};
