@@ -6,7 +6,7 @@ export default makeStyles(theme => ({
         maxHeight: '120px',
     },
     image: {
-        height: '250px', // todo: switch to rem/em
+        height: '250px',
         width: '250px',
         backgroundSize: 'cover',
         margin: 'auto',
