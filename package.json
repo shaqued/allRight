@@ -68,6 +68,7 @@
     "express-mongoose-errors": "^0.2.0",
     "express-param-objectid": "^1.0.0",
     "express-static-gzip": "^2.0.6",
+    "express-validator": "^6.5.0",
     "helmet": "^3.22.0",
     "http-errors": "latest",
     "http-parser-js": "^0.5.2",
