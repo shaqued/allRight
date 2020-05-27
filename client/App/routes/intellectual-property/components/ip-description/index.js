@@ -2,9 +2,9 @@ import React from 'react';
 import AnotherWaveForm from '../../../../../assets/photos/AnotherWaveForm.png';
 import Mergui from '../../../../../assets/photos/Mergui.png';
 import useStyles from './ip-description.css';
-import { Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 
-export default () => {
+export default ({ip}) => {
     const classes = useStyles();
 
     return (
@@ -16,7 +16,7 @@ export default () => {
                             <Grid item xs={4}>
                                 <Grid container direction='column'>
                                     <Grid item>
-                                        <Typography variant="h2" color="textPrimary">אסור</Typography>
+                                        <Typography variant="h2" color="textPrimary">{ip.name}</Typography>
                                     </Grid>
                                     <Grid item>
                                         <Typography variant="h4" color="textPrimary">מרגי</Typography>

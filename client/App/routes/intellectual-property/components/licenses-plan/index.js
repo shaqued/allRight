@@ -3,7 +3,7 @@ import useStyles from './licenses-plan.css';
 import {Grid, Container, Button, Card, CardActions, CardContent, CardHeader, CssBaseline, Typography} from '@material-ui/core';
 import StarIcon from '@material-ui/icons/StarBorder';
 
-export default () => {
+export default ({ip}) => {
     const classes = useStyles();
 
     return (

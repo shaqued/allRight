@@ -3,7 +3,7 @@ import { Grid, makeStyles, Typography, GridList, GridListTile, GridListTileBar} 
 import useStyles from './suggested-songs.css';
 import Mergui from '../../../../../assets/photos/Mergui.png';
 
-export default () => {
+export default ({ip}) => {
     const classes = useStyles();
 
     return (
