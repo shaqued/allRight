@@ -18,6 +18,18 @@ const ipSchema = new Schema({
         type: String,
         enum: Object.values(Tags)
     }],
+    composer: {
+        type: String,
+        required: true
+    },
+    performer: {
+        type: String,
+        required: true
+    },
+    writer: {
+        type: String,
+        required: true
+    },
     owners: [
         {
             user: {
@@ -65,8 +77,7 @@ const ipSchema = new Schema({
     ],
     about:
         {
-            type: String,
-            required: true
+            type: String
         },
     type:
         {

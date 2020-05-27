@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/default
 import Purchase from './purchase.model';
 import createError from 'http-errors';
-import _ from 'lodash';
+import {pick} from 'lodash';
 
 async function getBy (req) {
     try {
@@ -25,7 +25,7 @@ async function getBy (req) {
 
 async function update ({params: {id}, body}) {
     try {
-        const data = _.pick(body, [
+        const data = pick(body, [
             'user',
             'cartItems',
             'purchaseDate'
