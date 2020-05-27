@@ -10,7 +10,7 @@ export default () => {
             <Switch>
                 <Route exact path={'/'} component={Home} />
                 <Route path={'/signIn'} component={SignIn} />
-                <Route path={'/ipPage/:id'} component={IntllectualProperty} />
+                <Route path={'/ip/:id'} component={IntllectualProperty} />
                 <Redirect to={'/'} />
             </Switch>
         </BrowserRouter >

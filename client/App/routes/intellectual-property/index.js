@@ -9,13 +9,13 @@ export default () => {
     let { id } = useParams();
 
     const [hasError, setErrors] = useState(false);
-    const [ip, setIP] = useState({});
+    const [ip, setIp] = useState({});
 
     async function fetchData() {
         const res = await fetch("http://localhost:8080/api/ip/:id");
         res
             .json()
-            .then(res => setIP(res))
+            .then(res => setIp(res))
             .catch(err => setErrors(err));
     }
 

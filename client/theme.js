@@ -12,6 +12,7 @@ export default createMuiTheme({
         text: {
             primary: "#424242",
             darker: "#212121",
+            secondary: "#FFFFFF"
         },
         background: {
             default: "#FFFFFF",

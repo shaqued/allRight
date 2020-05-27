@@ -58,6 +58,7 @@
     "bcrypt": "^4.0.1",
     "body-parser": "latest",
     "clsx": "^1.1.0",
+    "color-thief-react": "^1.0.2",
     "compression": "latest",
     "cookie-parser": "^1.4.5",
     "dotenv-extended": "^2.8.0",
