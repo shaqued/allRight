@@ -47,6 +47,20 @@ export default {
             about: 'Let It Go is a song by English singer-songwriter James Bay.',
             type: Types.Music,
             sample: 'https://www.youtube.com/watch?v=GsPq9mzFNGY'
+        },
+        {
+            name: 'אסור',
+            category: Categories.Pop,
+            tag: [Tags.Happy],
+            composer: 'מרגי וגולדשטיין',
+            performer: 'מרגי',
+            writer: ' יהונתן מרגי, יונתן גולדשטיין וטליסמאן',
+            owners: [{user: id, percentageOfOwnership: 100}],
+            dateOfCreation: new Date('2019-01-04'),
+            price: id,
+            about: 'אסור הוא סינגל שהוקלט על ידי הזמר-יוצר הישראלי יהונתן מרגי.',
+            type: Types.Music,
+            sample: 'https://www.youtube.com/watch?v=RerzmNafv1s'
         }
     ]
 };

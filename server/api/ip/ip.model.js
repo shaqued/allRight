@@ -87,6 +87,11 @@ const ipSchema = new Schema({
     sample:
         {
             type: String
+        },
+    image:
+        {
+            data: Buffer,
+            contentType: String
         }
 });
 

@@ -1,8 +1,8 @@
+import {MediaType} from '../../constant/priceMediaType.const';
+import {UsageType} from '../../constant/priceUsageType.const';
 import seed from './price.seed';
 import {createSeedModel} from 'mongoose-plugin-seed';
 import {Schema} from 'mongoose';
-import {MediaType} from '../../constant/priceMediaType.const';
-import {UsageType} from '../../constant/priceUsageType.const';
 
 const rangePriceSchema = new Schema({
     rangeMin: {
@@ -26,9 +26,16 @@ const rangePriceSchema = new Schema({
 });
 
 const priceSchema = new Schema({
-    businessRangePrice: {
+    businessRangePrice: [{
         type: Schema.Types.ObjectID,
-        ref: 'user',
+        ref: 'rangePrice',
         required: true
-    }
+    }],
+    privateRangePrice: [{
+        type: Schema.Types.ObjectID,
+        ref: 'rangePrice',
+        required: true
+    }]
 });
+
+export default createSeedModel('Price', priceSchema, seed);

@@ -23,6 +23,19 @@ async function getBy (req) {
     }
 }
 
+async function create (req, res) {
+    const {body} = req;
+    const purchase = {
+        cartItems: body.cartItems,
+        purchaseDate: Date.now(),
+        user: body.user
+    };
+
+    const newPurchase = await Purchase.create(purchase);
+
+    res.sendStatus(201).send({id: newPurchase._id});
+}
+
 async function update ({params: {id}, body}) {
     try {
         const data = pick(body, [
@@ -49,5 +62,6 @@ async function destroy ({params: {id}}) {
 module.exports = {
     destroy,
     update,
-    getBy
+    getBy,
+    create
 };

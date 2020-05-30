@@ -6,6 +6,11 @@ import createError from 'http-errors';
 import {pick} from 'lodash';
 import {body, validationResult} from 'express-validator/check';
 
+const fs = require('fs-extra');
+
+const SUGGESTED_SONGS_COUNT = 7;
+
+
 async function getAll () {
     try {
         const ips = await Ip.find();
@@ -17,9 +22,8 @@ async function getAll () {
     }
 }
 
-async function getById ({params: {id}}, res) {
-
-    const ip = await Ip.findById(id);
+async function getById (req, res) {
+    const ip = await Ip.findById(req.params.id);
 
     if (!ip) {
         res.status(404);
@@ -29,13 +33,21 @@ async function getById ({params: {id}}, res) {
 }
 
 async function create (req, res) {
-
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors.array()});
-        return;
+
+return;
     }
+    const img = fs.readFileSync(req.file.path);
+
+    const encode_image = img.toString('base64');
+    const finalImg = {
+        contentType: req.file.mimetype,
+        data: Buffer.from(encode_image, 'base64')
+    };
+
     const {body} = req;
     const ip = {
         name: body.name,
@@ -49,7 +61,8 @@ async function create (req, res) {
         price: body.price,
         reviews: body.reviews,
         about: body.about,
-        sample: body.sample
+        sample: body.sample,
+        image: finalImg
     };
 
     const newIp = await Ip.create(ip);
@@ -58,14 +71,13 @@ async function create (req, res) {
 }
 
 async function update (req, res) {
-
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors.array()});
-        return;
-    }
 
+return;
+    }
     const data = pick(req.body, [
         'name',
         'category',
@@ -81,7 +93,19 @@ async function update (req, res) {
         'sample'
     ]);
 
-    const updated = await Ip.findByIdAndUpdate(req.params.id, {$set: data});
+    if (req.file.path) {
+        const img = fs.readFileSync(req.file.path);
+
+        const encode_image = img.toString('base64');
+        const finalImg = {
+            contentType: req.file.mimetype,
+            data: Buffer.from(encode_image, 'base64')
+        };
+
+        data.image = finalImg;
+    }
+
+    const updated = await Ip.findByIdAndUpdate(req.params.id, {$set: data}, {new: true});
 
     if (!updated) {
         res.status(404);
@@ -104,8 +128,9 @@ async function destroy ({params: {id}}, res) {
 
 function tagsValidation (tags) {
     for (const tag of tags) {
-        if (!Object.values(Tags).includes(tag))
-            return false;
+        if (!Object.values(Tags).includes(tag)) {
+                return false;
+        }
     }
 
     return true;
@@ -168,11 +193,11 @@ function validate (method) {
     }
 }
 
-async function getSuggestionIps (req, res){
-    const ip = await getById(req.params.id, res);
+async function getSuggestionIps (req, res) {
+    const ip = await getById(req, res);
 
     const query = {
-        _id: {$not: ip._id},
+        _id: {$ne: ip._id},
         $or: [
             {performer: ip.performer},
             {category: ip.category},
@@ -181,7 +206,30 @@ async function getSuggestionIps (req, res){
 
     const ips = await Ip.find(query);
 
-    return ips;
+    let count = SUGGESTED_SONGS_COUNT;
+    const result = new Array(SUGGESTED_SONGS_COUNT);
+
+    let len = ip.length;
+    const taken = new Array(len);
+
+    if (count > len) {
+        return ips;
+    }
+
+    while (count--) {
+        const x = Math.floor(Math.random() * len);
+
+        result[count] = ips[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+
+    return result;
+}
+
+async function ipIdMiddleware (id) {
+    const ip = await Ip.findById(id);
+
+    return ip;
 }
 
 module.exports = {
@@ -191,5 +239,6 @@ module.exports = {
     update,
     create,
     validate,
-    getSuggestionIps
+    getSuggestionIps,
+    ipIdMiddleware
 };
