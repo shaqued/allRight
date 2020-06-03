@@ -10,7 +10,7 @@ export default ({ ip }) => {
     const classes = useStyles();
 
     return (
-        <Color src={Mergui}>
+        <Color src={ip.image}>
             {({ data, loading }) => {
                 if (loading) return <div>noa hayta kan</div>;
                 return (
@@ -51,7 +51,7 @@ export default ({ ip }) => {
                             </Grid>
                         </Grid>
                         <Grid item xs={3} display="flex" className={classes.imageContainer}>
-                            <Box component="img" src={Mergui} className={classes.image} />
+                            <Box component="img" src={ip.image} className={classes.image} />
                         </Grid>
                     </Grid>
                 );

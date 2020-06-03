@@ -3,7 +3,6 @@ import {Tags} from '../../constant/ipTag.const';
 import {Types} from '../../constant/ipType.const';
 import Ip from './ip.model';
 import createError from 'http-errors';
-import {pick} from 'lodash';
 import {body, validationResult} from 'express-validator/check';
 
 const fs = require('fs-extra');
@@ -46,13 +45,10 @@ return;
     if (req.file) {
         const img = fs.readFileSync(req.file.path);
 
-        const encode_image = img.toString('base64');
-        const finalImg = {
-            contentType: req.file.mimetype,
-            data: Buffer.from(encode_image, 'base64')
+        ip.image = {
+            contentType: 'image/jpeg',
+            data: img
         };
-
-        ip.image = finalImg;
     }
 
     const newIp = await Ip.create(ip);
@@ -73,13 +69,10 @@ return;
     if (req.file) {
         const img = fs.readFileSync(req.file.path);
 
-        const encode_image = img.toString('base64');
-        const finalImg = {
-            contentType: req.file.mimetype,
-            data: Buffer.from(encode_image, 'base64')
+        ip.image = {
+            contentType: 'image/jpeg',
+            data: img
         };
-
-        ip.image = finalImg;
     }
 
     const updated = await Ip.findByIdAndUpdate(req.params.id, ip, {new: true});

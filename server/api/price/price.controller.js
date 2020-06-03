@@ -18,3 +18,8 @@ async function getById (req, res) {
 
     return price;
 }
+
+module.exports = {
+    getAll,
+    getById
+   };
