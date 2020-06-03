@@ -40,30 +40,20 @@ async function create (req, res) {
 
 return;
     }
-    const img = fs.readFileSync(req.file.path);
 
-    const encode_image = img.toString('base64');
-    const finalImg = {
-        contentType: req.file.mimetype,
-        data: Buffer.from(encode_image, 'base64')
-    };
+    const ip = req.body;
 
-    const {body} = req;
-    const ip = {
-        name: body.name,
-        category: body.category,
-        tag: body.tag,
-        composer: body.composer,
-        performer: body.performer,
-        writer: body.writer,
-        owners: body.owners,
-        dateOfCreation: body.dateOfCreation,
-        price: body.price,
-        reviews: body.reviews,
-        about: body.about,
-        sample: body.sample,
-        image: finalImg
-    };
+    if (req.file) {
+        const img = fs.readFileSync(req.file.path);
+
+        const encode_image = img.toString('base64');
+        const finalImg = {
+            contentType: req.file.mimetype,
+            data: Buffer.from(encode_image, 'base64')
+        };
+
+        ip.image = finalImg;
+    }
 
     const newIp = await Ip.create(ip);
 
@@ -78,22 +68,9 @@ async function update (req, res) {
 
 return;
     }
-    const data = pick(req.body, [
-        'name',
-        'category',
-        'tag',
-        'composer',
-        'performer',
-        'writer',
-        'owners',
-        'dateOfCreation',
-        'price',
-        'reviews',
-        'about',
-        'sample'
-    ]);
+    const ip = req.body;
 
-    if (req.file.path) {
+    if (req.file) {
         const img = fs.readFileSync(req.file.path);
 
         const encode_image = img.toString('base64');
@@ -102,10 +79,10 @@ return;
             data: Buffer.from(encode_image, 'base64')
         };
 
-        data.image = finalImg;
+        ip.image = finalImg;
     }
 
-    const updated = await Ip.findByIdAndUpdate(req.params.id, {$set: data}, {new: true});
+    const updated = await Ip.findByIdAndUpdate(req.params.id, ip, {new: true});
 
     if (!updated) {
         res.status(404);
