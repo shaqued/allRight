@@ -163,34 +163,33 @@ function validate (method) {
     }
 }
 
-async function getSuggestionIps (req, res) {
+async function suggestedIps (req, res) {
     const ip = await getById(req, res);
 
-    const query = {
+    const ips = await Ip.find({
         _id: {$ne: ip._id},
         $or: [
             {performer: ip.performer},
             {category: ip.category},
             {tag: {$in: ip.tag}}
-        ]};
-
-    const ips = await Ip.find(query);
+        ]});
 
     let count = SUGGESTED_SONGS_COUNT;
     const result = new Array(SUGGESTED_SONGS_COUNT);
 
-    let len = ip.length;
-    const taken = new Array(len);
+    let length = ips.length;
 
-    if (count > len) {
+    if (count > length) {
         return ips;
     }
 
+    const taken = new Array(length);
+    
     while (count--) {
-        const x = Math.floor(Math.random() * len);
+        const x = Math.floor(Math.random() * length);
 
         result[count] = ips[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
+        taken[x] = --length in taken ? taken[length] : length;
     }
 
     return result;
@@ -209,6 +208,6 @@ module.exports = {
     update,
     create,
     validate,
-    getSuggestionIps,
+    suggestedIps,
     ipIdMiddleware
 };

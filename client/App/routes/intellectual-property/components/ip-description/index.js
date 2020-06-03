@@ -12,7 +12,7 @@ export default ({ ip }) => {
     return (
         <Color src={ip.image}>
             {({ data, loading }) => {
-                if (loading) return <div>noa hayta kan</div>;
+                if (!loading)
                 return (
                     <Grid container spacing={0} style={{ backgroundColor: data, height: '30%' }}>
                         <Grid item xs={8} style={{ margin: '2%' }}>
