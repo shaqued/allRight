@@ -23,7 +23,7 @@ export default ({ip}) => {
                                 />
                                 <CardContent>
                                     <div className={classes.cardPricing}>
-                                        <Typography variant="h6" color="textSecondary">
+                                        <Typography variant="h6" color="textPrimary">
                                             החל מ-
                                             <Typography component="h2" variant="h3" color="textPrimary">{tier.price}₪</Typography>
                                             /לחודש
@@ -31,7 +31,7 @@ export default ({ip}) => {
                                     </div>
                                     <ul>
                                         {tier.description.map((line) => (
-                                            <Typography component="li" color="textSecondary" variant="subtitle1" align="center" key={line}>
+                                            <Typography component="li" color="textPrimary" variant="subtitle1" align="center" key={line}>
                                                 {line}
                                             </Typography>
                                         ))}

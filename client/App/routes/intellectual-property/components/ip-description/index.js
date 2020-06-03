@@ -10,7 +10,7 @@ export default ({ ip }) => {
     const classes = useStyles();
 
     return (
-        <Color src={Ariana}>
+        <Color src={Mergui}>
             {({ data, loading }) => {
                 if (loading) return <div>noa hayta kan</div>;
                 return (
@@ -22,25 +22,26 @@ export default ({ ip }) => {
                                         <Grid item xs={4}>
                                             <Grid container direction='column'>
                                                 <Grid item>
-                                                    <Typography variant="h2" color="textSecondary">אסור</Typography>
+                                                    <Typography variant="h2" color="textSecondary">
+                                                        {ip.name}
+                                                    </Typography>
                                                 </Grid>
                                                 <Grid item>
-                                                    <Typography variant="h4" color="textSecondary">מרגי</Typography>
+                                                    <Typography variant="h4" color="textSecondary">
+                                                        {ip.performer}
+                                                    </Typography>
                                                 </Grid>
                                                 <Grid item>
                                                     <Typography variant="body1" color="textSecondary">
-                                                        תני לי רגע הוא סינגל הבכורה של הזמר-יוצר הישראלי יהונתן מרגי. השיר יצא לאור ב-12 באוגוסט 2018, כסינגל שלא מתוך אלבום, על ידי חברות התקליטים טדי הפקות וגאגא בוקינג.
-                                            </Typography>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Typography variant="body1" color="textSecondary">לפני שעתיים</Typography>
+                                                        {ip.about}
+                                                    </Typography>
                                                 </Grid>
                                             </Grid>
                                         </Grid>
                                         <Grid item xs={2}></Grid>
                                         <Grid item xs={3}>
-                                            <Typography variant="body1" color="textSecondary" style={{ textAlign: 'left' }}>מילים: לדגכלדג דלגכלדג לדגכל ד</Typography>
-                                            <Typography variant="body1" color="textSecondary" style={{ textAlign: 'left' }}>לחן: לדגכלדג דלגכלדג לדגכל ד</Typography>
+                                            <Typography variant="body1" color="textSecondary" style={{ textAlign: 'left' }}>מילים: {ip.writer}</Typography>
+                                            <Typography variant="body1" color="textSecondary" style={{ textAlign: 'left' }}>לחן: {ip.composer}</Typography>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -50,7 +51,7 @@ export default ({ ip }) => {
                             </Grid>
                         </Grid>
                         <Grid item xs={3} display="flex" className={classes.imageContainer}>
-                            <Box component="img" src={Ariana} className={classes.image} />
+                            <Box component="img" src={Mergui} className={classes.image} />
                         </Grid>
                     </Grid>
                 );

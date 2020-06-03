@@ -12,7 +12,7 @@ export default () => {
     const [ip, setIp] = useState({});
 
     async function fetchData() {
-        const res = await fetch("http://localhost:8080/api/ip/:id");
+        const res = await fetch(`/api/ip/${id}`);
         res
             .json()
             .then(res => setIp(res))
@@ -21,7 +21,7 @@ export default () => {
 
     useEffect(() => {
         fetchData();
-    });
+    }, []);
 
     return (
         <Grid container direction='column'>
