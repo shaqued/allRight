@@ -30,7 +30,7 @@ export default createMuiTheme({
                 marginTop: "8px",
                 marginBottom: "16px"
             }
-        }
+        },
     },
     props: {
         MuiTextField: {
@@ -42,9 +42,6 @@ export default createMuiTheme({
         MuiLink: {
             underline: "always"
         },
-        // MuiInputLabel: {
-        //     shrink: false
-        // },
         MuiButton: {
             disableElevation: true,
         }

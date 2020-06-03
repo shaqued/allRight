@@ -7,8 +7,6 @@ export default makeStyles(theme => ({
         height: '100vh'
     },
     imageSection: {
-        // backgroundImage: 'url(https://source.unsplash.com/random)',
-        // backgroundRepeat: 'no-repeat',
         backgroundColor,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
@@ -24,11 +22,4 @@ export default makeStyles(theme => ({
         flexDirection: 'column',
         alignItems: 'center'
     },
-    form: {
-        width: '70%', // Fix IE 11 issue.
-        marginTop: theme.spacing(1)
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2)
-    }
 }));
