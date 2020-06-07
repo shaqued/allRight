@@ -58,14 +58,17 @@ export default createMuiTheme({
         },
         h1: {
             fontWeight: 800,
-            fontSize: "7.5rem"
+            fontSize: "3.1rem"
         },
         h2: {
             fontWeight: 800,
-            fontSize: "2.5rem"
+            fontSize: "1.4rem"
         },
         body1: {
-            fontSize: "0.8rem"
+            fontSize: "0.7rem"
+        },
+        body2: {
+            fontSize: "1.1rem"
         }
     },
 
