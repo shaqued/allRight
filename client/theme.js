@@ -32,13 +32,23 @@ export default createMuiTheme({
                 marginBottom: "16px"
             }
         },
+        MuiOutlinedInput: { 
+            input: {
+                borderWidth: "0.1px!important",
+            },
+            borderWidth: "0.1px!important",
+        }
     },
     props: {
+        MuiRadio: {
+            color: 'primary',
+            size: 'small'
+        },
         MuiTextField: {
             variant: "outlined",
             inputlabelprops: {
                 shrink: false
-            }
+            },
         },
         MuiLink: {
             underline: "always"
@@ -71,5 +81,4 @@ export default createMuiTheme({
             fontSize: "1.1rem"
         }
     },
-
 });

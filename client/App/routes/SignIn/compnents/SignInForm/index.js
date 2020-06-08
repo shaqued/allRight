@@ -1,11 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '../../../../../components/TextField';
 import PasswordInput from '../../../../../components/Registration/PasswordInput';
-import {
-    Button, FormControlLabel, Checkbox, Link, 
-    Box, Grid, Typography, InputAdornment
-} from '@material-ui/core';
+import { Button, Link, Grid, Typography } from '@material-ui/core';
 
 export default (props) => {
     const classes = useStyles(),
@@ -65,7 +62,7 @@ export default (props) => {
             <Grid container justify='center'>
                 <Grid item> 
                     <Typography align='center' display='inline'> {'עדיין לא חברים שלנו?'} </Typography>
-                    <Link href='#' variant='body1'> {'הצטרפו עכשיו'} </Link>
+                     <Link href='/signUp' variant='body1'> {'הצטרפו עכשיו'} </Link>
                 </Grid>
             </Grid>
         </form>
