@@ -1,4 +1,5 @@
-// eslint-disable-next-line import/default
+// eslint-disable-next-line import/default,import/named
+import {addPurchase} from '../ip/ip.controller';
 import Purchase from './purchase.model';
 import createError from 'http-errors';
 import {pick} from 'lodash';
@@ -6,6 +7,7 @@ import {pick} from 'lodash';
 async function getBy (req) {
     try {
         let purchases;
+
         if (req.query.user) {
             purchases = await Purchase.find({user: req.query.user});
         }
@@ -31,6 +33,8 @@ async function create (req, res) {
         user: body.user
     };
 
+    await Promise.all(purchase.cartItems.map(({ipId})=> addPurchase(ipId)));
+
     const newPurchase = await Purchase.create(purchase);
 
     res.sendStatus(201).send({id: newPurchase._id});
@@ -43,6 +47,8 @@ async function update ({params: {id}, body}) {
             'cartItems',
             'purchaseDate'
         ]);
+
+        await Promise.all(data.cartItems.map(({ipId})=> addPurchase(ipId)));
 
         const updated = await Purchase.findByIdAndUpdate(id, {$set: data});
 

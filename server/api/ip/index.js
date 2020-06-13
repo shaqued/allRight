@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import {getById, getAll, update, destroy, create, validate, suggestedIps} from './ip.controller';
+import {getById, getAll, update, destroy, create, validate, suggestedIps, popularIps} from './ip.controller';
 import {AsyncRouter} from 'express-async-router';
 import objectId from 'express-param-objectid';
 import multer from 'multer';

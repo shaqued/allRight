@@ -92,6 +92,11 @@ const ipSchema = new Schema({
         {
             data: Buffer,
             contentType: String
+        },
+    purchasesCounter:
+        {
+            type: Number,
+            default: 0
         }
 });
 

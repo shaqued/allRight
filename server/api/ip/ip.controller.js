@@ -10,8 +10,46 @@ const fs = require('fs-extra');
 const SUGGESTED_SONGS_COUNT = 7;
 
 
-async function getAll () {
+async function popularIps () {
+    const ips = await Ip.aggregate([{$sort: {purchasesCounter: -1}},
+        {$limit: 10}]);
+
+    return ips;
+}
+
+async function search (query) {
+    const ips = await Ip.aggregate([query]);
+
+    return ips;
+}
+
+async function getAll (req, res) {
     try {
+        if (req.query.popular === 'true') {
+            return await popularIps();
+        }
+        else if (req.query.category || req.query.type || req.query.name || req.query.performer) {
+            const orClause = [];
+
+            if (req.query.category) {
+                orClause.push({category: req.query.category});
+            }
+
+            if (req.query.type) {
+                orClause.push({type: req.query.type});
+            }
+
+            if (req.query.name) {
+                orClause.push({name: {$regex: req.query.name, $options: 'i'}});
+            }
+
+            if (req.query.performer) {
+                orClause.push({performer: {$regex: req.query.performer, $options: 'i'}});
+            }
+
+            return await search({$match: {$or: orClause}});
+        }
+
         const ips = await Ip.find();
 
         return ips;
@@ -37,7 +75,7 @@ async function create (req, res) {
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors.array()});
 
-return;
+    return;
     }
 
     const ip = req.body;
@@ -62,7 +100,7 @@ async function update (req, res) {
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors.array()});
 
-return;
+    return;
     }
     const ip = req.body;
 
@@ -121,21 +159,25 @@ function validate (method) {
         case 'create': {
             return [
                 body('name').exists(),
-                body('category').optional().custom(item => {
+                body('category').optional()
+                                .custom(item => {
                     return Object.values(Categories).includes(item);
                 }),
-                body('tag').optional().custom(tags => {
+                body('tag').optional()
+                           .custom(tags => {
                    return tagsValidation(tags);
                 }),
                 body('performer').exists(),
                 body('composer').exists(),
                 body('writer').exists(),
-                body('owners').exists().custom(owners => {
+                body('owners').exists()
+                              .custom(owners => {
                     return ownersValidation(owners);
                 }),
                 body('price').exists(),
                 body('about').optional(),
-                body('type').optional().custom(item => {
+                body('type').optional()
+                            .custom(item => {
                     return Object.values(Types).includes(item);
                 })
             ];
@@ -143,19 +185,24 @@ function validate (method) {
         case 'update':
         {
             return [
-                body('name').optional().notEmpty(),
-                body('category').optional().custom(item => {
+                body('name').optional()
+.notEmpty(),
+                body('category').optional()
+.custom(item => {
                     return Object.values(Categories).includes(item);
                 }),
-                body('tag').optional().custom(tags => {
+                body('tag').optional()
+.custom(tags => {
                     return tagsValidation(tags);
                 }),
-                body('owners').optional().custom(owners => {
+                body('owners').optional()
+.custom(owners => {
                     return ownersValidation(owners);
                 }),
                 body('price').optional(),
                 body('about').optional(),
-                body('type').optional().custom(item => {
+                body('type').optional()
+.custom(item => {
                     return Object.values(Types).includes(item);
                 })
             ];
@@ -177,14 +224,14 @@ async function suggestedIps (req, res) {
     let count = SUGGESTED_SONGS_COUNT;
     const result = new Array(SUGGESTED_SONGS_COUNT);
 
-    let length = ips.length;
+    let {length} = ips;
 
     if (count > length) {
         return ips;
     }
 
     const taken = new Array(length);
-    
+
     while (count--) {
         const x = Math.floor(Math.random() * length);
 
@@ -194,6 +241,15 @@ async function suggestedIps (req, res) {
 
     return result;
 }
+
+async function addPurchase (id) {
+    const ip = await Ip.findById(id);
+
+    console.log(ip);
+    const updated = await Ip.findByIdAndUpdate(id, {purchasesCounter: ip.purchasesCounter + 1},
+                                      {new: true});
+}
+
 
 async function ipIdMiddleware (id) {
     const ip = await Ip.findById(id);
@@ -209,5 +265,7 @@ module.exports = {
     create,
     validate,
     suggestedIps,
-    ipIdMiddleware
+    ipIdMiddleware,
+    addPurchase,
+    popularIps
 };
