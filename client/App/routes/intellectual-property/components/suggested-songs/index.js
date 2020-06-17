@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography, CardContent, Card, CardMedia, CardActionArea } from '@material-ui/core';
 import useStyles from './suggested-songs.css';
-import Mergui from '../../../../../assets/photos/Mergui.png';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default ({ ip }) => {
     const classes = useStyles();
@@ -45,10 +44,10 @@ export default ({ ip }) => {
             {suggestedIps.map((tile) => (
                 <Card className={classes.card}>
                     <CardActionArea
-                                    component={Link} 
-                                    to={{pathname: '/ip/'+tile._id}}>
+                        component={Link}
+                        to={{ pathname: '/ip/' + tile._id }}>
                         <CardMedia
-                            image={tile.image ? tile.image : Mergui}
+                            image={tile.image}
                             title={tile.name}
                             className={classes.media}
                         />

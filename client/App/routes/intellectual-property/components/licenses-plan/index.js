@@ -1,13 +1,24 @@
 import React from 'react';
 import useStyles from './licenses-plan.css';
-import {Grid, Container, Button, Card, CardActions, CardContent, CardHeader, CssBaseline, Typography} from '@material-ui/core';
+import LicensePlanDialog from './license-plan-dialog';
+import { Grid, Container, Button, Card, CardActions, CardContent, CardHeader, CssBaseline, Typography } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/StarBorder';
 
-export default ({ip}) => {
+export default ({ ip }) => {
     const classes = useStyles();
 
+    const [open, setOpen] = React.useState(false);
+  
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
     return (
-        <Grid container style={{height: '40%' }}>
+        <Grid container style={{ height: '40%' }}>
             <CssBaseline />
             <Container maxWidth="md" component="main">
                 <Grid container spacing={5} alignItems="flex-end">
@@ -37,14 +48,15 @@ export default ({ip}) => {
                                         ))}
                                     </ul>
                                 </CardContent>
-                                <CardActions style={{justifyContent: 'center'}}>
-                                    <Button variant={tier.buttonVariant} color="primary">
+                                <CardActions style={{ justifyContent: 'center' }}>
+                                    <Button variant={tier.buttonVariant} color="primary" onClick={handleClickOpen}>
                                         {tier.buttonText}
                                     </Button>
                                 </CardActions>
                             </Card>
                         </Grid>
                     ))}
+                    <LicensePlanDialog open={open} onClose={handleClose} />
                 </Grid>
             </Container>
         </Grid>
