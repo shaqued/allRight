@@ -36,6 +36,22 @@ export default {
                     usageType: UsageType.single,
                     price: 200
                 }
+            ],
+            socialRangePrice: [
+                {
+                    rangeMin: 1,
+                    rangeMax: 50,
+                    mediaType: MediaType.online,
+                    usageType: UsageType.onlyMe,
+                    price: 100
+                },
+                {
+                    rangeMin: 50,
+                    rangeMax: 100,
+                    mediaType: MediaType.online,
+                    usageType: UsageType.single,
+                    price: 200
+                }
             ]
         }
 ]

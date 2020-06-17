@@ -1,4 +1,4 @@
-import {getById, getAll} from './price.controller';
+import {getById, getAll, create} from './price.controller';
 import {AsyncRouter} from 'express-async-router';
 import objectId from 'express-param-objectid';
 
@@ -8,6 +8,7 @@ router.param('id', objectId);
 
 router.get('/', getAll);
 router.get('/:id', getById);
+router.post('/', create);
 
 export default router;
 

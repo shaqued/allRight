@@ -6,7 +6,6 @@ import ip from './ip';
 
 const router = AsyncRouter();
 
-router.use('/song', songs);
 router.use('/users', user);
 router.use('/ip', ip);
 router.use('/purchase', purchase);

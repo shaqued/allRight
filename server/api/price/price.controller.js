@@ -2,6 +2,7 @@ import {MediaType} from '../../constant/priceMediaType.const';
 import {UsageType} from '../../constant/priceUsageType.const';
 import Price from './price.model';
 import {pick} from 'lodash';
+import Ip from "../ip/ip.model";
 
 async function getAll () {
     const prices = await Price.find();
@@ -19,7 +20,17 @@ async function getById (req, res) {
     return price;
 }
 
+async function create (req, res) {
+    const price = req.body;
+
+    const newPrice = await Price.create(price);
+
+    res.sendStatus(201).send({id: price._id});
+}
+
+
 module.exports = {
     getAll,
-    getById
+    getById,
+    create
    };

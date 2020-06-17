@@ -49,8 +49,8 @@ const ipSchema = new Schema({
         },
     price:
         {
-            type: Schema.Types.ObjectID,
-            ref: 'price',
+            type: Schema.Types.Object,
+            ref: 'Price',
             required: true
         },
     reviews:

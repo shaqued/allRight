@@ -27,12 +27,17 @@ const rangePriceSchema = new Schema({
 
 const priceSchema = new Schema({
     businessRangePrice: [{
-        type: Schema.Types.ObjectID,
+        type: Schema.Types.Object,
         ref: 'rangePrice',
         required: true
     }],
     privateRangePrice: [{
-        type: Schema.Types.ObjectID,
+        type: Schema.Types.Object,
+        ref: 'rangePrice',
+        required: true
+    }],
+    socialRangePrice: [{
+        type: Schema.Types.Object,
         ref: 'rangePrice',
         required: true
     }]
