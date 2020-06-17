@@ -2,6 +2,7 @@ import {Tags} from '../../constant/ipTag.const';
 import {Categories} from '../../constant/ipCategory.const';
 import {Types} from '../../constant/ipType.const';
 import User from '../user/user.model';
+import Price from '../price/price.model';
 import mongoose from 'mongoose';
 
 // eslint-disable-next-line new-cap
@@ -9,7 +10,8 @@ const id = mongoose.Types.ObjectId();
 const users = User.find().then();
 
 export default {
-    seed: () => [
+    dependencies: [Price],
+    seed: ([price]) => [
         {
             name: 'Juice',
             category: Categories.Pop,
@@ -19,7 +21,7 @@ export default {
             writer: ' Lizzo, Theron Thomas, Sam Sumser, Sean Small and Ricky Reed',
             owners: [{user: id, percentageOfOwnership: 100}],
             dateOfCreation: new Date('2019-01-04'),
-            price: id,
+            price: price,
             reviews:
                 [
                     {user: id, comment: 'great!', scoring: 5},
@@ -21672,10 +21674,10 @@ export default {
             type: Types.Music,
             sample: 'https://www.youtube.com/watch?v=RerzmNafv1s',
             image: {
-                "contentType": "image/jpeg",
-                "data": {
-                    "type": "Buffer",
-                    "data": [
+                contentType: 'image/jpeg',
+                data: {
+                    type: 'Buffer',
+                    data: [
                         255,
                         216,
                         255,
