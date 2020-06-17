@@ -21671,7 +21671,7 @@ export default {
             about: 'אסור הוא סינגל שהוקלט על ידי הזמר-יוצר הישראלי יהונתן מרגי.',
             type: Types.Music,
             sample: 'https://www.youtube.com/watch?v=RerzmNafv1s',
-            "image": {
+            image: {
                 "contentType": "image/jpeg",
                 "data": {
                     "type": "Buffer",
