@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Grid, Box, makeStyles, Typography, GridList, GridListTile, GridListTileBar } from '@material-ui/core';
+import React, { useState, useEffect, useContext } from 'react';
+import { Grid, Typography, CardContent, Card, CardMedia, CardActionArea } from '@material-ui/core';
 import useStyles from './suggested-songs.css';
 import Mergui from '../../../../../assets/photos/Mergui.png';
+import { Link, withRouter } from 'react-router-dom';
+import {__RouterContext} from 'react-router';
+import useForceUpdate from 'use-force-update';
 
-export default ({ ip }) => {
+export default withRouter(({ ip }) => {
     const classes = useStyles();
+    const forceUpdate = useForceUpdate();
+    const routerContext = useContext(__RouterContext);
 
-    const [hasError, setErrors] = useState(false);
+    const [, setErrors] = useState(false);
     const [suggestedIps, setSuggestedIps] = useState([]);
 
     function arrayBufferToBase64(buffer) {
@@ -18,23 +23,21 @@ export default ({ ip }) => {
     };
 
     async function fetchData() {
-        console.log(ip.image);
         const res = await fetch(`/api/ip/${ip._id}/suggestedIps`);
         res
             .json()
             .then(res => {
                 var base64Flag = 'data:image/jpeg;base64,';
-                var a =  res.map(x => ({...x, image: x.image && (base64Flag + arrayBufferToBase64(x.image.data.data))}));
-                 console.log(a);
-                return res.map(x => ({...x, image: x.image && (base64Flag + arrayBufferToBase64(x.image.data.data))}));
+                return res.map(x => ({ ...x, image: x.image && (base64Flag + arrayBufferToBase64(x.image.data.data)) }));
             })
             .then(res => setSuggestedIps(res))
             .catch(err => setErrors(err));
     }
 
     useEffect(() => {
+        () => routerContext.history.listen(forceUpdate);
         fetchData();
-    }, [ip]);
+    }, [ip, routerContext]);
 
 
     return (
@@ -44,14 +47,27 @@ export default ({ ip }) => {
                     עוד שירים שאולי תאהבו
                 </Typography>
             </Grid>
-            <GridList xs={12} className={classes.gridList} cols={7}>
-                {suggestedIps.map((tile) => (
-                    <GridListTile key={tile._id} className={classes.tile}>
-                        <Box component="img" src={tile.image ? tile.image : Mergui} className={classes.tile}/>
-                        <GridListTileBar title={tile.name} />
-                    </GridListTile>
-                ))}
-            </GridList>
+            {suggestedIps.map((tile) => (
+                <Card className={classes.card}>
+                    <CardActionArea
+                                    component={Link} 
+                                    to={{pathname: '/ip/'+tile._id}}>
+                        <CardMedia
+                            image={tile.image ? tile.image : Mergui}
+                            title={tile.name}
+                            className={classes.media}
+                        />
+                        <CardContent className={classes.cardContent}>
+                            <Typography variant="body2">
+                                {tile.name}
+                            </Typography>
+                            <Typography variant="body1" color="textSecondary" component="p">
+                                {tile.performer}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            ))}
         </Grid>
     );
-}
+})
