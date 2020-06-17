@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Typography, CardContent, Card, CardMedia, CardActionArea } from '@material-ui/core';
 import useStyles from './suggested-songs.css';
 import Mergui from '../../../../../assets/photos/Mergui.png';
 import { Link, withRouter } from 'react-router-dom';
-import {__RouterContext} from 'react-router';
-import useForceUpdate from 'use-force-update';
 
-export default withRouter(({ ip }) => {
+export default ({ ip }) => {
     const classes = useStyles();
-    const forceUpdate = useForceUpdate();
-    const routerContext = useContext(__RouterContext);
 
-    const [, setErrors] = useState(false);
+    const [errors, setErrors] = useState(false);
     const [suggestedIps, setSuggestedIps] = useState([]);
 
     function arrayBufferToBase64(buffer) {
@@ -35,9 +31,8 @@ export default withRouter(({ ip }) => {
     }
 
     useEffect(() => {
-        () => routerContext.history.listen(forceUpdate);
         fetchData();
-    }, [ip, routerContext]);
+    }, [ip]);
 
 
     return (
@@ -70,4 +65,4 @@ export default withRouter(({ ip }) => {
             ))}
         </Grid>
     );
-})
+}
