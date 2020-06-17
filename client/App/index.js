@@ -12,7 +12,7 @@ export default () => {
                 <Route exact path={'/'} component={Home} />
                 <Route path={'/signUp'} component={SignUp} />
                 <Route path={'/signIn'} component={SignIn} />
-                <Route path={'/ip/:id'} component={IntllectualProperty} />
+                <Route exact path={'/ip/:id'} component={IntllectualProperty} />
                 <Redirect to={'/'} />
             </Switch>
         </BrowserRouter >

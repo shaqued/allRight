@@ -34,7 +34,7 @@ export default () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [id]);
 
     return (
         <Grid container direction='column'>
