@@ -10,14 +10,15 @@ const fs = require('fs-extra');
 const SUGGESTED_SONGS_COUNT = 7;
 
 
-async function popularIps () {
+async function popularIps() {
     const ips = await Ip.aggregate([{$sort: {purchasesCounter: -1}},
         {$limit: 10}]);
 
     return ips;
 }
 
-async function search (query) {
+async function search(query) {
+    console.log(query)
     const ips = await Ip.aggregate([query]);
 
     return ips;
@@ -30,13 +31,14 @@ async function getAll (req, res) {
         }
         else if (req.query.category || req.query.type || req.query.name || req.query.performer) {
             const orClause = [];
+            const regularClause = [];
 
             if (req.query.category) {
-                orClause.push({category: req.query.category});
+                regularClause.push({category: req.query.category});
             }
 
             if (req.query.type) {
-                orClause.push({type: req.query.type});
+                regularClause.push({type: req.query.type});
             }
 
             if (req.query.name) {
@@ -47,19 +49,21 @@ async function getAll (req, res) {
                 orClause.push({performer: {$regex: req.query.performer, $options: 'i'}});
             }
 
-            return await search({$match: {$or: orClause}});
+            if (orClause.length > 0) {
+                regularClause.push({$or: orClause});
+            }
+            return await search({$match: {$and: regularClause}});
         }
 
         const ips = await Ip.find();
 
         return ips;
-    }
-    catch (error) {
+    } catch (error) {
         createError(error);
     }
 }
 
-async function getById (req, res) {
+async function getById(req, res) {
     const ip = await Ip.findById(req.params.id);
 
     if (!ip) {
@@ -69,13 +73,13 @@ async function getById (req, res) {
     return ip;
 }
 
-async function create (req, res) {
+async function create(req, res) {
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors.array()});
 
-    return;
+        return;
     }
 
     const ip = req.body;
@@ -94,13 +98,13 @@ async function create (req, res) {
     res.sendStatus(201).send({id: newIp._id});
 }
 
-async function update (req, res) {
+async function update(req, res) {
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors.array()});
 
-    return;
+        return;
     }
     const ip = req.body;
 
@@ -117,34 +121,32 @@ async function update (req, res) {
 
     if (!updated) {
         res.status(404);
-    }
-    else {
+    } else {
         res.status(200);
     }
 }
 
-async function destroy ({params: {id}}, res) {
+async function destroy({params: {id}}, res) {
     const removed = await Ip.findByIdAndRemove(id);
 
     if (!removed) {
         res.status(404);
-    }
-    else {
+    } else {
         res.status(200);
     }
 }
 
-function tagsValidation (tags) {
+function tagsValidation(tags) {
     for (const tag of tags) {
         if (!Object.values(Tags).includes(tag)) {
-                return false;
+            return false;
         }
     }
 
     return true;
 }
 
-function ownersValidation (owners) {
+function ownersValidation(owners) {
     let sum = 0;
 
     for (const e of owners) {
@@ -154,63 +156,62 @@ function ownersValidation (owners) {
     return sum === 100;
 }
 
-function validate (method) {
+function validate(method) {
     switch (method) {
         case 'create': {
             return [
                 body('name').exists(),
                 body('category').optional()
-                                .custom(item => {
-                    return Object.values(Categories).includes(item);
-                }),
+                    .custom(item => {
+                        return Object.values(Categories).includes(item);
+                    }),
                 body('tag').optional()
-                           .custom(tags => {
-                   return tagsValidation(tags);
-                }),
+                    .custom(tags => {
+                        return tagsValidation(tags);
+                    }),
                 body('performer').exists(),
                 body('composer').exists(),
                 body('writer').exists(),
                 body('owners').exists()
-                              .custom(owners => {
-                    return ownersValidation(owners);
-                }),
+                    .custom(owners => {
+                        return ownersValidation(owners);
+                    }),
                 body('price').exists(),
                 body('about').optional(),
                 body('type').optional()
-                            .custom(item => {
-                    return Object.values(Types).includes(item);
-                })
+                    .custom(item => {
+                        return Object.values(Types).includes(item);
+                    })
             ];
         }
-        case 'update':
-        {
+        case 'update': {
             return [
                 body('name').optional()
-.notEmpty(),
+                    .notEmpty(),
                 body('category').optional()
-.custom(item => {
-                    return Object.values(Categories).includes(item);
-                }),
+                    .custom(item => {
+                        return Object.values(Categories).includes(item);
+                    }),
                 body('tag').optional()
-.custom(tags => {
-                    return tagsValidation(tags);
-                }),
+                    .custom(tags => {
+                        return tagsValidation(tags);
+                    }),
                 body('owners').optional()
-.custom(owners => {
-                    return ownersValidation(owners);
-                }),
+                    .custom(owners => {
+                        return ownersValidation(owners);
+                    }),
                 body('price').optional(),
                 body('about').optional(),
                 body('type').optional()
-.custom(item => {
-                    return Object.values(Types).includes(item);
-                })
+                    .custom(item => {
+                        return Object.values(Types).includes(item);
+                    })
             ];
         }
     }
 }
 
-async function suggestedIps (req, res) {
+async function suggestedIps(req, res) {
     const ip = await getById(req, res);
 
     const ips = await Ip.find({
@@ -219,7 +220,8 @@ async function suggestedIps (req, res) {
             {performer: ip.performer},
             {category: ip.category},
             {tag: {$in: ip.tag}}
-        ]});
+        ]
+    });
 
     let count = SUGGESTED_SONGS_COUNT;
     const result = new Array(SUGGESTED_SONGS_COUNT);
@@ -242,16 +244,16 @@ async function suggestedIps (req, res) {
     return result;
 }
 
-async function addPurchase (id) {
+async function addPurchase(id) {
     const ip = await Ip.findById(id);
 
     console.log(ip);
     const updated = await Ip.findByIdAndUpdate(id, {purchasesCounter: ip.purchasesCounter + 1},
-                                      {new: true});
+        {new: true});
 }
 
 
-async function ipIdMiddleware (id) {
+async function ipIdMiddleware(id) {
     const ip = await Ip.findById(id);
 
     return ip;
