@@ -2,21 +2,8 @@ import React from 'react';
 import useStyles from './license-plan-dialog.css';
 import { Dialog, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@material-ui/core';
 
-export default (props) => {
+export default ({ onClose, open, priceRange }) => {
     const classes = useStyles();
-    const { onClose, open } = props;
-
-    const createData = (min, max, type, price) => {
-        return { min, max, type, price };
-    }
-
-    const rows = [
-        createData(100, 200, "סרטון", 50 ),
-        createData(201, 300, "סרטון", 60 ),
-        createData(301, 400, "סרטון", 70 ),
-        createData(401, 500, "סרטון", 80 ),
-        createData(501, 600, "סרטון", 90 ),
-    ];
 
     const handleClose = () => {
         onClose();
@@ -36,10 +23,10 @@ export default (props) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {priceRange.map((row) => (
                             <TableRow key={row.min}>
-                                <TableCell align="right">{row.min} - {row.max}</TableCell>
-                                <TableCell align="right">{row.type}</TableCell>
+                                <TableCell align="right">{row.rangeMin} - {row.rangeMax}</TableCell>
+                                <TableCell align="right">{row.usageType}</TableCell>
                                 <TableCell align="right">{row.price} ש"ח</TableCell>
                             </TableRow>
                         ))}

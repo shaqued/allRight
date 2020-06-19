@@ -3,19 +3,56 @@ import useStyles from './licenses-plan.css';
 import LicensePlanDialog from './license-plan-dialog';
 import { Grid, Container, Button, Card, CardActions, CardContent, CardHeader, CssBaseline, Typography } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/StarBorder';
+import { min } from 'lodash';
 
 export default ({ ip }) => {
     const classes = useStyles();
-
     const [open, setOpen] = React.useState(false);
-  
-    const handleClickOpen = () => {
-      setOpen(true);
+    const [priceRange, setPriceRange] = React.useState([]);
+
+    let plansDictionary = {
+        privateRangePrice: 'פרטי',
+        socialRangePrice: 'חברתי',
+        businessRangePrice: 'עסקי'
     };
-  
+
+    const getMinimumPrice = pricesArray => pricesArray && min(pricesArray.map(x => x.price));
+
+    const handleClickOpen = (priceRangeValue) => {
+        const priceRangeKey = Object.keys(plansDictionary).find(x => plansDictionary[x] === priceRangeValue);
+        setPriceRange(ip.price[priceRangeKey]);
+        setOpen(true);
+    };
+
     const handleClose = () => {
-      setOpen(false);
+        setOpen(false);
     };
+    
+    const tiers = [
+        {
+            title: plansDictionary.privateRangePrice,
+            price: getMinimumPrice(ip && ip.price && ip.price.privateRangePrice),
+            description: [
+                'אירועים אישיים, סרטונים לשימוש אישי,',
+                'לחברים במשרד ועוד.'
+            ]
+        },
+        {
+            title: plansDictionary.socialRangePrice,
+            price: getMinimumPrice(ip && ip.price && ip.price.socialRangePrice),
+            description: [
+                'מתאים לשימוש בסטוריז, פוסטים או סרטונים.'
+            ]
+        },
+        {
+            title: plansDictionary.businessRangePrice,
+            price: getMinimumPrice(ip && ip.price && ip.price.businessRangePrice),
+            description: [
+                'דיג\'יים, מפיקים מתחילים, להקות -',
+                'זה בשבילכם.'
+            ]
+        },
+    ];
 
     return (
         <Grid container style={{ height: '40%' }}>
@@ -37,7 +74,6 @@ export default ({ ip }) => {
                                         <Typography variant="h6" color="textPrimary">
                                             החל מ-
                                             <Typography component="h2" variant="h3" color="textPrimary">{tier.price}₪</Typography>
-                                            /לחודש
                                         </Typography>
                                     </div>
                                     <ul>
@@ -49,48 +85,16 @@ export default ({ ip }) => {
                                     </ul>
                                 </CardContent>
                                 <CardActions style={{ justifyContent: 'center' }}>
-                                    <Button variant={tier.buttonVariant} color="primary" onClick={handleClickOpen}>
-                                        {tier.buttonText}
+                                    <Button variant='outlined' color="primary" onClick={() => handleClickOpen(tier.title)}>
+                                        קבלת רשיון
                                     </Button>
                                 </CardActions>
                             </Card>
                         </Grid>
                     ))}
-                    <LicensePlanDialog open={open} onClose={handleClose} />
+                    <LicensePlanDialog priceRange={priceRange} open={open} onClose={handleClose} />
                 </Grid>
             </Container>
         </Grid>
     );
 }
-
-const tiers = [
-    {
-        title: 'פרטי',
-        price: '10',
-        description: [
-            'אירועים אישיים, סרטונים לשימוש אישי,',
-            'לחברים במשרד ועוד.'
-        ],
-        buttonText: 'קבלת רשיון',
-        buttonVariant: 'outlined',
-    },
-    {
-        title: 'חברתי',
-        price: '50',
-        description: [
-            'מתאים לשימוש בסטוריז, פוסטים או סרטונים.'
-        ],
-        buttonText: 'קבלת רשיון',
-        buttonVariant: 'contained',
-    },
-    {
-        title: 'עסקי',
-        price: '100',
-        description: [
-            'דיג\'יים, מפיקים מתחילים, להקות -',
-            'זה בשבילכם.'
-        ],
-        buttonText: 'קבלת רשיון',
-        buttonVariant: 'outlined',
-    },
-];
