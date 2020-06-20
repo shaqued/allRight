@@ -13,7 +13,7 @@ export default ({ ip }) => {
                 if (!loading)
                     return (
                         <Grid container spacing={0} style={{ backgroundColor: data, height: '30%' }}>
-                            <Grid item xs={8} style={{ margin: '2%' }}>
+                            <Grid item xs={8} style={{ marginRight: '2%', marginTop: '2%'}}>
                                 <Grid container direction="column">
                                     <Grid item>
                                         <Grid container>
@@ -36,20 +36,20 @@ export default ({ ip }) => {
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={2}></Grid>
+                                            <Grid item xs={3}></Grid>
                                             <Grid item xs={3}>
                                                 <Typography variant="body1" color="textSecondary" style={{ textAlign: 'left' }}>מילים: {ip.writer}</Typography>
                                                 <Typography variant="body1" color="textSecondary" style={{ textAlign: 'left' }}>לחן: {ip.composer}</Typography>
                                             </Grid>
                                         </Grid>
                                     </Grid>
-                                    <Grid item>
-                                        <Box component="img" src={AnotherWaveForm} className={classes.wave} />
-                                        <audio
-                                            controls
-                                            controlsList="nodownload"
-                                            src={ip.sample}>
-                                        </audio>
+                                    <Grid container direction="row" spacing={1} style={{ alignItems: 'center' }}>
+                                        <Grid xs={7} item>
+                                            <Box component="img" src={AnotherWaveForm} className={classes.wave} />
+                                        </Grid>
+                                        <Grid xs={3} item display="flex">
+                                            <audio controls controlsList="nodownload" src={ip.sample} className={classes.sample} />
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Grid>

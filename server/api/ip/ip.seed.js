@@ -29,7 +29,7 @@ export default {
                 ],
             about: 'Juice is a song recorded by American singer and rapper Lizzo.',
             type: Types.Music,
-            sample: 'https://www.youtube.com/watch?v=XaCrQL_8eMY',
+            sample: 'https://cdns-preview-b.dzcdn.net/stream/c-b3605e08b0e8cc141f4bfad1d472ed60-6.mp3',
             image: {
                 contentType: 'image/jpeg',
                 data: {
@@ -4779,7 +4779,7 @@ export default {
                 ],
             about: 'Let It Go is a song by English singer-songwriter James Bay.',
             type: Types.Music,
-            sample: 'https://www.youtube.com/watch?v=GsPq9mzFNGY',
+            sample: 'https://cdns-preview-f.dzcdn.net/stream/c-f51f19bdd23e10b38c541a68899fb89c-15.mp3',
             image: {
                 contentType: 'image/jpeg',
                 data: {
@@ -21672,7 +21672,7 @@ export default {
             price: price3,
             about: 'אסור הוא סינגל שהוקלט על ידי הזמר-יוצר הישראלי יהונתן מרגי.',
             type: Types.Music,
-            sample: 'https://www.youtube.com/watch?v=RerzmNafv1s',
+            sample: 'https://cdns-preview-5.dzcdn.net/stream/c-57b4874529a31f11a033852cbeade9fc-4.mp3',
             image: {
                 contentType: 'image/jpeg',
                 data: {

@@ -10,6 +10,7 @@ const fs = require('fs-extra');
 
 const SUGGESTED_SONGS_COUNT = 7;
 
+const DeezerClient = new Deezer();
 
 async function popularIps() {
     const ips = await Ip.aggregate([{ $sort: { purchasesCounter: -1 } },
@@ -63,17 +64,6 @@ async function getAll(req, res) {
         createError(error);
     }
 }
-const DeezerClient = new Deezer();
-
-async function getSample(trackName) {
-    try {
-        let res = await DeezerClient.infos.search("track", encodeURI(trackName));
-        console.log(res.data[0].preview);
-        return res.data[0].preview;
-    } catch (err) {
-        console.log(err);
-    };
-}
 
 async function getById(req, res) {
     let ip = await Ip.findById(req.params.id);
@@ -82,9 +72,19 @@ async function getById(req, res) {
         res.status(404);
     }
 
-    ip.sample = await getSample(ip.name);
-
     return ip;
+}
+
+
+async function getSample(ip) {
+    try {
+        let res = await DeezerClient.infos.search("track", encodeURI(ip.name));
+        const track = res.data.find(x => x.artist.name === ip.performer);
+
+        return track !== undefined ? track.preview : res.data[0].preview;
+    } catch (err) {
+        console.log(err);
+    };
 }
 
 async function create(req, res) {
@@ -97,6 +97,10 @@ async function create(req, res) {
     }
 
     const ip = req.body;
+
+    if (!ip.sample) {
+        ip.sample = await getSample(ip.name);
+    }
 
     if (req.file) {
         const img = fs.readFileSync(req.file.path);
