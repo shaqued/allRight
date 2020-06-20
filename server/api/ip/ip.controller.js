@@ -1,9 +1,10 @@
-import {Categories} from '../../constant/ipCategory.const';
-import {Tags} from '../../constant/ipTag.const';
-import {Types} from '../../constant/ipType.const';
+import { Categories } from '../../constant/ipCategory.const';
+import { Tags } from '../../constant/ipTag.const';
+import { Types } from '../../constant/ipType.const';
 import Ip from './ip.model';
 import createError from 'http-errors';
-import {body, validationResult} from 'express-validator/check';
+import { body, validationResult } from 'express-validator/check';
+import Deezer from 'deezer-web-api';
 
 const fs = require('fs-extra');
 
@@ -11,8 +12,8 @@ const SUGGESTED_SONGS_COUNT = 7;
 
 
 async function popularIps() {
-    const ips = await Ip.aggregate([{$sort: {purchasesCounter: -1}},
-        {$limit: 10}]);
+    const ips = await Ip.aggregate([{ $sort: { purchasesCounter: -1 } },
+    { $limit: 10 }]);
 
     return ips;
 }
@@ -24,7 +25,7 @@ async function search(query) {
     return ips;
 }
 
-async function getAll (req, res) {
+async function getAll(req, res) {
     try {
         if (req.query.popular === 'true') {
             return await popularIps();
@@ -34,25 +35,25 @@ async function getAll (req, res) {
             const regularClause = [];
 
             if (req.query.category) {
-                regularClause.push({category: req.query.category});
+                regularClause.push({ category: req.query.category });
             }
 
             if (req.query.type) {
-                regularClause.push({type: req.query.type});
+                regularClause.push({ type: req.query.type });
             }
 
             if (req.query.name) {
-                orClause.push({name: {$regex: req.query.name, $options: 'i'}});
+                orClause.push({ name: { $regex: req.query.name, $options: 'i' } });
             }
 
             if (req.query.performer) {
-                orClause.push({performer: {$regex: req.query.performer, $options: 'i'}});
+                orClause.push({ performer: { $regex: req.query.performer, $options: 'i' } });
             }
 
             if (orClause.length > 0) {
-                regularClause.push({$or: orClause});
+                regularClause.push({ $or: orClause });
             }
-            return await search({$match: {$and: regularClause}});
+            return await search({ $match: { $and: regularClause } });
         }
 
         const ips = await Ip.find();
@@ -62,13 +63,26 @@ async function getAll (req, res) {
         createError(error);
     }
 }
+const DeezerClient = new Deezer();
+
+async function getSample(trackName) {
+    try {
+        let res = await DeezerClient.infos.search("track", encodeURI(trackName));
+        console.log(res.data[0].preview);
+        return res.data[0].preview;
+    } catch (err) {
+        console.log(err);
+    };
+}
 
 async function getById(req, res) {
-    const ip = await Ip.findById(req.params.id);
+    let ip = await Ip.findById(req.params.id);
 
     if (!ip) {
         res.status(404);
     }
+
+    ip.sample = await getSample(ip.name);
 
     return ip;
 }
@@ -77,7 +91,7 @@ async function create(req, res) {
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors.array()});
+        res.status(422).json({ errors: errors.array() });
 
         return;
     }
@@ -95,14 +109,14 @@ async function create(req, res) {
 
     const newIp = await Ip.create(ip);
 
-    res.sendStatus(201).send({id: newIp._id});
+    res.sendStatus(201).send({ id: newIp._id });
 }
 
 async function update(req, res) {
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors.array()});
+        res.status(422).json({ errors: errors.array() });
 
         return;
     }
@@ -117,7 +131,7 @@ async function update(req, res) {
         };
     }
 
-    const updated = await Ip.findByIdAndUpdate(req.params.id, ip, {new: true});
+    const updated = await Ip.findByIdAndUpdate(req.params.id, ip, { new: true });
 
     if (!updated) {
         res.status(404);
@@ -126,7 +140,7 @@ async function update(req, res) {
     }
 }
 
-async function destroy({params: {id}}, res) {
+async function destroy({ params: { id } }, res) {
     const removed = await Ip.findByIdAndRemove(id);
 
     if (!removed) {
@@ -215,18 +229,18 @@ async function suggestedIps(req, res) {
     const ip = await getById(req, res);
 
     const ips = await Ip.find({
-        _id: {$ne: ip._id},
+        _id: { $ne: ip._id },
         $or: [
-            {performer: ip.performer},
-            {category: ip.category},
-            {tag: {$in: ip.tag}}
+            { performer: ip.performer },
+            { category: ip.category },
+            { tag: { $in: ip.tag } }
         ]
     });
 
     let count = SUGGESTED_SONGS_COUNT;
     const result = new Array(SUGGESTED_SONGS_COUNT);
 
-    let {length} = ips;
+    let { length } = ips;
 
     if (count > length) {
         return ips;
@@ -248,8 +262,8 @@ async function addPurchase(id) {
     const ip = await Ip.findById(id);
 
     console.log(ip);
-    const updated = await Ip.findByIdAndUpdate(id, {purchasesCounter: ip.purchasesCounter + 1},
-        {new: true});
+    const updated = await Ip.findByIdAndUpdate(id, { purchasesCounter: ip.purchasesCounter + 1 },
+        { new: true });
 }
 
 

@@ -61,6 +61,7 @@
     "color-thief-react": "^1.0.2",
     "compression": "latest",
     "cookie-parser": "^1.4.5",
+    "deezer-web-api": "^1.7.2",
     "dotenv-extended": "^2.8.0",
     "email-address": "^1.2.2",
     "express": "latest",

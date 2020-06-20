@@ -45,6 +45,11 @@ export default ({ ip }) => {
                                     </Grid>
                                     <Grid item>
                                         <Box component="img" src={AnotherWaveForm} className={classes.wave} />
+                                        <audio
+                                            controls
+                                            controlsList="nodownload"
+                                            src={ip.sample}>
+                                        </audio>
                                     </Grid>
                                 </Grid>
                             </Grid>

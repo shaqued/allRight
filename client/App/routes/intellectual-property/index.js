@@ -26,6 +26,7 @@ export default () => {
           .then(res => {
             var base64Flag = 'data:image/jpeg;base64,';
             res.image = base64Flag + arrayBufferToBase64(res.image.data.data);
+            console.log(res);
             return res;
           })
             .then(res => setIp(res))

@@ -1,7 +1,7 @@
 require('dotenv-extended').config();
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const htmlPlugin = new HtmlWebPackPlugin({
     template: './client/index.html',
@@ -56,6 +56,11 @@ module.exports = {
                 ]
             },
             {
+                test: /\.css$/,
+                include: /node_modules/,
+                loaders: ['style-loader', 'css-loader'],
+            },
+            {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: {
@@ -63,7 +68,7 @@ module.exports = {
                 }
             },
             {
-                test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf)$/,
+                test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf|otf|mp3)$/,
                 use: [
                     'file-loader',
                 ],
