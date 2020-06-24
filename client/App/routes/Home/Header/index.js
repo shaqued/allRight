@@ -1,10 +1,13 @@
 import React from 'react'
 import { Box, Typography, makeStyles, Link } from '@material-ui/core';
-import tapeImage from '../../../../../assets/photos/Tape.png'
-import Search from './components/Search'
+import tapeImage from '../../../../assets/photos/Tape.png'
+import SearchBar from '../../components/SearchBar';
+import history from '../../../../history';
 
 export default () => {
     const classes = useStyles();
+
+    const handleSearch = (query) => history.push(`/search/${query}`);
 
     return (
         <Box className={classes.container}>
@@ -16,12 +19,12 @@ export default () => {
                     <Typography variant={'body2'} className={classes.text} gutterBottom>
                         {'קבלו רישיון לשימוש ביצירות בקליק'}
                     </Typography>
-                    <Search />
+                    <SearchBar arrow onSearch={handleSearch} />
                     <Box display={'flex'}>
                         <Typography variant={'body1'} className={classes.text} gutterBottom>
                             {'מעוניינים להעלות את היצירות שלכם?'}
                         </Typography>
-                        <Link variant={'body1'} color={'secondary'} className={classes.text} gutterBottom>
+                        <Link variant={'body1'} color={'textSecondary'} className={classes.text} gutterBottom>
                             {'הצטרפו אלינו בקליק'}
                         </Link>
                     </Box>

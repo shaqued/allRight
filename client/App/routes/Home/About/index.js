@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
-import videoPlayer from '../../../../../assets/photos/VideoPlayer.png'
+import videoPlayer from '../../../../assets/photos/VideoPlayer.png'
 
 export default () => {
     const classes = useStyles();

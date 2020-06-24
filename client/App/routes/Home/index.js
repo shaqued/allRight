@@ -1,10 +1,10 @@
-import Navbar from '../../Shell/Navbar';
-import Header from './components/Header';
-import TopViews from './components/TopViews'
+import Navbar from '../../Shell/Navbar/Dark';
+import Header from './Header';
+import TopViews from './TopViews'
 import { Box, Button, makeStyles } from '@material-ui/core'
 import React from 'react';
-import About from './components/About';
-import HowItWorks from './components/HowItWorks';
+import About from './About';
+import HowItWorks from './HowItWorks';
 import Footer from '../../Shell/Footer';
 
 export default () => {

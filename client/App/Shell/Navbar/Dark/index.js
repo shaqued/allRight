@@ -1,6 +1,6 @@
-import logo from '../../../assets/icons/AllrightLogo.png';
+import darkLogo from '../../../../assets/icons/AllrightLogo.png';
 import React from 'react';
-import { Box, Button, Typography, Hidden } from '@material-ui/core';
+import { Box, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
@@ -27,7 +27,7 @@ export default () => {
         </Box>
         <Box>
           <Button component={Link} to='/'>
-            <img src={logo} className={classes.logo} />
+            <img src={darkLogo} className={classes.logo} />
           </Button>
         </Box>
       </Box>
@@ -48,13 +48,13 @@ const useStyles = makeStyles({
   centered: {
     display: 'flex',
     justifyContent: 'center',
-    backgroundColor: 'rgb(81,122,106)',
+    backgroundColor: 'rgb(81,122,106)'
   },
   button: {
     margin: '10px',
     padding: '10px',
     height: 'fit-content',
-    color: 'white'
+    color: '#FFFFFF'
   },
   pinkButton: {
     backgroundColor: 'rgb(240,149,175)'

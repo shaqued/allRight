@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Typography, makeStyles } from '@material-ui/core'
-import startIcon from '../../../../../assets/icons/icon-start@2x.png'
-import surveyIcon from '../../../../../assets/icons/icon-survey@2x.png'
-import creditCardIcon from '../../../../../assets/icons/icon-mastercard-credit-card@2x.png'
+import startIcon from '../../../../assets/icons/icon-start@2x.png'
+import surveyIcon from '../../../../assets/icons/icon-survey@2x.png'
+import creditCardIcon from '../../../../assets/icons/icon-mastercard-credit-card@2x.png'
 
 export default () => {
     const classes = useStyles();
