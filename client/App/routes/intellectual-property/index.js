@@ -30,9 +30,9 @@ export default () => {
 
     return (
         <Grid container direction='column'>
-            <IpDescription ip={ip} />
-            <LicensesPlan ip={ip} />
-            <SuggestedSongs ip={ip} />
-        </Grid>
+          <IpDescription ip={ip} />
+          <LicensesPlan ip={ip} />
+          <SuggestedSongs ip={ip} />
+      </Grid>
     );
 }

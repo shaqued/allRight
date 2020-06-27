@@ -1,7 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
-    table: {
-        minWidth: 550,
+    contract: {
+
     },
+    signature: {
+        width: '60%',
+        height: '70%'
+    }
 }));

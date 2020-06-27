@@ -92,7 +92,7 @@ export default ({ ip }) => {
                             </Card>
                         </Grid>
                     ))}
-                    <LicensePlanDialog priceRange={priceRange} open={open} onClose={handleClose} />
+                    <LicensePlanDialog ip={ip} selectedPriceSection={priceRange} open={open} onClose={handleClose} />
                 </Grid>
             </Container>
         </Grid>

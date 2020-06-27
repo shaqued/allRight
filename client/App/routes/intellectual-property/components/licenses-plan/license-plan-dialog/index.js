@@ -1,13 +1,10 @@
 import React from 'react';
 import useStyles from './license-plan-dialog.css';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Typography from '@material-ui/core/Typography';
+import ContractSigning from './steps/contract-signing';
 import LicenseSelection from './steps/license-selection';
-import { Dialog, DialogTitle, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Checkbox } from '@material-ui/core';
+import { Dialog, Stepper, Step, StepLabel, Typography, Button } from '@material-ui/core';
 
-export default ({ onClose, open, priceRange }) => {
+export default ({ onClose, open, ip, selectedPriceSection }) => {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = ["בחירת רישיון", "חתימת חוזה שימוש", "הוספה לסל"];
@@ -15,9 +12,9 @@ export default ({ onClose, open, priceRange }) => {
     const getStepContent = stepIndex => {
         switch (stepIndex) {
             case 0:
-                return <LicenseSelection priceRange={priceRange} />;
+                return <LicenseSelection selectedPriceSection={selectedPriceSection} />;
             case 1:
-                return <div></div>;
+                return <ContractSigning ip={ip} />;
             case 2:
                 return <div></div>;
             default:
@@ -43,10 +40,10 @@ export default ({ onClose, open, priceRange }) => {
     };
 
     return (
-        <Dialog className={classes.dialog} onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-            <div className={classes.root}>
+        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+            <div className={classes.dialog}>
                 <Stepper activeStep={activeStep}>
-                    {steps.map((label, index) => {
+                    {steps.map((label) => {
                         const stepProps = {};
                         const labelProps = {};
                         return (
@@ -60,25 +57,27 @@ export default ({ onClose, open, priceRange }) => {
                     {activeStep === steps.length ? (
                         <div>
                             <Typography className={classes.instructions}>
-                                All steps completed - you&apos;re finished
-              </Typography>
-                            <Button onClick={handleReset} className={classes.button}>
-                                Reset
-              </Button>
+                                הוספה לסל התסיימה בהצלחה
+                            </Typography>
+                            <Button onClick={handleReset} 
+                                    className={classes.button}>
+                                איפוס
+                            </Button>
                         </div>
                     ) : (
                             <div>
                                 <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                                 <div>
-                                    <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                                    <Button disabled={activeStep === 0} 
+                                            onClick={handleBack} 
+                                            className={classes.button}>
                                         חזור
-                </Button>
+                                    </Button>
                                     <Button
                                         variant="contained"
                                         color="primary"
                                         onClick={handleNext}
-                                        className={classes.button}
-                                    >
+                                        className={classes.button}>
                                         {activeStep === steps.length - 1 ? 'סיום' : 'הבא'}
                                     </Button>
                                 </div>

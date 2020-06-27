@@ -1,11 +1,10 @@
 import React from 'react';
 import useStyles from './license-selction.css';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox, Button, DialogTitle } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox } from '@material-ui/core';
 
-export default ({ priceRange }) => {
+export default ({ selectedPriceSection }) => {
     const classes = useStyles();
     const [selected, setSelected] = React.useState();
-
     const isSelected = row => selected === row;
 
     const handleClick = (event, row) => {
@@ -23,13 +22,14 @@ export default ({ priceRange }) => {
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                        <TableCell></TableCell>
                         <TableCell align="right">כמות קהל</TableCell>
                         <TableCell align="right">סוג מדיה</TableCell>
                         <TableCell align="right">מחיר</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {priceRange.map((row) => {
+                    {selectedPriceSection.map((row) => {
                         const isItemSelected = isSelected(row);
 
                         return (
