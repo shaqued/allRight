@@ -16,19 +16,10 @@ export default () => {
         const res = await fetch(`/api/ip/${id}`);
         res
             .json()
-<<<<<<< HEAD
-          .then(res => {
-            var base64Flag = 'data:image/jpeg;base64,';
-            res.image = base64Flag + arrayBufferToBase64(res.image.data.data);
-            console.log(res);
-            return res;
-          })
-=======
             .then(res => {
                 res.image = convertDataToImage(res.image.data.data);
                 return res;
             })
->>>>>>> 5780b6a... added account page, route, card
             .then(res => setIp(res))
             .catch(err => setErrors(err));
     }
