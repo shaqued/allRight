@@ -15,9 +15,9 @@ export default createMuiTheme({
             secondary: "#FFFFFF"
         },
         background: {
-            default: "#FFFFFF",
-            paper: "#FAFAFA",
-            dark: 'rgb(81,122,106)'
+            default: "#FAFAFA",
+            paper: "#FFFFFF",
+            homepage: 'rgb(81,122,106)'
         },
     },
     overrides: {
@@ -34,9 +34,7 @@ export default createMuiTheme({
         },
         MuiOutlinedInput: { 
             input: {
-                borderWidth: "0.1px!important",
             },
-            borderWidth: "0.1px!important",
         }
     },
     props: {
@@ -60,10 +58,10 @@ export default createMuiTheme({
     typography: {
         fontFamily: "Open Sans Hebrew",
         button: {
-            fontWeight: "fontWeightMedium",
+            //fontWeight: "fontWeightMedium",
             fontSize: "0.8rem",
             letterSpacing: "0.05em",
-            fontWeight: "bold",
+            fontWeight: "normal",
             fontFamily: "Open Sans Hebrew",
         },
         h1: {
@@ -72,7 +70,23 @@ export default createMuiTheme({
         },
         h2: {
             fontWeight: 800,
-            fontSize: "1.4rem"
+            fontSize: "2rem"
+        },
+        h3: {
+            fontWeight: 800,
+            fontSize: "1.3em"
+        },
+        h4: {
+            fontWeight: "bold",
+            fontSize: "1rem"
+        },
+        h5: {
+            fontWeight: 'bold',
+            fontSize: "1rem"
+        },
+        h6: {
+            fontWeight: "normal",
+            fontSize: "0.8rem",
         },
         body1: {
             fontSize: "0.7rem"

@@ -12,8 +12,13 @@ module.exports = {
     mode: process.env.NODE_ENV,
     resolve: {
         alias: {
-            'react-dom': '@hot-loader/react-dom'
-        }
+            'react-dom': '@hot-loader/react-dom',
+            assets: path.resolve(__dirname, './client/assets'),
+            components: path.resolve(__dirname, './client/components'),
+            shell: path.resolve(__dirname, './client/App/Shell/'),
+            common: path.resolve(__dirname, './client/common'),
+        },
+        extensions: ['*','.js','.jsx']
     },
     entry: {
         app: './client/index.js'

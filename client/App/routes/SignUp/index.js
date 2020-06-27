@@ -1,7 +1,6 @@
 import SignUpForm from './components/SignUpForm';
-import logo from '../../../assets/icons/AllrightLogo.png';
 import React, { useState } from 'react';
-import { Link, Paper, Box, Grid, Typography, InputAdornment } from '@material-ui/core';
+import { Link, Paper, Box, Grid, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 export default function SignUnPage(props) {
@@ -9,6 +8,7 @@ export default function SignUnPage(props) {
 
     return (
         <Grid container component='main' className={classes.root}>
+            <CssBaseline />
             <Grid item xs={12} sm={8} md={7} component={Paper} elevation={6} square>
                 {/* <Box component='div' className={classes.paper}> */}
                     <SignUpForm />
