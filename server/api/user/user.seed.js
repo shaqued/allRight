@@ -2,8 +2,32 @@ export default {
     seed: () => [
         {
             name: {
-                first: 'noa',
-                last: 'fridman'
+                first: 'Melissa Viviane',
+                last: 'Jefferson'
+            },
+            email: 'lizzu123@gmail.com',
+            password: 'Aa123456'
+        },
+        {
+            name: {
+                first: 'James',
+                last: 'Bay'
+            },
+            email: 'jamestheking@gmail.com',
+            password: 'Aa123456'
+        },
+        {
+            name: {
+                first: 'יהונתן',
+                last: 'מרגי'
+            },
+            email: 'milakunisthequeen@gmail.com',
+            password: 'Aa123456'
+        },
+        {
+            name: {
+                first: 'נועה',
+                last: 'פרידמן'
             },
             email: 'noaf256@gmail.com',
             password: 'Aa123456',
@@ -11,8 +35,8 @@ export default {
         },
         {
             name: {
-                first: 'shaqued',
-                last: 'gavriel'
+                first: 'שקד',
+                last: 'גבריאל'
             },
             email: 'shaqued201@gmail.com',
             password: 'Aa123456',
@@ -20,8 +44,8 @@ export default {
         },
         {
             name: {
-                first: 'ido',
-                last: 'perach'
+                first: 'עידו',
+                last: 'פרח'
             },
             email: 'idoperach@gmail.com',
             password: 'Aa123456',
@@ -29,8 +53,8 @@ export default {
         },
         {
             name: {
-                first: 'dagan',
-                last: 'naar'
+                first: 'דגן',
+                last: 'נער'
             },
             email: 'dagannaar@gmail.com',
             password: 'Aa123456',
@@ -38,20 +62,12 @@ export default {
         },
         {
             name: {
-                first: 'amit',
-                last: 'nativ'
+                first: 'עמית',
+                last: 'נתיב'
             },
             email: 'amitnativ11@gmail.com',
             password: 'Aa123456',
             admin: true
-        },
-        {
-            name: {
-                first: 'jane',
-                last: 'doe'
-            },
-            email: 'milakunisthequeen@gmail.com',
-            password: 'Aa123456'
         }
     ]
 };

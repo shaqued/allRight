@@ -7,11 +7,10 @@ import mongoose from 'mongoose';
 
 // eslint-disable-next-line new-cap
 const id = mongoose.Types.ObjectId();
-const users = User.find().then();
 
 export default {
-    dependencies: [Price],
-    seed: ([price1, price2, price3]) => [
+    dependencies: [Price, User],
+    seed: ([price1, price2, price3], [user1,user2,user3]) => [
         {
             name: 'Juice',
             category: Categories.Pop,
@@ -19,7 +18,7 @@ export default {
             composer: 'Lizzo',
             performer: 'Lizzo',
             writer: ' Lizzo, Theron Thomas, Sam Sumser, Sean Small and Ricky Reed',
-            owners: [{user: id, percentageOfOwnership: 100}],
+            owners: [{user: user1.id, percentageOfOwnership: 100}],
             dateOfCreation: new Date('2019-01-04'),
             price: price1,
             reviews:
@@ -4769,7 +4768,7 @@ export default {
             composer: 'Jacquire King',
             performer: 'James Bay',
             writer: 'Bay with Paul Barry',
-            owners: [{user: id, percentageOfOwnership: 100}],
+            owners: [{user: user2.id, percentageOfOwnership: 100}],
             dateOfCreation: new Date('2014-09-15'),
             price: price2,
             reviews:
@@ -21667,7 +21666,7 @@ export default {
             composer: 'מרגי וגולדשטיין',
             performer: 'מרגי',
             writer: ' יהונתן מרגי, יונתן גולדשטיין וטליסמאן',
-            owners: [{user: id, percentageOfOwnership: 100}],
+            owners: [{user: user3.id, percentageOfOwnership: 100}],
             dateOfCreation: new Date('2019-01-04'),
             price: price3,
             about: 'אסור הוא סינגל שהוקלט על ידי הזמר-יוצר הישראלי יהונתן מרגי.',
@@ -21677,7 +21676,7 @@ export default {
                 contentType: 'image/jpeg',
                 data: {
                     type: 'Buffer',
-                    data: [
+                        data: [
                         255,
                         216,
                         255,

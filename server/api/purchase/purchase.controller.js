@@ -1,8 +1,9 @@
 // eslint-disable-next-line import/default,import/named
 import {addPurchase} from '../ip/ip.controller';
+import Ip from '../ip/ip.model';
 import Purchase from './purchase.model';
 import createError from 'http-errors';
-import {pick} from 'lodash';
+import {pick, reduce, sum, map} from 'lodash';
 
 async function getBy (req) {
     try {
@@ -33,7 +34,7 @@ async function create (req, res) {
         user: body.user
     };
 
-    await Promise.all(purchase.cartItems.map(({ipId})=> addPurchase(ipId)));
+    await Promise.all(purchase.cartItems.map(({ipId}) => addPurchase(ipId)));
 
     const newPurchase = await Purchase.create(purchase);
 
@@ -48,7 +49,7 @@ async function update ({params: {id}, body}) {
             'purchaseDate'
         ]);
 
-        await Promise.all(data.cartItems.map(({ipId})=> addPurchase(ipId)));
+        await Promise.all(data.cartItems.map(({ipId}) => addPurchase(ipId)));
 
         const updated = await Purchase.findByIdAndUpdate(id, {$set: data});
 
@@ -65,9 +66,24 @@ async function destroy ({params: {id}}) {
     return removed;
 }
 
+async function getProfitsByIp (req, res) {
+    const purchases = await Purchase.find({cartItems: {$elemMatch: {ipId: req.params.id}}});
+
+    const profits = reduce(purchases,
+        (result, purchase) => {
+        const items = purchase.cartItems.filter(x => x.ipId.toString() === req.params.id);
+
+        // reduce in case one purchase include same ip multiple times
+        return result + reduce(items, (sum, value) => sum + value.range.price, 0);
+        }, 0);
+
+    res.send({profits});
+}
+
 module.exports = {
     destroy,
     update,
     getBy,
-    create
+    create,
+    getProfitsByIp
 };

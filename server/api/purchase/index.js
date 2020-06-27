@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/named
 import {ipIdMiddleware} from '../ip/ip.controller';
-import {destroy, update, getBy, create} from './purchase.controller';
+import {destroy, update, getBy, create, getProfitsByIp} from './purchase.controller';
 import {AsyncRouter} from 'express-async-router';
 import objectId from 'express-param-objectid';
 
@@ -22,6 +22,7 @@ router.param('id', objectId);
 
 router.get('/', getBy);
 router.get('/:id', getBy);
+router.get('/profits/:id', getProfitsByIp)
 router.put('/', ipValidation, create);
 router.put('/:id', update);
 router.delete('/:id', destroy);

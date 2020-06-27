@@ -15,7 +15,9 @@ const purchaseSchema = new Schema({
             required: true
         },
         range: {
-            type: Number
+            type: Schema.Types.Object,
+            ref: 'rangePrice',
+            required: true
         }
     }],
     purchaseDate: {
