@@ -10,18 +10,18 @@ export default () => {
         <Box className={classes.container}>
             <Box className={classes.centered}>
                 <Box className={classes.content}>
-                    <Typography variant={'h1'} className={classes.title}>
+                    <Typography variant='h1' className={classes.title}>
                         {'מצאו את השירים והאמנים האהובים עליכם'}
                     </Typography>
-                    <Typography variant={'body2'} className={classes.text} gutterBottom>
+                    <Typography variant='body2' className={classes.text} gutterBottom>
                         {'קבלו רישיון לשימוש ביצירות בקליק'}
                     </Typography>
                     <Search />
                     <Box display={'flex'}>
-                        <Typography variant={'body1'} className={classes.text} gutterBottom>
+                        <Typography variant='body1' className={classes.text} gutterBottom>
                             {'מעוניינים להעלות את היצירות שלכם?'}
                         </Typography>
-                        <Link variant={'body1'} color={'secondary'} className={classes.text} gutterBottom>
+                        <Link variant='body1' color='textSecondary' className={classes.text} gutterBottom>
                             {'הצטרפו אלינו בקליק'}
                         </Link>
                     </Box>

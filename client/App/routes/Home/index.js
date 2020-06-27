@@ -12,7 +12,7 @@ export default () => {
 
   return (
     <Box className={classes.container}>
-      <Navbar />
+      <Navbar isHomepage/>
       <Header />
       <TopViews />
       <About />

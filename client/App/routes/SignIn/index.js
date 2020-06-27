@@ -1,9 +1,8 @@
-import logo from '../../../assets/icons/AllrightLogo.png';
 import Picture from '../../../assets/photos/Workspace.png';
 import useStyles from './SignIn.css';
 import SignInForm from './compnents/SignInForm';
-import React, { useContext, useState } from 'react';
-import { Link, Paper, Box, Grid, Typography, InputAdornment } from '@material-ui/core';
+import React from 'react';
+import { Link, Paper, Box, Grid, Typography, InputAdornment, CssBaseline } from '@material-ui/core';
 import { Forward as ForwardIcon } from '@material-ui/icons';
 
 const Copyright = () => (
@@ -21,8 +20,8 @@ export default function SignInPage(props) {
 
     return (
         <Grid container component='main' className={classes.root}>
-            {/* <CssBaseline /> */}
-            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+            <CssBaseline />
+            <Grid item xs={12} sm={8} md={5} elevation={6} square>
                 <Link href='/' margin='normal'>
                     <ForwardIcon />
                 </Link>
