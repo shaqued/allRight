@@ -3,21 +3,22 @@ import useStyles from './contract-signing.css';
 import SignatureCanvas from 'react-signature-canvas'
 import {Grid} from '@material-ui/core';
 
-export default ({ priceRange }) => {
+export default ({ ip }) => {
     const classes = useStyles();
-
+    let current_datetime = new Date()
+    const date = current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate();
+    const {name, performer} = ip;
+    
     return (
         <Grid container direction='column'>
-            תאריך: ____________                                          שם היוצר: _________________
-טלפון: ____________________
-לכב'
-______________
-______________
+תאריך: <b>{date}</b>
+
+לכב' <b>כאן יהיה שם יוזר</b>
 (להלן: "המזמין")
-הנדון: הזמנת שירותי יצירה – תנאי התקשרות
+הנדון: רכישת רישיון שימוש ל <b>{name}</b>
 בהמשך לפנייתך אלי בבקשה ליצור עבורך את הציורים / איורים / קומיקס / עיצובים / הר"מ (להלן: "היצירות") וזאת לצורך פרסומם ומסחורם להלן פירוט תנאי ההתקשרות בינינו ותנאי השימוש ביצירות:
-תיאור היצירות המוזמנות: __________________________________________________.
-המוצר / מטרת השימוש: __________________________________________________ .
+שם היצירה: <b>{name}</b>.
+המבצע: <b>{performer}</b> .
 כמות האיורים: __________________________________________________.
 גודל: ____x____ מימדים: דו מימד/תלת מימד.
 פורמט דיגיטלי: gif / tif / jpg / pdf
