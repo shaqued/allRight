@@ -13,7 +13,7 @@ export default ({ ip }) => {
                 if (!loading)
                     return (
                         <Grid container spacing={0} style={{ backgroundColor: data, height: '30%' }}>
-                            <Grid item xs={8} style={{ marginRight: '2%', marginTop: '2%'}}>
+                            <Grid item xs={8} style={{ marginRight: '2%', marginTop: '2%' }}>
                                 <Grid container direction="column">
                                     <Grid item>
                                         <Grid container>

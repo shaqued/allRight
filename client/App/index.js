@@ -13,7 +13,8 @@ export default () => {
             <Router history={history}>
                 <Switch>
                     <Route exact path={'/'} component={Home} />
-                    <Route exact path={'/search/:query'} component={() => <Search />} />
+                    <Route exact path={'/search/:query'} component={Search} />
+                    <Route exact path={'/search/'} component={Search} />
                     <Route path={'/signUp'} component={SignUp} />
                     <Route path={'/signIn'} component={SignIn} />
                     <Route exact path={'/ip/:id'} component={IntllectualProperty} />
