@@ -7,7 +7,7 @@ import history from '../../../../history';
 export default () => {
     const classes = useStyles();
 
-    const handleSearch = (query) => history.push(`/search/${query}`);
+    const handleSearch = (query) => history.push(query ? `/search/${query}` : '/search/');
 
     return (
         <Box className={classes.container}>
