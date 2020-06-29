@@ -1,90 +1,67 @@
-import seed from './user.seed';
-import {single as emailAddress} from 'email-address';
-import {createSeedModel} from 'mongoose-plugin-seed';
+import pify from 'pify';
+import { Schema } from 'mongoose';
+import { single as emailAddress } from 'email-address';
 import passportLocalMongoose from 'passport-local-mongoose';
-import {Schema} from 'mongoose';
-import bcrypt from 'bcrypt';
-
-const SALT_WORK_FACTOR = 10;
+import createSeed from 'mongoose-dependent-seed';
+import seed from './user.seed';
+import genderOptions from '../../../common/genderOptions'
 
 const UserSchema = new Schema({
-    name: {
-        first: {
-            type: String,
-            required: true
-        },
-        last: {
-            type: String,
-            required: true
-        }
+  name: {
+    first: {
+      type: String,
+      required: true
     },
-    email: {
-        match: emailAddress,
-        type: String,
-        required: true,
-        lowercase: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true,
-        select: false,
-    },
-    admin: Boolean
+    last: {
+      type: String,
+      required: true
+    }
+  },
+  email: {
+    match: emailAddress,
+    type: String,
+    required: true,
+    lowercase: true,
+    unique: true
+  },
+  birthDate:{
+    type: Date,
+    required: true
+  },
+  gender:{
+    type: String,
+    enum: genderOptions.map(option => option.value)
+  },
+  admin: Boolean
 });
-
-
-/**
- * Plugins
- */
-UserSchema
-    .plugin(passportLocalMongoose, {
-        usernameField: 'email'
-    });
 
 /**
  * Virtuals
  */
 
-UserSchema
-    .virtual('name.full')
-    .get(function () {
-        return `${this.name.first} ${this.name.last}`;
-    });
+UserSchema.virtual('name.full').get(function() {
+  return `${this.name.first} ${this.name.last}`;
+});
+
+UserSchema.virtual('password').set(function(password) {
+  this._password = password;
+});
 
 /**
  * Pre-save hook
  */
-UserSchema
-    .pre('save', function (next) {
-        var user = this;
+UserSchema.pre('save', function(next) {
+  if (!this._password) {
+    return next();
+  }
 
-        // only hash the password if it has been modified (or is new)
-        if (!user.isModified('password')) return next();
+  this.setPassword(this._password).then(() => next());
+});
 
-        // generate a salt
-        bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
-            if (err) return next(err);
+UserSchema.plugin(passportLocalMongoose, {
+  usernameField: 'email'
+});
 
-            // hash the password using our new salt
-            bcrypt.hash(user.password, salt, function(err, hash) {
-                if (err) return next(err);
+UserSchema.methods.setPassword = pify(UserSchema.methods.setPassword);
 
-                // override the cleartext password with the hashed one
-                user.password = hash;
-                next();
-            });
-        });
-    });
-
-    UserSchema.methods.comparePassword = function(candidatePassword, cb) {
-        bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
-            if (err) return cb(err);
-            cb(null, isMatch);
-        });
-    };
-
-/**
- * Methods
- */
-export default createSeedModel('User', UserSchema, seed);
+export default createSeed('User', UserSchema, seed);

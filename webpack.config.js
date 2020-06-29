@@ -24,7 +24,7 @@ module.exports = {
         contentBase: './dist',
         hot: true,
         compress: true,
-        port: 9000,
+        port: process.env.WEBPACK_PORT,
         proxy: {
             '/api': `http://localhost:${process.env.PORT}`,
             '/auth': `http://localhost:${process.env.PORT}`
@@ -73,12 +73,6 @@ module.exports = {
                     'file-loader',
                 ],
             },
-            // {
-            //     test: /\.(woff|woff2|eot|ttf|otf)$/,
-            //     use: [
-            //         'file-loader',
-            //     ],
-            //},
         ]
     }
 };

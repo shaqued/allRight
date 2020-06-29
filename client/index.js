@@ -1,5 +1,5 @@
 import theme from './theme';
-import { StoreProvider } from './Store/StoreProvider';
+import { UserStoreProvider } from './Stores/UserStore/UserStoreProvider';
 import App from './App';
 import Shaqued from './App/routes/intellectual-property';
 import React from 'react';
@@ -9,7 +9,7 @@ import './style.scss';
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <StoreProvider>
+    <UserStoreProvider>
       <App />
-    </StoreProvider>
+    </UserStoreProvider>
   </ThemeProvider>, document.querySelector('#root'));
