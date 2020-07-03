@@ -1,21 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Typography, makeStyles, CardContent, Card, CardMedia, CardActionArea } from '@material-ui/core'
+import Axios from 'axios'
+import history from '../../../../history'
 
-const MyCard = ({ classes, image, title, artist }) => {
+const IpCard = ({ classes, image: { contentType, data }, name, performer, onClick }) => {
     return (
-        <Card className={classes.card}>
+        <Card className={classes.card} onClick={onClick}>
             <CardActionArea>
                 <CardMedia
-                    image={image}
-                    title={title}
+                    component={"img"}
+                    src={`data:${contentType};base64, ${data}`}
+                    title={name}
                     className={classes.media}
                 />
                 <CardContent className={classes.cardContent}>
                     <Typography variant="body2">
-                        {title}
+                        {name}
                     </Typography>
-                    <Typography variant="body1" color="textSecondary" component="p">
-                        {artist}
+                    <Typography variant="body1">
+                        {performer}
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -26,41 +29,40 @@ const MyCard = ({ classes, image, title, artist }) => {
 export default () => {
     const classes = useStyles();
 
-    const songs = [
-        {
-            image: 'https://i1.wp.com/www.rollingstone.com/wp-content/uploads/2020/02/TheWeeknd.jpg?ssl=1',
-            title: 'Blinding Lights',
-            artist: 'The Weekend'
-        },
-        {
-            image: 'https://i1.sndcdn.com/artworks-000610036000-8c83jy-t500x500.jpg',
-            title: 'Dance Monkey',
-            artist: 'Tones & I'
-        },
-        {
-            image: 'https://i.ytimg.com/vi/jlCNqyY-fAk/maxresdefault.jpg',
-            title: 'אלוף העולם',
-            artist: 'חנן בן ארי'
-        },
-        {
-            image: 'https://upload.wikimedia.org/wikipedia/he/d/dd/Don%27t_Start_Now.jpg',
-            title: `Don't Start Now`,
-            artist: 'Dua Lipa'
-        },
-        {
-            image: 'https://upload.wikimedia.org/wikipedia/he/e/e6/%D7%90%D7%9D_%D7%90%D7%AA%D7%94_%D7%92%D7%91%D7%A8.jpg',
-            title: 'אם אתה גבר',
-            artist: 'נועה קירל'
+    const [ips, setIps] = useState([]);
+
+    useEffect(() => {
+        fetch();
+    }, []);
+
+    const fetch = async () => {
+        try {
+            const { data } = await Axios.get('/api/ip',
+                {
+                    params: {
+                        popular: true
+                    }
+                }
+            );
+
+            setIps(data);
+        } catch (e) {
+            console.log(e);
+            setIps([]);
         }
-    ]
+    };
+
+    const goToIp = (id) => {
+        history.push(`/ip/${id}`);
+    }
 
     return (
         <Box className={classes.container}>
             <Typography variant={'h2'} className={classes.title}>{'הנצפים ביותר'}</Typography>
 
             <Box className={classes.content}>
-                {songs.map(ip =>
-                    <MyCard classes={classes} {...ip} key={`${ip.title}${ip.artist}`} />
+                {ips.map(ip =>
+                    <IpCard classes={classes} {...ip} key={`${ip._id}`} onClick={() => goToIp(ip._id)} />
                 )}
             </Box>
         </Box>

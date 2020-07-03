@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Navbar from '../../Shell/Navbar/Light'
 import SearchPanel from './SearchPanel'
-import { makeStyles, Box, Typography, IconButton } from '@material-ui/core';
+import { makeStyles, Box, Typography, IconButton, Button } from '@material-ui/core';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
@@ -11,18 +11,21 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+import history from '../../../history'
 
 export default () => {
     const classes = useStyles();
     const { query: initQuery } = useParams();
 
     const [ips, setIps] = useState([]);
+    const [playedSample, setPlayedSample] = useState({ id: '', audio: null });
     const [searchDisplay, setSearchDisplay] = useState(initQuery);
     const [query, setQuery] = useState({
-        name: initQuery,
+        name: initQuery || '',
         type: '',
         category: '',
-        performer: initQuery
+        performer: initQuery || ''
     });
 
     useEffect(() => {
@@ -40,13 +43,50 @@ export default () => {
             );
 
             setIps(data);
-            console.log(data)
             setSearchDisplay(() => (query.name && query.performer) ? `${query.name}` : `${query.name}${query.performer}`);
         } catch (e) {
             console.log(e);
             setIps([]);
         }
     };
+
+    const playSample = (id, sample) => {
+        playedSample.audio && playedSample.audio.pause();
+
+        const audio = new Audio(sample);
+        setPlayedSample({ id, audio });
+
+        audio.play();
+    }
+
+    const pauseSample = () => {
+        playedSample.audio.pause();
+        setPlayedSample({ id: '', audio: null });
+    }
+
+    const goToIp = (id) => {
+        playedSample.audio && playedSample.audio.pause();
+        history.push(`/ip/${id}`);
+    }
+
+    const LinkedTableCell = ({ value, id }) => (
+        <TableCell align="right" onClick={() => goToIp(id)}>{value}</TableCell>
+    );
+
+    const Sample = ({ id, sample }) => {
+        if (playedSample.id === id) {
+            return (
+                <IconButton onClick={pauseSample}>
+                    <PauseCircleFilledIcon className={classes.icon} />
+                </IconButton>);
+        }
+
+        return (
+            <IconButton onClick={() => playSample(id, sample)}>
+                <PlayCircleFilledIcon className={classes.icon} />
+            </IconButton>
+        );
+    }
 
     const ResultsTable = () => {
         return (
@@ -62,15 +102,13 @@ export default () => {
                     </TableHead>
                     <TableBody>
                         {ips.map((ip) => (
-                            <TableRow key={ip._id}>
-                                <TableCell align="center">
-                                    <IconButton>
-                                        <PlayCircleFilledIcon className={classes.icon} />
-                                    </IconButton>
+                            <TableRow key={ip._id} style={{ cursor: 'pointer' }}>
+                                <TableCell id={ip._id} align="center">
+                                    <Sample id={ip._id} sample={ip.sample} />
                                 </TableCell>
-                                <TableCell align="right">{ip.name}</TableCell>
-                                <TableCell align="right">{ip.performer}</TableCell>
-                                <TableCell align="right">{"פופ"}</TableCell>
+                                <LinkedTableCell id={ip._id} value={ip.name} />
+                                <LinkedTableCell id={ip._id} value={ip.performer} />
+                                <LinkedTableCell id={ip._id} value={"פופ"} />
                             </TableRow>
                         ))}
                     </TableBody>

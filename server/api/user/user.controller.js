@@ -2,12 +2,9 @@ import User from './user.model';
 import createError from 'http-errors';
 import _ from 'lodash';
 
-export function getAll () {
-    return User.find({});
-}
-
 export function getById ({params: {id}})  {
-    return User.findById(id);}
+    return User.findById(id);
+}
 
 export function update  ({user, params: {id}, body}) {
     if (!user._id.equals(id) && !user.admin) {

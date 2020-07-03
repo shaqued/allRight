@@ -6,6 +6,10 @@ import PasswordInput from '../../../../../components/Registration/PasswordInput'
 import {
     Button, Link, CssBaseline, Box, Grid, Typography
 } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import { UserStoreContext } from '../../../../../Stores/UserStore/UserStoreProvider';
+import genderOptions from '../../../../../../common/genderOptions'
+import {omit} from 'lodash';
 
 export default function SignUpForm(props) {
     const classes = useStyles(),
@@ -16,25 +20,30 @@ export default function SignUpForm(props) {
             gender: '',
             email: '',
             password: ''
-        }),
-        genderOptions = [{
-            label: "נקבה",
-            value: "female"
-        }, {
-            label: "זכר",
-            value: "male"
-        }, {
-            label: "אחר",
-            value: "other"
-        }]
+        });
 
+    const userStore = useContext(UserStoreContext);
+    const history = useHistory();
     const handleChange = (fieldName) => (event) => {
         let { value } = event.target;
         setFormFields((formFields) => ({ ...formFields, [fieldName]: value }));
     };
 
-    const handleSubmit = function() {
-        // http
+    const handleSubmit =  (e) => {
+        e.preventDefault();
+        const user = {...formFields, name: {
+            first: formFields.firstName,
+            last: formFields.lastName
+        }};
+
+        user.birthDate = new Date(user.birthDate).toISOString();
+        
+        omit(user, ['firstName', 'lastName']);
+
+        userStore.Register(user)
+            .then(() => {
+                history.push('/', null)
+            })
     }
 
     return (<div className={classes.paper}>
@@ -89,16 +98,16 @@ export default function SignUpForm(props) {
                         placeholder="תאריך לידה"
                         autoFocus
                         onChange={handleChange('birthDate')}
-                        defaultValue={new Date(formFields.birthDate).toJSON().slice(0,10)}
+                        defaultValue={new Date(formFields.birthDate).toJSON().slice(0, 10)}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <GenderRadioButtons 
+                    <GenderRadioButtons
                         label="מגדר"
                         onChange={handleChange('gender')}
                         value={formFields.gender}
                         options={genderOptions}
-                    />                    
+                    />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <TextField
@@ -160,7 +169,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
     },
     form: {
-        width: '100%', 
+        width: '100%',
         marginTop: theme.spacing(3),
     },
     submit: {

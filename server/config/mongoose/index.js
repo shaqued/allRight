@@ -1,4 +1,4 @@
-import {seed} from 'mongoose-plugin-seed';
+import {seed} from 'mongoose-dependent-seed';
 import logger from 'env-bunyan';
 import mongoose from 'mongoose';
 import inProduction from 'in-production';
