@@ -1,5 +1,5 @@
-import whiteLogo from '../../../assets/icons/AllrightWhiteLogo.png';
-import blackLogo from '../../../assets/icons/AllrightBlackLogo.png';
+import whiteLogo from 'assets/icons/AllrightWhiteLogo.png';
+import blackLogo from 'assets/icons/AllrightBlackLogo.png';
 import React from 'react';
 import { Box, Button, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';

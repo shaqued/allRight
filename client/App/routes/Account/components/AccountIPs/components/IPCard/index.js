@@ -35,7 +35,7 @@ export default function (props) {
                 }
             }
         },
-        earnings = 2250;
+        profit = 2250;
 
     return (
         <Card className={classes.root}>
@@ -56,8 +56,8 @@ export default function (props) {
                 </Grid>
                 {/* action and earning */}
                 <Grid item className='classes.leftCardSection'>
-                    <div className={classes.earnings}>
-                        <Typography variant="h3" align="left">{"₪" + earnings}</Typography>
+                    <div className={classes.profit}>
+                        <Typography variant="h3" align="left">{"₪" + profit}</Typography>
                         <Typography variant="body1" align="left">{"רווחים מהשיר עד כה"}</Typography>
                     </div>
                     <CardActions disableSpacing>
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme) => ({
         height: 140,
         width: 140
     },
-    earnings: {
+    profit: {
         marginLeft: theme.spacing(2)
     },
     iconButton: {

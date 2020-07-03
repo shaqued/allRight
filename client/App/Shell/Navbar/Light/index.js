@@ -1,4 +1,4 @@
-import lightLogo from '../../../../assets/icons/AllrightLogoBlack.png';
+import lightLogo from 'assets/icons/AllrightLogoBlack.png';
 import React from 'react';
 import { Box, Button, Typography, Hidden } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';

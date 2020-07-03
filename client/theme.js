@@ -88,6 +88,14 @@ export default createMuiTheme({
             fontWeight: "normal",
             fontSize: "0.8rem",
         },
+        subtitle1: {
+            fontSize: "0.8em",
+            fontWeight: "lighter"
+        },
+        subtitle2: {
+            fontSize: "0.8em",
+            fontWeight: 'bold'
+        },
         body1: {
             fontSize: "0.7rem"
         },

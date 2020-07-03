@@ -4,7 +4,7 @@ import IpDescription from './components/ip-description';
 import LicensesPlan from './components/licenses-plan';
 import { Grid } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import convertDataToImage from 'common/Util.js';
+import { convertDataToImage } from 'common/Util.js';
 
 export default () => {
     let { id } = useParams();
