@@ -17,6 +17,7 @@ module.exports = {
             components: path.resolve(__dirname, './client/components'),
             shell: path.resolve(__dirname, './client/App/Shell/'),
             common: path.resolve(__dirname, './client/common'),
+            stores: path.resolve(__dirname, './client/Stores')
         },
         extensions: ['*','.js','.jsx']
     },
