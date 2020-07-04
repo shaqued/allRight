@@ -14,9 +14,7 @@ export default () => {
             <Router history={history}>
                 <Switch>
                     <Route exact path={'/'} component={Home} />
-                    <Route path={'/account'} component={Account}>
-                        {/* account menu placeholder */}
-                    </Route>
+                    <Route path={'/account'} component={Account} />
                     <Route exact path={'/search/:query'} component={Search} />
                     <Route exact path={'/search/'} component={Search} />
                     <Route path={'/signUp'} component={SignUp} />

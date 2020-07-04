@@ -1,10 +1,10 @@
 import { Typography, Grid } from '@material-ui/core';
-import IPCard from './components/IPCard';
+import React from 'react';
 
 export default function (props) {
     const ips = [1, 2];
 
     return (
-        <Typography variant="h3">הרכישות שלי</Typography>
+        <Typography variant="h3" gutterBottom>הגדרות</Typography>
     );
 }
