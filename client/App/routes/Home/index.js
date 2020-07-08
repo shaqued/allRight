@@ -1,4 +1,4 @@
-import Navbar from '../../Shell/Navbar/Dark';
+import Navbar from '../../Shell/Navbar';
 import Header from './Header';
 import TopViews from './TopViews'
 import { Box, Button, makeStyles } from '@material-ui/core'

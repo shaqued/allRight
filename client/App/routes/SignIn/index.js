@@ -4,9 +4,9 @@ import { Link, Paper, Box, Grid, Typography, InputAdornment, Snackbar, CssBaseli
 import MuiAlert from '@material-ui/lab/Alert';
 import { Forward as ForwardIcon } from '@material-ui/icons';
 import axios from 'axios';
-import { UserStoreContext } from '../../../Stores/UserStore/UserStoreProvider';
-import logo from '../../../assets/icons/AllrightLogo.png';
-import Picture from '../../../assets/photos/Workspace.png';
+import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
+import logo from 'assets/icons/AllrightBlackLogo.png';
+import Picture from 'assets/photos/Workspace.png';
 import useStyles from './SignIn.css';
 import SignInForm from './compnents/SignInForm';
 import { useHistory } from "react-router-dom";

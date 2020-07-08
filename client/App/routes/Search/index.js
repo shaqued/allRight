@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Navbar from '../../Shell/Navbar/Light'
+import Navbar from '../../Shell/Navbar'
 import SearchPanel from './SearchPanel'
 import { makeStyles, Box, Typography, IconButton, Button } from '@material-ui/core';
 import axios from 'axios';
