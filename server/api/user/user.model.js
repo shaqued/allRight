@@ -2,7 +2,7 @@ import pify from 'pify';
 import { Schema } from 'mongoose';
 import { single as emailAddress } from 'email-address';
 import passportLocalMongoose from 'passport-local-mongoose';
-import createSeed from 'mongoose-dependent-seed';
+import {createSeedModel} from 'mongoose-plugin-seed';
 import seed from './user.seed';
 import genderOptions from '../../../common/genderOptions'
 
@@ -26,7 +26,7 @@ const UserSchema = new Schema({
   },
   birthDate:{
     type: Date,
-    required: true
+    required: false
   },
   gender:{
     type: String,
@@ -64,4 +64,4 @@ UserSchema.plugin(passportLocalMongoose, {
 
 UserSchema.methods.setPassword = pify(UserSchema.methods.setPassword);
 
-export default createSeed('User', UserSchema, seed);
+export default createSeedModel('User', UserSchema, seed);
