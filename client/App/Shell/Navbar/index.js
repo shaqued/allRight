@@ -1,40 +1,24 @@
 import whiteLogo from 'assets/icons/AllrightWhiteLogo.png';
 import blackLogo from 'assets/icons/AllrightBlackLogo.png';
-import React from 'react';
+import React, {useContext} from 'react';
+import { observer } from 'mobx-react'
 import { Box, Button, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
+import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
+import UnsingedButtons from './UnsingedButtons'
+import SignedUser from './SingedUser'
 
-export default ({ isHomepage }) => {
+
+export default observer(({ isHomepage }) => {
     const classes = useStyles();
+    const userStore = useContext(UserStoreContext);
 
     return (
         <Box className={`${classes.centered} ${isHomepage? classes.homepageBackground : ''}`}>
             <CssBaseline />
             <Box className={classes.header}>
-                <Box display={'flex'} flexDirection={'row-reverse'}>
-                    <Button
-                        component={Link}
-                        to='/signUp'
-                        color='primary'
-                        variant='contained'
-                        className={classes.button}
-                    >
-                        {'הצטרפו אלינו'}
-                    </Button>
-                    <Button component={Link} to='/signIn' 
-                        className={`${isHomepage ? classes.lightText: classes.darkText} 
-                            ${classes.button}`}
-                        >
-                        {'כניסת משתמשים'}
-                    </Button>
-                    <Button component={Link} to="/signUp" 
-                        className={`${isHomepage ? classes.lightText: classes.darkText} 
-                        ${classes.button} ${classes.bold}`}
-                        >
-                        {'הצטרפות כיוצרים'}
-                    </Button>
-                </Box>
+                {userStore.UserData ? <SignedUser /> : <UnsingedButtons isHomepage={isHomepage}/>}
                 <Box>
                     <Button component={Link} to='/'>
                         <img src={isHomepage ? whiteLogo : blackLogo} className={classes.logo} />
@@ -43,7 +27,7 @@ export default ({ isHomepage }) => {
             </Box>
         </Box>
     );
-};
+});
 
 const useStyles = makeStyles((theme) => ({
     header: {
@@ -61,20 +45,6 @@ const useStyles = makeStyles((theme) => ({
     },
     homepageBackground: {
         backgroundColor: theme.palette.background.homepage,
-    },
-    button: {
-        margin: '10px',
-        padding: '10px',
-        height: 'fit-content',
-    },
-    lightText: {
-        color: theme.palette.text.secondary
-    },
-    darkText: {
-        color: theme.palette.text.primary
-    },
-    bold: {
-        fontWeight: "bold"
     },
     logo: {
         maxHeight: '60px',
