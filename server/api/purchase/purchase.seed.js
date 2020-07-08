@@ -1,14 +1,16 @@
 import mongoose from 'mongoose';
 import {MediaType} from "../../constant/priceMediaType.const";
 import {UsageType} from "../../constant/priceUsageType.const";
+import User from '../user/user.model';
 
 const id = mongoose.Types.ObjectId();
 const idSec = mongoose.Types.ObjectId();
 
 export default {
-    seed: () => [
+    dependencies: [User],
+    seed: (users) => [
         {
-            user: id,
+            user: users[0],
             cartItems: [
                 {ipId: id, range: {
                         rangeMin: 1,
@@ -20,7 +22,7 @@ export default {
             ]
         },
         {
-            user: idSec,
+            user: users[1],
             cartItems: [
                 {ipId: id, range:  {
                         rangeMin: 1,
