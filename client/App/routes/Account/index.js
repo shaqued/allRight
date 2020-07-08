@@ -16,7 +16,7 @@ export default function (props) {
     const classes = useStyles(),
         { match } = props,
         { LoggedInUser } = useContext(UserStoreContext),
-        { user } = JSON.parse(LoggedInUser);
+        { user } = LoggedInUser ? JSON.parse(LoggedInUser) : { user: undefined };
     let { url } = useRouteMatch();
 
     // when (loggenInUser === undefined)
@@ -49,11 +49,11 @@ export default function (props) {
             <CssBaseline />
             <Navbar />
             <Grid container justify="center" alignItems="flex-start" spacing={3}>
-                {/* user section */}
                 <Grid item sm={3}>
                     <AccountCard user={user} />
                 </Grid>
                 {/* content section */}
+                {/* user section */}
                 <Grid item sm={6}>
                     <Switch>
                         <Route exact path={`${url}`} component={AccountIps}></Route>
