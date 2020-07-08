@@ -24,7 +24,7 @@ const authenticate = (req, res, next, cb) =>
   });
 
 export const login = async (req, res, next) => {
-  await authenticate(req, res, next, user => res.json({ user: user.id, token: signToken(user) }));
+  await authenticate(req, res, next, user => res.json({ user: { id: user.id, name: user.name }, token: signToken(user) }));
 };
 
 export const register = async ({ body }, res) => {
