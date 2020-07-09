@@ -1,12 +1,13 @@
 import songPicture from 'assets/photos/songPicture.jpg';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import {
     Card, Typography, Grid, Divider,
     CardMedia, CardActions, IconButton, Link
 } from '@material-ui/core';
 import { Share as ShareIcon } from '@material-ui/icons';
-import { getDisplayDate } from 'common/Util';
+import { getDisplayDate, convertDataToImage } from 'common/Util';
+
 
 const UsageType = {
     onlyme: 'אישי',
@@ -19,47 +20,23 @@ const MediaType = {
     offline: 'Offline'
 };
 
-export default function (props) {
+export default function ({ purchase }) {
     const classes = useStyles(),
-        ip = {
-            name: 'השיר של עידו',
-            category: 'pop',
-            tag: ['happy', 'love'],
-            composer: 'Lizzo',
-            performer: 'Lizzo',
-            writer: ' Lizzo, Theron Thomas, Sam Sumser, Sean Small and Ricky Reed',
-            owners: [{ user: 123, percentageOfOwnership: 100 }],
-            dateOfCreation: new Date('2019-01-04'),
-            price: 130,
-            reviews: [
-                { user: 123, comment: 'great!', scoring: 5 },
-                { user: 123, comment: 'The best', scoring: 4 }
-            ],
-            about: 'Juice is a song recorded by American singer and rapper Lizzo.',
-            type: 'music',
-            sample: 'https://www.youtube.com/watch?v=XaCrQL_8eMY',
-            image: {
-                contentType: 'image/jpeg',
-                data: {
-                    type: 'Buffer',
-                    data: []
-                }
-            }
-        },
-        purchase = {
-            user: 123,
-            cartItems: [{
-                ipId: 123,
-                range: {
-                    rangeMin: 1,
-                    rangeMax: 40,
-                    mediaType: 'online',
-                    usageType: 'onlyme',
-                    price: 100
-                }
-            }
-            ]
-        };
+        [ip, setIp] = useState({});
+
+    useEffect(() => {
+        fetchIp()
+    }, []);
+
+    const fetchIp = async () => {
+        try {
+            const { data } = await Axios.get(`api/ip/${purchase.ipId}`);
+            setIp(data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
 
     return (
         <Card className={classes.root}>
@@ -69,7 +46,7 @@ export default function (props) {
                         <CardMedia
                             className={classes.cover}
                             component="img"
-                            src={songPicture}
+                            src={ip.image ? convertDataToImage(ip.image.data.data) : songPicture}
                         />
                     </Link>
                     <Grid container justify="space-between" alignContent='space-between' className={classes.cardContent}>
@@ -79,14 +56,15 @@ export default function (props) {
                                 {ip.name}
                             </Typography>
                             <Typography variant="body1">
-                                {`נוסף ב-${getDisplayDate(ip.dateOfCreation)}`}
+                                {/* change to purchase */}
+                                {`נוסף ב-${getDisplayDate(purchase.purchaseDate)}`}
                             </Typography>
                         </Grid>
                         {/* action and price */}
                         <Grid item className='classes.leftCardSection'>
                             <div className={classes.price}>
                                 <Typography variant="body1" align="left">{"עלות השימוש"}</Typography>
-                                <Typography variant="h3" align="left">{"₪" + purchase.cartItems[0].range.price}</Typography>
+                                <Typography variant="h3" align="left">{"₪" + purchase.range.price}</Typography>
                             </div>
                             <CardActions disableSpacing>
                                 <IconButton className={classes.iconButton}>
@@ -102,11 +80,11 @@ export default function (props) {
                     <Grid container justify="space-between" spacing={2}>
                         <Grid item>
                             <Typography variant="subtitle1" display="inline">{"לשימוש "}</Typography>
-                            <Typography variant="subtitle2" display="inline">{`${UsageType[purchase.cartItems[0].range.usageType]}, ${MediaType[purchase.cartItems[0].range.mediaType]}`}</Typography>
+                            <Typography variant="subtitle2" display="inline">{`${UsageType[purchase.range.usageType]}, ${MediaType[purchase.range.mediaType]}`}</Typography>
                         </Grid>
                         <Grid item>
                             <Typography variant="subtitle1" display="inline">{"עד "}</Typography>
-                            <Typography variant="subtitle2" display="inline">{purchase.cartItems[0].range.rangeMax}</Typography>
+                            <Typography variant="subtitle2" display="inline">{purchase.range.rangeMax}</Typography>
                             <Typography variant="subtitle1" display="inline">{" מאזינים"}</Typography>
                         </Grid>
                     </Grid>

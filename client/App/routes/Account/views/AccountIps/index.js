@@ -5,7 +5,6 @@ import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
 import Axios from 'axios';
 
 export default function (props) {
-    const bla = [1, 2];
     const [ips, setIps] = useState([]);
     const { LoggedInUser } = useContext(UserStoreContext),
         { user } = JSON.parse(LoggedInUser);
@@ -16,12 +15,13 @@ export default function (props) {
 
     const fetchIps = async () => {
         try {
-            const { data } = await Axios.get(`/api/ip/ownerIps/${user.id}`);
+            // after the dependencies in the db will be ok:
+            //const { data } = await Axios.get(`/api/ip/ownerIps/${user.id}`);
+            // until then:
+            const { data } = await Axios.get(`/api/ip`);
             setIps(data);
-            console.log("ips: " + data.length)
         } catch (e) {
             console.log(e);
-            setIps([]);
         }
     };
 
@@ -29,9 +29,9 @@ export default function (props) {
         <Grid item>
             <Typography variant="h3" gutterBottom>היצירות שלי</Typography>
         </Grid>
-        {bla.map(ip =>
-            <Grid item sm={12} key={ip}>
-                <IPCard />
+        {ips.map(ip =>
+            <Grid item sm={12} key={ip._id}>
+                <IPCard ip={ip} />
             </Grid>
         )}
     </Grid>
