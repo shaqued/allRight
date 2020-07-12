@@ -1,48 +1,37 @@
 import songPicture from 'assets/photos/songPicture.jpg';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import {
     Card, Typography, Grid,
     CardMedia, CardActions, IconButton
 } from '@material-ui/core';
 import { Delete as DeleteIcon, Block as BlockIcon, Edit as EditIcon } from '@material-ui/icons';
-import { getDisplayDate } from 'common/Util';
+import { getDisplayDate, convertDataToImage } from 'common/Util';
+import Axios from 'axios';
 
-export default function (props) {
+export default function ({ ip }) {
     const classes = useStyles(),
-        ip = {
-            name: 'השיר של עידו',
-            category: 'pop',
-            tag: ['happy', 'love'],
-            composer: 'Lizzo',
-            performer: 'Lizzo',
-            writer: ' Lizzo, Theron Thomas, Sam Sumser, Sean Small and Ricky Reed',
-            owners: [{ user: 123, percentageOfOwnership: 100 }],
-            dateOfCreation: new Date('2019-01-04'),
-            price: 2555,
-            reviews: [
-                { user: 123, comment: 'great!', scoring: 5 },
-                { user: 123, comment: 'The best', scoring: 4 }
-            ],
-            about: 'Juice is a song recorded by American singer and rapper Lizzo.',
-            type: 'music',
-            sample: 'https://www.youtube.com/watch?v=XaCrQL_8eMY',
-            image: {
-                contentType: 'image/jpeg',
-                data: {
-                    type: 'Buffer',
-                    data: []
-                }
-            }
-        },
-        profit = 2250;
+        [profit, setProfit] = useState(0);
+    
+    useEffect(() => {
+        fetchProfit()
+    }, []);
+
+    const fetchProfit = async () => {
+        try {
+            const { data } = await Axios.get(`/api/purchase/profits/${ip._id}`);
+            setProfit(data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     return (
         <Card className={classes.root}>
             <CardMedia
                 className={classes.cover}
                 component="img"
-                src={songPicture}
+                src={convertDataToImage(ip.image.data.data)}
             />
             <Grid container justify="space-between" alignContent='space-between' className={classes.cardContent}>
                 {/* song details */}
@@ -57,8 +46,14 @@ export default function (props) {
                 {/* action and earning */}
                 <Grid item className='classes.leftCardSection'>
                     <div className={classes.profit}>
-                        <Typography variant="h3" align="left">{"₪" + profit}</Typography>
-                        <Typography variant="body1" align="left">{"רווחים מהשיר עד כה"}</Typography>
+                        { (profit > 0) ? 
+                            <>
+                                <Typography variant="h3" align="left">{"₪" + profit}</Typography>
+                                <Typography variant="body1" align="left">{"רווחים מהשיר עד כה"}</Typography>
+                            </>
+                            :
+                            <Typography variant="body1" align="left" gutterBottom>{"עוד אין לך רווחים מהשיר הזה"}</Typography>
+                        }
                     </div>
                     <CardActions disableSpacing>
                         <IconButton className={classes.iconButton}>

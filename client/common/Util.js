@@ -1,4 +1,5 @@
-export function getDisplayDate(date) {
+export function getDisplayDate(dateParam) {
+    const date = new Date(dateParam);
     return (`${date.getDate()} ל${getDisplayMonth(date.getMonth())}, ${date.getFullYear()}`);
 }
 
