@@ -7,10 +7,10 @@ import {
 } from '@material-ui/core';
 import { Share as ShareIcon } from '@material-ui/icons';
 import { getDisplayDate, convertDataToImage } from 'common/Util';
-
+import Axios from 'axios';
 
 const UsageType = {
-    onlyme: 'אישי',
+    onlyMe: 'אישי',
     single: 'בודד',
     multiple: 'מרובה'
 };
@@ -30,7 +30,7 @@ export default function ({ purchase }) {
 
     const fetchIp = async () => {
         try {
-            const { data } = await Axios.get(`api/ip/${purchase.ipId}`);
+            const { data } = await Axios.get(`/api/ip/${purchase.ipId}`);
             setIp(data);
         } catch (e) {
             console.log(e);
@@ -57,7 +57,7 @@ export default function ({ purchase }) {
                             </Typography>
                             <Typography variant="body1">
                                 {/* change to purchase */}
-                                {`נוסף ב-${getDisplayDate(purchase.purchaseDate)}`}
+                                {`נרכש ב-${getDisplayDate(purchase.purchaseDate)}`}
                             </Typography>
                         </Grid>
                         {/* action and price */}

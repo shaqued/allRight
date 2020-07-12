@@ -19,7 +19,7 @@ export default function ({ ip }) {
 
     const fetchProfit = async () => {
         try {
-            const { data } = await Axios.get(`api/purchase/profits/${ip._id}`);
+            const { data } = await Axios.get(`/api/purchase/profits/${ip._id}`);
             setProfit(data);
         } catch (e) {
             console.log(e);
