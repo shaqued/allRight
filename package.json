@@ -100,7 +100,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
-    "sass": "^1.26.8"
-    "react-signature-canvas": "^1.0.3",
+    "sass": "^1.26.8",
+    "react-signature-canvas": "^1.0.3"
   }
 }
