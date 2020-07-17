@@ -35,7 +35,7 @@ export default ({ ip }) => {
 
 
     return (
-        <Grid container style={{ height: '30%' }}>
+        <Grid container>
             <Grid xs={12} item>
                 <Typography variant="h2">
                     עוד שירים שאולי תאהבו

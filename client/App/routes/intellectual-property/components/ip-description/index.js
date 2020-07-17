@@ -12,7 +12,7 @@ export default ({ ip }) => {
             {({ data, loading }) => {
                 if (!loading)
                     return (
-                        <Grid container spacing={0} style={{ backgroundColor: data, height: '30%' }}>
+                        <Grid container spacing={0} style={{ backgroundColor: data}}>
                             <Grid item xs={8} style={{ marginRight: '2%', marginTop: '2%' }}>
                                 <Grid container direction="column">
                                     <Grid item>
@@ -25,12 +25,12 @@ export default ({ ip }) => {
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item>
-                                                        <Typography variant="h4" color="textSecondary">
+                                                        <Typography variant="h3" color="textSecondary">
                                                             {ip.performer}
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item>
-                                                        <Typography variant="body1" color="textSecondary">
+                                                        <Typography variant={'subtitle1'} color="textSecondary">
                                                             {ip.about}
                                                         </Typography>
                                                     </Grid>
@@ -38,8 +38,8 @@ export default ({ ip }) => {
                                             </Grid>
                                             <Grid item xs={3}></Grid>
                                             <Grid item xs={3}>
-                                                <Typography variant="body1" color="textSecondary" style={{ textAlign: 'left' }}>מילים: {ip.writer}</Typography>
-                                                <Typography variant="body1" color="textSecondary" style={{ textAlign: 'left' }}>לחן: {ip.composer}</Typography>
+                                                <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>מילים: {ip.writer}</Typography>
+                                                <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>לחן: {ip.composer}</Typography>
                                             </Grid>
                                         </Grid>
                                     </Grid>
