@@ -14,16 +14,12 @@ export default function (props) {
     }, []);
 
     const fetchPurchases = async () => {
-        try {
-            // until then:
-            const { data } = await Axios.get(`/api/purchase`);
-            
-            // after the dependencies in the db will be ok:            
-            // const { data } = await Axios.get(`/api/purchase`, {
-            //     params: {
-            //         user: user.id
-            //     }
-            // });
+        try {            
+            const { data } = await Axios.get(`/api/purchase`, {
+                params: {
+                    user: user.id
+                }
+            });
             setPurchases(data);
             console.log(data[0])
         } catch (e) {

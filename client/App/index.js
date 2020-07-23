@@ -6,7 +6,8 @@ import React from 'react';
 import { BrowserRouter, Router, Switch, Route, Redirect } from 'react-router-dom';
 import Home from './routes/Home';
 import Search from './routes/Search';
-import history from '../history'
+import history from '../history';
+import IpEdit from './routes/IpEdit';
 
 export default () => {
     return (
@@ -20,6 +21,7 @@ export default () => {
                     <Route path={'/signUp'} component={SignUp} />
                     <Route path={'/signIn'} component={SignIn} />
                     <Route exact path={'/ip/:id'} component={IntllectualProperty} />
+                    <Route exact path={'/ip/:id/edit'} component={IpEdit} />
                     <Redirect to={'/'} />
                 </Switch>
             </Router >

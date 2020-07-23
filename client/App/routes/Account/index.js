@@ -1,6 +1,3 @@
-// import profilePicture from '../../../assets/photos/profilePicture.jpg';
-import profilePicture from 'assets/photos/profilePicture.jpg';
-// import songPicture from 'Assets/songPicture';
 import Navbar from '../../Shell/Navbar';
 import React, { useContext, useEffect } from 'react';
 import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
@@ -18,15 +15,6 @@ export default function (props) {
         { LoggedInUser } = useContext(UserStoreContext),
         { user } = LoggedInUser ? JSON.parse(LoggedInUser) : { user: undefined };
     let { url } = useRouteMatch();
-
-    // when (loggenInUser === undefined)
-    // <Redirect to={{pathname: '/login', state: {from: props.location}}}
-    // create PrivateRoute for account
-    // tutorial: https://reactrouter.com/web/example/auth-workflow
-
-    // useEffect(() => {
-    //     fetch();
-    // }, []);
 
     const accountViews = [
         {

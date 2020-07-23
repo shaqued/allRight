@@ -1,18 +1,27 @@
-import songPicture from 'assets/photos/songPicture.jpg';
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import {
-    Card, Typography, Grid,
-    CardMedia, CardActions, IconButton
+import { 
+    Card, Typography, Grid, CardMedia, CardActions, IconButton
 } from '@material-ui/core';
-import { Delete as DeleteIcon, Block as BlockIcon, Edit as EditIcon } from '@material-ui/icons';
+import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 import { getDisplayDate, convertDataToImage } from 'common/Util';
 import Axios from 'axios';
+import { useHistory } from "react-router-dom";
+import DeleteDialog from '../DeleteDialog';
+import Alert from 'components/Alert';
 
 export default function ({ ip }) {
     const classes = useStyles(),
-        [profit, setProfit] = useState(0);
-    
+        history = useHistory(),
+        snackbarMessages = {
+            success: "היצירה נמחקה בהצלחה",
+            error: "הפעולה נכשלה בהצלחה"
+        },  
+        [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false),
+        [profit, setProfit] = useState(0),
+        [showSnackbar, setShowSnackbar] = useState(false),
+        [deleteStatus, setDeleteStatus] = useState('');
+
     useEffect(() => {
         fetchProfit()
     }, []);
@@ -26,7 +35,42 @@ export default function ({ ip }) {
         }
     };
 
-    return (
+    const handleDeleteClick = () => {
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleDeleteDialogClose = () => {
+        setIsDeleteDialogOpen(false);
+    };
+
+    const handleSnackClose = (event, reason) => {
+        // if (reason === 'clickaway') {
+        //     return;
+        // }
+
+        setShowSnackbar(false);
+    };
+
+    const deleteIp = async () => {
+        setShowSnackbar(true);
+        setDeleteStatus('success')
+        return;
+        try {
+            const response = await Axios.delete(`/api/ip/${ip._id}`);
+            setShowSnackbar(true);
+            respone.status == 200 ? setDeleteStatus('success') : setDeleteStatus('error');
+        } catch (e) {
+            setDeleteStatus('error')
+            setShowSnackbar(true);
+            console.log(e);
+        }
+    }
+
+    const handleEditClick = () => {
+        history.push(`/ip/${ip._id}/edit`);
+    }
+
+    return (<>
         <Card className={classes.root}>
             <CardMedia
                 className={classes.cover}
@@ -46,7 +90,7 @@ export default function ({ ip }) {
                 {/* action and earning */}
                 <Grid item className='classes.leftCardSection'>
                     <div className={classes.profit}>
-                        { (profit > 0) ? 
+                        {(profit > 0) ?
                             <>
                                 <Typography variant="h3" align="left">{"₪" + profit}</Typography>
                                 <Typography variant="body1" align="left">{"רווחים מהשיר עד כה"}</Typography>
@@ -55,20 +99,23 @@ export default function ({ ip }) {
                             <Typography variant="body1" align="left" gutterBottom>{"עוד אין לך רווחים מהשיר הזה"}</Typography>
                         }
                     </div>
-                    <CardActions disableSpacing>
-                        <IconButton className={classes.iconButton}>
+                    <CardActions disableSpacing className={classes.cardActions}>
+                        <IconButton onClick={handleEditClick} className={classes.iconButton}>
                             <EditIcon />
                         </IconButton>
-                        <IconButton className={classes.iconButton}>
-                            <BlockIcon />
-                        </IconButton>
-                        <IconButton className={classes.iconButton}>
+                        <IconButton onClick={handleDeleteClick} className={classes.iconButton}>
                             <DeleteIcon />
                         </IconButton>
                     </CardActions>
                 </Grid>
             </Grid>
         </Card>
+        <DeleteDialog handleClose={handleDeleteDialogClose} isOpen={isDeleteDialogOpen}
+            handleDelete={deleteIp} ipName={ip.name} />
+        <Alert open={showSnackbar} onClose={handleSnackClose} severity={deleteStatus}>
+            {snackbarMessages[deleteStatus]}
+        </Alert>
+    </>
     );
 }
 
@@ -90,7 +137,10 @@ const useStyles = makeStyles((theme) => ({
     profit: {
         marginLeft: theme.spacing(2)
     },
+    cardActions: {
+        justifyContent: "flex-end"
+    },
     iconButton: {
-        paddingLeft: '0!important', 
+        //paddingLeft: '0!important',
     }
 }));
