@@ -90,7 +90,11 @@ export default function ({ ip }) {
                 {/* action and earning */}
                 <Grid item className='classes.leftCardSection'>
                     <div className={classes.profit}>
+<<<<<<< HEAD
                         {(profit > 0) ?
+=======
+                        { (profit > 0) ? 
+>>>>>>> master
                             <>
                                 <Typography variant="h3" align="left">{"₪" + profit}</Typography>
                                 <Typography variant="body1" align="left">{"רווחים מהשיר עד כה"}</Typography>

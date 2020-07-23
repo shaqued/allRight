@@ -27,19 +27,6 @@ export default function (props) {
         }
     };
 
-    // const flattenCartItems = () => {
-    //     let purchase = purchases[0];
-    //     let newPurchases = purchase.cartItems.reduce((acc, cartItem) => {
-    //         let x = {
-    //             purchaseId: purchase._id,
-    //             user: purchase.user,
-    //             ...cartItem
-    //         };
-    //         console.log(x)
-    //         acc.concat(x)
-    //     }, [])
-    // }   
-
     return (
         <Grid container spacing={2} direction="column">
             <Grid item>
