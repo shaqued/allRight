@@ -6,9 +6,10 @@ import Color from 'color-thief-react';
 
 export default ({ ip }) => {
     const classes = useStyles();
+    const image = `data:${ip && ip.image && ip.image.contentType};base64, ${ip && ip.image && ip.image.data}`;
 
     return (
-        <Color src={ip.image}>
+        <Color src={image}>
             {({ data, loading }) => {
                 if (!loading)
                     return (
@@ -54,7 +55,7 @@ export default ({ ip }) => {
                                 </Grid>
                             </Grid>
                             <Grid item xs={3} display="flex" className={classes.imageContainer}>
-                                <Box component="img" src={ip.image} className={classes.image} />
+                                <Box component="img" src={image} className={classes.image} />
                             </Grid>
                         </Grid>
                     );

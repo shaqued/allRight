@@ -5,7 +5,6 @@ import LicensesPlan from './components/licenses-plan';
 import Navbar from '../../Shell/Navbar';
 import { Grid } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import { convertDataToImage } from 'common/Util.js';
 
 export default () => {
     let { id } = useParams();
@@ -17,10 +16,6 @@ export default () => {
         const res = await fetch(`/api/ip/${id}`);
         res
             .json()
-            .then(res => {
-                res.image = convertDataToImage(res.image.data.data);
-                return res;
-            })
             .then(res => setIp(res))
             .catch(err => setErrors(err));
     }
