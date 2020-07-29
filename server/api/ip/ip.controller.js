@@ -23,7 +23,7 @@ async function suggestedIps (req, res) {
             {category: ip.category},
             {tag: {$in: ip.tag}}
         ]
-    });
+    }).lean();
 
     let count = SUGGESTED_SONGS_COUNT;
     const result = new Array(SUGGESTED_SONGS_COUNT);
@@ -49,7 +49,7 @@ async function suggestedIps (req, res) {
         let strImage;
 
         if (x.image) {
-            buff = Buffer.from(ip.image.data.buffer);
+            buff = Buffer.from(x.image.data.buffer);
             strImage = buff.toString('base64');
             x.image.data = strImage;
         }
