@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import {getById, getAll, update, destroy, create, validate, suggestedIps, getOwnerIps} from './ip.controller';
+import {getById, getAll, update, destroy, create, validate, suggestedIps, getOwnerIps, addComment} from './ip.controller';
 import {AsyncRouter} from 'express-async-router';
 import objectId from 'express-param-objectid';
 import multer from 'multer';
@@ -25,6 +25,7 @@ router.get('/ownerIps/:id', getOwnerIps);
 router.post('/', validate('create'), upload.single('image'), create);
 router.get('/:id/suggestedIps', suggestedIps);
 router.put('/:id', validate('update'), upload.single('image'), update);
+router.put('/:id/addComment', validate('addComment'), addComment);
 router.delete('/:id', destroy);
 
 export default router;
