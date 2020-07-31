@@ -61,6 +61,10 @@ const ipSchema = new Schema({
                 ref: 'user',
                 required: true
             },
+            userName: {
+                type: String,
+                required: true
+            },
             comment: {
                 type: String,
                 required: true

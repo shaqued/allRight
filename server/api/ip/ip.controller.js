@@ -4,6 +4,7 @@ import Deezer from 'deezer-web-api';
 import {Categories} from '../../constant/ipCategory.const';
 import {Tags} from '../../constant/ipTag.const';
 import {Types} from '../../constant/ipType.const';
+import {getNameById} from '../user/user.controller';
 import Ip from './ip.model';
 
 const fs = require('fs-extra');
@@ -225,7 +226,13 @@ async function addComment (req, res) {
 
         return;
     }
+
+    // Getting user name
+    const name = await getNameById(req.body.user);
+    
     const comment = req.body;
+
+    comment.userName = `${name.first} ${name.last}`;
 
     const updated = await Ip.findByIdAndUpdate(req.params.id, {$push: {reviews: comment}}, {new: true});
 

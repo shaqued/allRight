@@ -1,12 +1,18 @@
-import User from './user.model';
 import createError from 'http-errors';
 import _ from 'lodash';
+import User from './user.model';
 
-export function getById ({params: {id}})  {
+export function getById ({params: {id}}) {
     return User.findById(id);
 }
 
-export function update  ({user, params: {id}, body}) {
+async function getNameById (id) {
+    const user = await User.findById(id);
+
+    return user.name;
+}
+
+export function update ({user, params: {id}, body}) {
     if (!user._id.equals(id) && !user.admin) {
         return Promise.reject(createError(403));
     }
@@ -16,4 +22,8 @@ export function update  ({user, params: {id}, body}) {
 
     return User.findByIdAndUpdate(id, {$set: data})
         .then(_.noop);
+}
+
+module.exports = {
+    getNameById
 }
