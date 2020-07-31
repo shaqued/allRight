@@ -89,6 +89,10 @@ async function getAll (req, res) {
                 regularClause.push({type: req.query.type});
             }
 
+            if (req.query.tag) {
+                regularClause.push({tag: {$regex: `^${req.query.tag}`, $options: 'i'}});
+            }
+
             if (req.query.name) {
                 orClause.push({name: {$regex: req.query.name, $options: 'i'}});
             }
