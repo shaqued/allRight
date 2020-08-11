@@ -7,8 +7,7 @@ export default function ({ handleClose, handleDelete, isOpen, ipName}) {
     return (
         <div>
             <Dialog
-                //open={isOpen}
-                open
+                open={isOpen}
                 fullWidth
                 maxWidth="xs"
                 onClose={handleClose}
@@ -22,7 +21,7 @@ export default function ({ handleClose, handleDelete, isOpen, ipName}) {
                     </Typography>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="text" color="textPrimary" className={classes.textButton}>
+                    <Button onClick={handleClose} variant="text" color="primary" className={classes.textButton}>
                         כן, אני רוצה למחוק
                     </Button>
                     <Button onClick={handleDelete} variant="contained" color="primary" autoFocus>

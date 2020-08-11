@@ -21,7 +21,6 @@ export default function (props) {
                 }
             });
             setPurchases(data);
-            console.log(data[0])
         } catch (e) {
             console.log(e);
         }

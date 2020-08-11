@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Button, Link, Grid, Typography} from '@material-ui/core';
-import TextField from '../../../../../components/TextField';
-import PasswordInput from '../../../../../components/Registration/PasswordInput';
+import TextField from 'components/TextField';
+import PasswordInput from 'components/Registration/PasswordInput';
 
 export default props => {
     const classes = useStyles();

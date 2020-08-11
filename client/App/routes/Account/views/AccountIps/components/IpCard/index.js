@@ -4,7 +4,7 @@ import {
     Card, Typography, Grid, CardMedia, CardActions, IconButton
 } from '@material-ui/core';
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
-import { getDisplayDate, convertDataToImage } from 'common/Util';
+import { getDisplayDate, convertDataToImage } from 'clientCommon/Util';
 import Axios from 'axios';
 import { useHistory } from "react-router-dom";
 import DeleteDialog from '../DeleteDialog';
@@ -15,7 +15,7 @@ export default function ({ ip }) {
         history = useHistory(),
         snackbarMessages = {
             success: "היצירה נמחקה בהצלחה",
-            error: "הפעולה נכשלה בהצלחה"
+            error: "אוי לא, משהו השתבש. נסו שנית מאוחר יותר"
         },  
         [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false),
         [profit, setProfit] = useState(0),
@@ -44,17 +44,14 @@ export default function ({ ip }) {
     };
 
     const handleSnackClose = (event, reason) => {
-        // if (reason === 'clickaway') {
-        //     return;
-        // }
+        if (reason === 'clickaway') {
+            return;
+        }
 
         setShowSnackbar(false);
     };
 
     const deleteIp = async () => {
-        setShowSnackbar(true);
-        setDeleteStatus('success')
-        return;
         try {
             const response = await Axios.delete(`/api/ip/${ip._id}`);
             setShowSnackbar(true);
@@ -90,11 +87,7 @@ export default function ({ ip }) {
                 {/* action and earning */}
                 <Grid item className='classes.leftCardSection'>
                     <div className={classes.profit}>
-<<<<<<< HEAD
                         {(profit > 0) ?
-=======
-                        { (profit > 0) ? 
->>>>>>> master
                             <>
                                 <Typography variant="h3" align="left">{"₪" + profit}</Typography>
                                 <Typography variant="body1" align="left">{"רווחים מהשיר עד כה"}</Typography>

@@ -16,7 +16,8 @@ module.exports = {
             assets: path.resolve(__dirname, './client/assets'),
             components: path.resolve(__dirname, './client/components'),
             shell: path.resolve(__dirname, './client/App/Shell/'),
-            common: path.resolve(__dirname, './client/common'),
+            clientCommon: path.resolve(__dirname, './client/common'),
+            common: path.resolve(__dirname, './common'),
             stores: path.resolve(__dirname, './client/Stores')
         },
         extensions: ['*','.js','.jsx']

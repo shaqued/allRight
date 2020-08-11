@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { InputAdornment, IconButton } from '@material-ui/core';
 import { Visibility as VisibilityIcon, VisibilityOff as VisibilityOffIcon,} from '@material-ui/icons';
-import TextField from '../../TextField';
+import TextField from 'components/TextField';
 
 export default function(props) {
     const [showPassword, setShowPassword] = useState(false);

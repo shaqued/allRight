@@ -35,6 +35,11 @@ export default createMuiTheme({
         MuiOutlinedInput: { 
             input: {
             },
+        },
+        MuiRadio: {
+            root: {
+                color: "#424242"
+            }
         }
     },
     props: {

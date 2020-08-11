@@ -6,7 +6,7 @@ import {
     CardMedia, CardActions, IconButton, Link
 } from '@material-ui/core';
 import { Share as ShareIcon } from '@material-ui/icons';
-import { getDisplayDate, convertDataToImage } from 'common/Util';
+import { getDisplayDate, convertDataToImage } from 'clientCommon/Util';
 import Axios from 'axios';
 
 const UsageType = {

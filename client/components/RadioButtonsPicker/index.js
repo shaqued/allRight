@@ -6,7 +6,6 @@ export default function RadioButtonsPicker(props) {
     const { value, label, onChange, options } = props,
         classes = useStyles(),
         radio = <Radio />;
-        //radio = <Radio size="small" color="primary"/>;
 
     return (<FormControl component="fieldset">
         {/* <FormLabel component="legend" value={value} onChange={handleChange}>{label}</FormLabel> */}
@@ -24,5 +23,5 @@ const useStyles = makeStyles(theme => ({
     formControlLabel: {
         marginLeft: "10px",
         marginRight: "-10px",
-    }
+    },
 }))

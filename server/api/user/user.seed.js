@@ -6,7 +6,9 @@ export default {
                 last: 'Jefferson'
             },
             email: 'lizzu123@gmail.com',
-            password: 'Aa123456'
+            password: 'Aa123456',
+            gender: 'female',
+            birthDate: new Date('1996-01-04'),
         },
         {
             name: {

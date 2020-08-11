@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '../../../../../components/TextField';
-import GenderRadioButtons from '../../../../../components/RadioButtonsPicker';
-import PasswordInput from '../../../../../components/Registration/PasswordInput';
+import TextField from 'components/TextField';
+import GenderRadioButtons from 'components/RadioButtonsPicker';
+import PasswordInput from 'components/Registration/PasswordInput';
 import {
-    Button, Link, CssBaseline, Box, Grid, Typography
+    Button, Link, CssBaseline, Grid, Typography
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { UserStoreContext } from '../../../../../Stores/UserStore/UserStoreProvider';
-import genderOptions from '../../../../../../common/genderOptions'
+import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
+import genderOptions from 'common/genderOptions'
 import {omit} from 'lodash';
 
 export default function SignUpForm(props) {
