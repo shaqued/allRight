@@ -83,10 +83,10 @@
     "http-reject-empty": "^1.0.0",
     "in-production": "^1.0.1",
     "joi": "^14.3.1",
+    "js-cookie": "^2.2.1",
     "jss-rtl": "^0.3.0",
     "lodash": "latest",
     "mobx": "^5.15.4",
-    "mobx-cookie": "^3.0.4",
     "mobx-react": "^6.1.8",
     "mongoose": "^5.9.19",
     "mongoose-plugin-seed": "^0.4.0",
@@ -100,7 +100,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
-    "sass": "^1.26.8",
-    "react-signature-canvas": "^1.0.3"
+    "react-signature-canvas": "^1.0.3",
+    "sass": "^1.26.8"
   }
 }

@@ -24,7 +24,11 @@ const authenticate = (req, res, next, cb) =>
   });
 
 export const login = async (req, res, next) => {
-  await authenticate(req, res, next, user => res.json({ user: { id: user.id, name: user.name }, token: signToken(user) }));
+  await authenticate(req, res, next, user => {
+    res.cookie('userToken', signToken(user));
+
+    return res.json(user); 
+  });
 };
 
 export const register = async ({ body }, res) => {
@@ -39,8 +43,9 @@ export const register = async ({ body }, res) => {
   if (!user) {
     throw createError(400, 'Something went wrong, please try again');
   }
-
-  return res.json({ user, token: signToken(user) });
+  
+  res.cookie('userToken', signToken(user));
+  return res.json(user);
 };
 
 export const authAdmin = async (req, res, next) => {
@@ -54,3 +59,5 @@ export const authAdmin = async (req, res, next) => {
 
   await authenticate(req, res, next, user => isAdmin(user));
 };
+
+export const me = async (req, res, next) => req.user
