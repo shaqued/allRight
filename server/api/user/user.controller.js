@@ -1,26 +1,15 @@
-import User from './user.model';
 import createError from 'http-errors';
 import _ from 'lodash';
+import User from './user.model';
 
-export function getById ({params: {id}})  {
+export function getById ({params: {id}}) {
     return User.findById(id);
 }
 
-const dagan = (req) => {
-    const getCircularReplacer = () => {
-        const seen = new WeakSet();
-        return (key, value) => {
-          if (typeof value === "object" && value !== null) {
-            if (seen.has(value)) {
-              return;
-            }
-            seen.add(value);
-          }
-          return value;
-        };
-    };
-      
-    return(JSON.stringify(req, getCircularReplacer()));
+async function getNameById (id) {
+    const user = await User.findById(id);
+
+    return user.name;
 }
 
 // export function update ({user, params: {id}, body}) {
@@ -34,4 +23,8 @@ export function update ({params: {id}, body: {user}}) {
 
     return User.findByIdAndUpdate(id, {$set: user})
         .then(_.noop);
+}
+
+module.exports = {
+    getNameById
 }

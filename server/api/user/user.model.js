@@ -64,4 +64,13 @@ UserSchema.plugin(passportLocalMongoose, {
 
 UserSchema.methods.setPassword = pify(UserSchema.methods.setPassword);
 
+UserSchema.methods.toJSON = function() {
+  const  obj = this.toObject(); 
+  
+  delete obj.hash;
+  delete obj.salt;
+
+  return obj;
+ }
+
 export default createSeedModel('User', UserSchema, seed);

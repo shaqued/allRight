@@ -1,9 +1,22 @@
 import { observable, computed, action } from 'mobx';
 import axios from 'axios';
-import Cookies from 'js-cookie';
+import jsCookie from 'js-cookie'
+
+const userTokenPath = 'userToken';
 
 export class UserStore {
-  @observable LoggedInUser = Cookies.get('userToken');
+  constructor() {
+    try {
+      if (!jsCookie.get(userTokenPath)) return;
+
+      axios.get('/auth/me').then(({data}) => this.UserData = data);
+
+    } catch (e) {
+      console.log(e);
+    };
+  };
+
+  @observable UserData;
 
   @action LogIn = ({ email, password }) => {
     return axios.post('/auth/login',
@@ -11,11 +24,16 @@ export class UserStore {
         email,
         password
       }
-    ).then(({ data }) => Cookies.set('userToken', data));
+    ).then(({data}) => this.UserData = data);
   };
 
   @action Register = (userData) => {
     return axios.post('/auth/register', userData)
-    .then(({ data }) => Cookies.set('userToken', data));
+      .then(({data}) => this.UserData = data);
+  };
+
+  @action LogOff = () => {
+    this.UserData = undefined;
+    jsCookie.remove(userTokenPath);
   }
 }

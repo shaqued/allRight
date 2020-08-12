@@ -34,3 +34,7 @@ export function convertDataToImage(data) {
     const base64Flag = 'data:image/jpeg;base64,';
     return (base64Flag + arrayBufferToBase64(data));
 }
+
+export function formatDate(date) {
+    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+}

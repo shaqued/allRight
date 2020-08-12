@@ -23,8 +23,8 @@ export default {
             price: price1,
             reviews:
                 [
-                    {user: id, comment: 'great!', scoring: 5},
-                    {user: id, comment: 'The best', scoring: 4}
+                    {user: id, userName: 'noa fridman', comment: 'great!', scoring: 5},
+                    {user: id, userName: 'shaqued gavriel', comment: 'The best', scoring: 4}
                 ],
             about: 'Juice is a song recorded by American singer and rapper Lizzo.',
             type: Types.Music,
@@ -4773,8 +4773,8 @@ export default {
             price: price2,
             reviews:
                 [
-                    {user: id, comment: 'great!', scoring: 5},
-                    {user: id, comment: 'The best', scoring: 4}
+                    {user: id,userName: 'noa fridman', comment: 'great!', scoring: 5},
+                    {user: id, userName: 'shaqued Gavriel',comment: 'The best', scoring: 4}
                 ],
             about: 'Let It Go is a song by English singer-songwriter James Bay.',
             type: Types.Music,

@@ -12,7 +12,8 @@ export default createMuiTheme({
         text: {
             primary: "#424242",
             darker: "#212121",
-            secondary: "#FFFFFF"
+            secondary: "#FFFFFF",
+            disabled: "#c1c1c1"
         },
         background: {
             default: "#FAFAFA",
@@ -39,6 +40,14 @@ export default createMuiTheme({
         MuiRadio: {
             root: {
                 color: "#424242"
+            }
+        },
+        MuiStepLabel: {
+            label: {
+                color: "#c1c1c1",
+                '&$active': {
+                    color: '#424242'
+                },
             }
         }
     },

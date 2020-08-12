@@ -55,30 +55,29 @@ export default ({ ip }) => {
     ];
 
     return (
-        <Grid container style={{ height: '40%' }}>
+        <Grid container>
             <CssBaseline />
             <Container maxWidth="md" component="main">
                 <Grid container spacing={5} alignItems="flex-end">
                     {tiers.map((tier) => (
-                        <Grid item key={tier.title} xs={12} sm={tier.title === 'חברתי' ? 12 : 6} md={4}>
+                        <Grid item key={tier.title} xs={12} md={4}>
                             <Card>
                                 <CardHeader
                                     title={tier.title}
                                     subheader={tier.subheader}
                                     titleTypographyProps={{ align: 'center' }}
                                     subheaderTypographyProps={{ align: 'center' }}
-                                    action={tier.title === 'פרטי' ? <StarIcon /> : null}
                                 />
                                 <CardContent>
                                     <div className={classes.cardPricing}>
-                                        <Typography variant="h6" color="textPrimary">
+                                        <Typography variant="body2" color="textPrimary">
                                             החל מ-
                                             <Typography component="h2" variant="h3" color="textPrimary">{tier.price}₪</Typography>
                                         </Typography>
                                     </div>
                                     <ul>
                                         {tier.description.map((line) => (
-                                            <Typography component="li" color="textPrimary" variant="subtitle1" align="center" key={line}>
+                                            <Typography component="li" color="textPrimary" variant="body2" align="center" key={line}>
                                                 {line}
                                             </Typography>
                                         ))}
@@ -92,7 +91,7 @@ export default ({ ip }) => {
                             </Card>
                         </Grid>
                     ))}
-                    <LicensePlanDialog priceRange={priceRange} open={open} onClose={handleClose} />
+                    <LicensePlanDialog ip={ip} selectedPriceSection={priceRange} open={open} onClose={handleClose} />
                 </Grid>
             </Container>
         </Grid>

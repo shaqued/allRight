@@ -2,29 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Box, Typography, makeStyles, CardContent, Card, CardMedia, CardActionArea } from '@material-ui/core'
 import Axios from 'axios'
 import history from '../../../../history'
-
-const IpCard = ({ classes, image: { contentType, data }, name, performer, onClick }) => {
-    return (
-        <Card className={classes.card} onClick={onClick}>
-            <CardActionArea>
-                <CardMedia
-                    component={"img"}
-                    src={`data:${contentType};base64, ${data}`}
-                    title={name}
-                    className={classes.media}
-                />
-                <CardContent className={classes.cardContent}>
-                    <Typography variant="body2">
-                        {name}
-                    </Typography>
-                    <Typography variant="body1">
-                        {performer}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-        </Card>
-    )
-}
+import IpCard from '../../../../components/IpCard';
 
 export default () => {
     const classes = useStyles();
