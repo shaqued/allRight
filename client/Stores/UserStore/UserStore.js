@@ -9,7 +9,9 @@ export class UserStore {
     try {
       if (!jsCookie.get(userTokenPath)) return;
 
-      axios.get('/auth/me').then(({data}) => this.UserData = data);
+      isLoading = true;
+
+      axios.get('/auth/me').then(({data}) => this.UserData = data).then(() => this.isLoading = false);
 
     } catch (e) {
       console.log(e);
@@ -17,6 +19,7 @@ export class UserStore {
   };
 
   @observable UserData;
+  @observable isLoading = false;
 
   @action LogIn = ({ email, password }) => {
     return axios.post('/auth/login',
