@@ -14,6 +14,8 @@ export default observer(({ isHomepage }) => {
     const classes = useStyles();
     const userStore = useContext(UserStoreContext);
 
+    console.log(userStore.UserData);
+
     return (
         <Box className={`${classes.centered} ${isHomepage? classes.homepageBackground : ''}`}>
             <CssBaseline />

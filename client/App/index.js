@@ -2,6 +2,7 @@ import IntllectualProperty from './routes/intellectual-property';
 import SignIn from './routes/SignIn'
 import SignUp from './routes/SignUp'
 import Account from './routes/Account'
+import Cart from './routes/Cart'
 import React from 'react';
 import { BrowserRouter, Router, Switch, Route, Redirect } from 'react-router-dom';
 import Home from './routes/Home';
@@ -16,6 +17,7 @@ export default () => {
                 <Switch>
                     <Route exact path={'/'} component={Home} />
                     <Route path={'/account'} component={Account} />
+                    <Route path={'/cart'} component={Cart} />
                     <Route exact path={'/search/:query'} component={Search} />
                     <Route exact path={'/search/'} component={Search} />
                     <Route path={'/signUp'} component={SignUp} />

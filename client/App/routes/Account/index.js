@@ -1,4 +1,4 @@
-import Navbar from '../../Shell/Navbar';
+import Navbar from 'shell/Navbar';
 import React, { useContext, useEffect } from 'react';
 import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
 import AccountCard from './components/AccountCard';
@@ -7,14 +7,19 @@ import { Grid, Card, CssBaseline, Typography, } from '@material-ui/core';
 import AccountPurchases from './views/AccountPurchases';
 import AccountIps from './views/AccountIps';
 import Settings from './views/Settings';
+import { observer } from 'mobx-react'
 import { Route, Switch, useRouteMatch, Redirect } from "react-router-dom";
 
-export default function (props) {
+export default observer((props) => {
     const classes = useStyles(),
         { match } = props,
-        { LoggedInUser } = useContext(UserStoreContext),
-        { user } = LoggedInUser ? JSON.parse(LoggedInUser) : { user: undefined };
+//        { UserData } = useContext(UserStoreContext);
+        userStore = useContext(UserStoreContext);
+        //{ user } = UserData ? JSON.parse(UserData) : { user: undefined };
     let { url } = useRouteMatch();
+
+    console.log(userStore);
+    console.log(userStore.UserData);
 
     const accountViews = [
         {
@@ -29,7 +34,7 @@ export default function (props) {
         }
     ]
 
-    return (<>{ !user ? 
+    return (<>{ !userStore.UserData ? 
         // user is not connected, redirecting to sign in
         <Redirect to={'/signIn'} /> 
         :
@@ -52,8 +57,7 @@ export default function (props) {
             </Grid>
     </>}
     </>);
-}
-
+});
 
 const useStyles = makeStyles((theme) => ({
     userCard: {

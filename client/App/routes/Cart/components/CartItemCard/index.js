@@ -11,17 +11,6 @@ import Axios from 'axios';
 import MediaType from 'common/mediaType';
 import UsageType from 'common/usageType';
 
-// const UsageType = {
-//     onlyMe: 'אישי',
-//     single: 'בודד',
-//     multiple: 'מרובה'
-// };
-
-// const MediaType = {
-//     online: 'Online',
-//     offline: 'Offline'
-// };
-
 export default function ({ purchase }) {
     const classes = useStyles(),
         [ip, setIp] = useState({});
@@ -56,10 +45,6 @@ export default function ({ purchase }) {
                         <Grid item>
                             <Typography component="h3" variant="h3" gutterBottom>
                                 {ip.name}
-                            </Typography>
-                            <Typography variant="body1">
-                                {/* change to purchase */}
-                                {`נרכש ב-${getDisplayDate(purchase.purchaseDate)}`}
                             </Typography>
                         </Grid>
                         {/* action and price */}
@@ -99,7 +84,8 @@ export default function ({ purchase }) {
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        maxHeight: 250
+        maxHeight: 250,
+        maxWidth: 600
     },
     cardContent: {
         padding: theme.spacing(3),
