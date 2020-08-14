@@ -1,14 +1,15 @@
-import { getById, changePassword, update, create } from './user.controller';
+import {AsyncRouter} from 'express-async-router';
+import {getAll, update, getNameById, getById} from './user.controller';
 import objectId from 'express-param-objectid';
-import { AsyncRouter } from 'express-async-router';
+import {isAuthenticated} from '../../auth/auth.service'
 
 const router = new AsyncRouter();
 
 router.param('id', objectId);
 
-router.put('/:id/password', changePassword);
-router.get('/:id', getById);
-router.put('/:id', update);
-router.post('/', create);
+router.get('/', isAuthenticated(), getAll)
+router.get('/:id', isAuthenticated(), getById)
+router.get('/:id/name', isAuthenticated(), getNameById)
+router.put('/', isAuthenticated(), update)
 
 export default router;
