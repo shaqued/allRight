@@ -1,6 +1,6 @@
-import {getAll, getById, changePassword, me, update, create, signIn} from './user.controller';
+import { getById, changePassword, update, create } from './user.controller';
 import objectId from 'express-param-objectid';
-import {AsyncRouter} from 'express-async-router';
+import { AsyncRouter } from 'express-async-router';
 
 const router = new AsyncRouter();
 

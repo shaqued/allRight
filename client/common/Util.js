@@ -35,6 +35,11 @@ export function convertDataToImage(data) {
     return (base64Flag + arrayBufferToBase64(data));
 }
 
+export function manipulationOnImage(ip) {
+    return `data:${ip && ip.image && ip.image.contentType};base64, ${
+        ip && ip.image && ip.image.data}`;
+}
+
 export function formatDate(date) {
     return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 }

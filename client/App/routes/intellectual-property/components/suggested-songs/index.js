@@ -16,20 +16,18 @@ export default ({ ip }) => {
         fetch();
     }, [ip]);
 
+    const goToIp = (id) => {
+        history.push(`/ip/${id}`);
+    };
+
     const fetch = async () => {
         try {
             const { data } = await Axios.get(`/api/ip/${ip._id}/suggestedIps`);
-            console.log(data);
-
             setSuggestedIps(data);
         } catch (e) {
             console.log(e);
             setSuggestedIps([]);
         }
-    };
-
-    const goToIp = (id) => {
-        history.push(`/ip/${id}`);
     }
 
     return (

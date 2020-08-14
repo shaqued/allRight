@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import AnotherWaveForm from "../../../../../assets/photos/AnotherWaveForm.png";
 import useStyles from "./ip-description.css";
 import { Box, Grid, Typography, Button } from "@material-ui/core";
@@ -6,7 +6,7 @@ import Color from "color-thief-react";
 import ReviewsDialog from "./reviews-dialog";
 
 export default ({ ip }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
   const image = `data:${ip && ip.image && ip.image.contentType};base64, ${
     ip && ip.image && ip.image.data

@@ -14,8 +14,8 @@ export default function (props) {
         <CardContent>
             <Grid container justify="center">
                 <Grid item className={classes.cardHeader}>
-                    <Avatar src={profilePicture} alt={user.name.first} className={classes.avatar} />
-                    <Typography align="center" variant="h3" component="h1">{user.name.first + " " + user.name.last}</Typography>
+                    <Avatar src={profilePicture} alt={user ? user.name.first : ''} className={classes.avatar} />
+                    <Typography align="center" variant="h3" component="h1">{user ? (user.name.first + " " + user.name.last) : ''}</Typography>
                 </Grid>
             </Grid>
         </CardContent>

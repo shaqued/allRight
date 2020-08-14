@@ -18,10 +18,7 @@ export default function (props) {
         [userData, setUserData] = useState({}),
         [updateStatus, setUpdateStatus] = useState('success'),
         [showSnackbar, setShowSnackbar] = useState(false),
-        { LoggedInUser } = useContext(UserStoreContext),
-        { user } = LoggedInUser ? JSON.parse(LoggedInUser) : { user: undefined };
-
-    const userIdForTesting = '5f33096ce62e83151c775a71';
+        { UserData } = useContext(UserStoreContext);
 
     useEffect(() => {
         fetchUser()
@@ -29,6 +26,8 @@ export default function (props) {
 
     const fetchUser = async () => {
         try {
+            const userIdForTesting = '5f33096ce62e83151c775a71';
+            // TODO: dagan change to original user id
             //const { data } = await Axios.get(`/api/users/${ user.id }`);
             const { data } = await Axios.get(`/api/users/${userIdForTesting}`);
             setUserData(data);
@@ -48,21 +47,13 @@ export default function (props) {
             const response = await Axios.put(`/api/users/${userIdForTesting}`, {
                 user: userData
             });
-            setShowSnackbar(true);
             response.status == 200 ? setUpdateStatus('success') : setUpdateStatus('error');
+            setShowSnackbar(true);
         } catch (e) {
             setUpdateStatus('error')
             setShowSnackbar(true);
             console.log(e);
         }
-        // user.birthDate = new Date(user.birthDate).toISOString();
-
-        // //omit(user, ['firstName', 'lastName']);
-
-        // userStore.Register(user)
-        //     .then(() => {
-        //         history.push('/', null)
-        //     })
     }
 
     const handleSnackClose = (event, reason) => {

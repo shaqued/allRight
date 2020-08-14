@@ -6,7 +6,7 @@ import {
 import { Delete as DeleteIcon, Edit as EditIcon } from '@material-ui/icons';
 import { getDisplayDate, convertDataToImage } from 'clientCommon/Util';
 import Axios from 'axios';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import DeleteDialog from '../DeleteDialog';
 import Alert from 'components/Alert';
 
@@ -71,13 +71,16 @@ export default function ({ ip }) {
         <Card className={classes.root}>
             <CardMedia
                 className={classes.cover}
-                component="img"
-                src={convertDataToImage(ip.image.data.data)}
+                //component="img"
+                //src={convertDataToImage(ip.image.data.data)}
+                image={convertDataToImage(ip.image.data.data)}
+                component={Link}
+                to={`/ip/${ip._id}`}
             />
             <Grid container justify="space-between" alignContent='space-between' className={classes.cardContent}>
                 {/* song details */}
                 <Grid item>
-                    <Typography component="h3" variant="h3" gutterBottom>
+                    <Typography component={Link} to={`/ip/${ip._id}`} variant="h3" gutterBottom>
                         {ip.name}
                     </Typography>
                     <Typography variant="body1">
@@ -129,7 +132,7 @@ const useStyles = makeStyles((theme) => ({
     },
     cover: {
         height: 140,
-        width: 140
+        width: 200
     },
     profit: {
         marginLeft: theme.spacing(2)

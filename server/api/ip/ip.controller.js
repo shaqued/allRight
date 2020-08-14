@@ -105,7 +105,7 @@ async function getAll (req, res) {
                 regularClause.push({$or: orClause});
             }
 
-return await search({$match: {$and: regularClause}});
+            return await search({$match: {$and: regularClause}});
         }
 
         const ips = await Ip.find();

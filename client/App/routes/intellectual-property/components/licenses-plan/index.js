@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useState} from 'react';
 import useStyles from './licenses-plan.css';
 import LicensePlanDialog from './license-plan-dialog';
 import { Grid, Container, Button, Card, CardActions, CardContent, CardHeader, CssBaseline, Typography } from '@material-ui/core';
 import StarIcon from '@material-ui/icons/StarBorder';
 import { min } from 'lodash';
+import Alert from 'components/Alert';
 
 export default ({ ip }) => {
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const [priceRange, setPriceRange] = React.useState([]);
+    const classes = useStyles(),
+        [isDialogOpen, setIsDialogOpen] = useState(false),
+        [showSnackbar, setShowSnackbar] = useState(false),
+        snackbarMessages = {
+            success: "נוסף לעגלה בהצלחה!",
+            error: "אוי לא, משהו השתבש. נסו שנית מאוחר יותר"
+        },
+        [addToCartStatus, setAddToCartStatus] = useState(''),
+        [priceRange, setPriceRange] = useState([]);
 
     let plansDictionary = {
         privateRangePrice: 'פרטי',
@@ -21,11 +28,23 @@ export default ({ ip }) => {
     const handleClickOpen = (priceRangeValue) => {
         const priceRangeKey = Object.keys(plansDictionary).find(x => plansDictionary[x] === priceRangeValue);
         setPriceRange(ip.price[priceRangeKey]);
-        setOpen(true);
+        setIsDialogOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleDialogClose = (cb) => {
+        setIsDialogOpen(false);
+        cb.then((res) => {
+            respone.status == 200 ? setDeleteStatus('success') : setDeleteStatus('error');
+            setShowSnackbar(true);
+        })
+    };
+
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setShowSnackbar(false);
     };
     
     const tiers = [
@@ -91,9 +110,12 @@ export default ({ ip }) => {
                             </Card>
                         </Grid>
                     ))}
-                    <LicensePlanDialog ip={ip} selectedPriceSection={priceRange} open={open} onClose={handleClose} />
+                    <LicensePlanDialog ip={ip} selectedPriceSection={priceRange} open={isDialogOpen} onClose={handleDialogClose} />
                 </Grid>
             </Container>
+            <Alert open={showSnackbar} onClose={handleSnackClose} severity={addToCartStatus}>
+                {snackbarMessages[addToCartStatus]}
+            </Alert>
         </Grid>
     );
 }

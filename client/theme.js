@@ -24,8 +24,13 @@ export default createMuiTheme({
     overrides: {
         MuiButton: {
             containedPrimary: {
-                color: '#FFFFFF',
+                color: '#FFFFFF!important',
             },
+        },
+        MuiAvatar: {
+            root: {
+                color: '#FFFFFF!important',
+            }
         },
         MuiFormControl: {
             marginNormal: {

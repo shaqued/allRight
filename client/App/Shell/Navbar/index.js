@@ -6,21 +6,19 @@ import { Box, Button, CssBaseline } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
-import UnsingedButtons from './UnsingedButtons'
-import SignedUser from './SingedUser'
+import NotSignedUser from './NotSignedUser'
+import SignedUser from './SignedUser'
 
 
 export default observer(({ isHomepage }) => {
     const classes = useStyles();
     const userStore = useContext(UserStoreContext);
 
-    console.log(userStore.UserData);
-
     return (
         <Box className={`${classes.centered} ${isHomepage? classes.homepageBackground : ''}`}>
             <CssBaseline />
             <Box className={classes.header}>
-                {userStore.UserData ? <SignedUser /> : <UnsingedButtons isHomepage={isHomepage}/>}
+                {userStore.UserData ? <SignedUser isHomepage={isHomepage}/> : <NotSignedUser isHomepage={isHomepage}/>}
                 <Box>
                     <Button component={Link} to='/'>
                         <img src={isHomepage ? whiteLogo : blackLogo} className={classes.logo} />

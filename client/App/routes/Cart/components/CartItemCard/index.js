@@ -6,12 +6,12 @@ import {
     CardMedia, CardActions, IconButton, Link
 } from '@material-ui/core';
 import { Share as ShareIcon } from '@material-ui/icons';
-import { getDisplayDate, convertDataToImage } from 'clientCommon/Util';
+import { manipulationOnImage } from 'clientCommon/Util';
 import Axios from 'axios';
 import MediaType from 'common/mediaType';
 import UsageType from 'common/usageType';
 
-export default function ({ purchase }) {
+export default function ({ cartItem }) {
     const classes = useStyles(),
         [ip, setIp] = useState({});
 
@@ -21,13 +21,12 @@ export default function ({ purchase }) {
 
     const fetchIp = async () => {
         try {
-            const { data } = await Axios.get(`/api/ip/${purchase.ipId}`);
+            const { data } = await Axios.get(`/api/ip/${cartItem.ipId}`);
             setIp(data);
         } catch (e) {
             console.log(e);
         }
     };
-
 
     return (
         <Card className={classes.root}>
@@ -37,7 +36,8 @@ export default function ({ purchase }) {
                         <CardMedia
                             className={classes.cover}
                             component="img"
-                            src={ip.image ? convertDataToImage(ip.image.data.data) : songPicture}
+                            //src={ip.image ? convertDataToImage(ip.image.data) : songPicture}
+                            src={ip.image ? manipulationOnImage(ip) : songPicture}
                         />
                     </Link>
                     <Grid container justify="space-between" alignContent='space-between' className={classes.cardContent}>
@@ -51,7 +51,7 @@ export default function ({ purchase }) {
                         <Grid item className='classes.leftCardSection'>
                             <div className={classes.price}>
                                 <Typography variant="body1" align="left">{"עלות השימוש"}</Typography>
-                                <Typography variant="h3" align="left">{"₪" + purchase.range.price}</Typography>
+                                <Typography variant="h3" align="left">{"₪" + cartItem.range.price}</Typography>
                             </div>
                             <CardActions disableSpacing>
                                 <IconButton className={classes.iconButton}>
@@ -67,11 +67,11 @@ export default function ({ purchase }) {
                     <Grid container justify="space-between" spacing={2}>
                         <Grid item>
                             <Typography variant="subtitle1" display="inline">{"לשימוש "}</Typography>
-                            <Typography variant="subtitle2" display="inline">{`${UsageType[purchase.range.usageType]}, ${MediaType[purchase.range.mediaType]}`}</Typography>
+                            <Typography variant="subtitle2" display="inline">{`${UsageType[cartItem.range.usageType]}, ${MediaType[cartItem.range.mediaType]}`}</Typography>
                         </Grid>
                         <Grid item>
                             <Typography variant="subtitle1" display="inline">{"עד "}</Typography>
-                            <Typography variant="subtitle2" display="inline">{purchase.range.rangeMax}</Typography>
+                            <Typography variant="subtitle2" display="inline">{cartItem.range.rangeMax}</Typography>
                             <Typography variant="subtitle1" display="inline">{" מאזינים"}</Typography>
                         </Grid>
                     </Grid>
@@ -85,7 +85,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         maxHeight: 250,
-        maxWidth: 600
+        maxWidth: 500,
+        minWidth: 500
     },
     cardContent: {
         padding: theme.spacing(3),
@@ -104,7 +105,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: theme.spacing(2)
     },
     iconButton: {
-        paddingLeft: '0!important',
+        //paddingLeft: '0!important',
     },
     topCardSection: {
         display: 'flex',

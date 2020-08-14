@@ -28,6 +28,7 @@ async function getBy (req) {
 
 async function create (req, res) {
     const {body} = req;
+
     const purchase = {
         cartItems: body.cartItems,
         purchaseDate: Date.now(),

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import useStyles from "./reviews-dialog.css";
 import {Rating} from '@material-ui/lab';
 import {
@@ -19,14 +19,13 @@ import {formatDate} from '../../../../../../common/Util';
 
 export default ({ onClose, open, ip }) => {
   const classes = useStyles();
-  const [writeReview, setwriteReview] = React.useState(false);
+  const [writeReview, setwriteReview] = useState(false);
 
   const addReview = () => {
     setwriteReview(true);
   };
 
   const getUserInitials = (userName) => {
-    console.log(ip.reviews);
     if (userName) {
       const fullName = userName.split(" ");
       const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);

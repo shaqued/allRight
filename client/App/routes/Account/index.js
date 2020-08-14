@@ -1,5 +1,5 @@
 import Navbar from 'shell/Navbar';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
 import AccountCard from './components/AccountCard';
 import { makeStyles } from '@material-ui/styles';
@@ -13,13 +13,8 @@ import { Route, Switch, useRouteMatch, Redirect } from "react-router-dom";
 export default observer((props) => {
     const classes = useStyles(),
         { match } = props,
-//        { UserData } = useContext(UserStoreContext);
         userStore = useContext(UserStoreContext);
-        //{ user } = UserData ? JSON.parse(UserData) : { user: undefined };
     let { url } = useRouteMatch();
-
-    console.log(userStore);
-    console.log(userStore.UserData);
 
     const accountViews = [
         {
@@ -34,19 +29,22 @@ export default observer((props) => {
         }
     ]
 
-    return (<>{ !userStore.UserData ? 
-        // user is not connected, redirecting to sign in
+    const isUserLoggedIn = function() {
+    }
+
+    return (<>{ (!userStore.UserData && !userStore.isLoading) ? 
+        //user is not connected, redirecting to sign in
         <Redirect to={'/signIn'} /> 
         :
         <>
             <CssBaseline />
             <Navbar />
             <Grid container justify="center" alignItems="flex-start" spacing={3}>
+                {/* user section */}
                 <Grid item sm={3}>
-                    <AccountCard user={user} />
+                    <AccountCard user={userStore.UserData} />
                 </Grid>
                 {/* content section */}
-                {/* user section */}
                 <Grid item sm={6}>
                     <Switch>
                         <Route exact path={`${url}`} component={AccountIps}></Route>

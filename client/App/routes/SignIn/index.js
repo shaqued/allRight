@@ -27,8 +27,8 @@ export default function SignInPage(props) {
         loginFailed: "מייל או סיסמא שגויים"
     }
 
-    const [showSnack, setShowSnack] = React.useState(false);
-    const [snackMessage, setSnackMessage] = React.useState(SNACKMESSAGES[0]);
+    const [showSnack, setShowSnack] = useState(false);
+    const [snackMessage, setSnackMessage] = useState(SNACKMESSAGES[0]);
     const userStore = useContext(UserStoreContext);
 
     const handleSnackClose = (event, reason) => {

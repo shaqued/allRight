@@ -6,8 +6,7 @@ import Axios from 'axios';
 
 export default function (props) {
     const [purchases, setPurchases] = useState([]);
-    const { LoggedInUser } = useContext(UserStoreContext),
-        { user } = JSON.parse(LoggedInUser);
+    const { UserData } = useContext(UserStoreContext);
 
     useEffect(() => {
         fetchPurchases()
@@ -17,7 +16,7 @@ export default function (props) {
         try {            
             const { data } = await Axios.get(`/api/purchase`, {
                 params: {
-                    user: user.id
+                    user: UserData._id
                 }
             });
             setPurchases(data);
@@ -31,7 +30,8 @@ export default function (props) {
             <Grid item>
                 <Typography variant="h3" gutterBottom>הרכישות שלי</Typography>
             </Grid>
-            {purchases.map(purchase => (
+            {purchases.length > 0 ?
+            purchases.map(purchase => (
                 purchase.cartItems.map(cartItem => (
                     <Grid item sm={12} key={cartItem._id}>
                         <PurchaseCard purchase={{
@@ -43,7 +43,10 @@ export default function (props) {
                         }} />
                     </Grid>
                 ))
-            ))}
+            )) :
+            <Grid item>
+                <Typography variant="h6"> עדיין לא רכשת כלום </Typography>
+            </Grid>}
         </Grid>
     );
 }

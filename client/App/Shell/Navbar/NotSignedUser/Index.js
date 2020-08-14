@@ -19,12 +19,13 @@ export default ({ isHomepage }) => {
             </Button>
             <Button component={Link} to='/signIn'
                 className={`${isHomepage ? classes.lightText : classes.darkText} 
-        ${classes.button}`}
+                    ${classes.button}`}
             >
                 {'כניסת משתמשים'}
             </Button>
             <Button component={Link} to='/signUp'
-                className={`${isHomepage ? classes.lightText : classes.darkText} ${classes.button} ${classes.bold}`}>
+                className={`${isHomepage ? classes.lightText : classes.darkText} 
+                    ${classes.button} ${classes.bold}`}>
                 {'הצטרפות כיוצרים'}
             </Button>
         </Box>)

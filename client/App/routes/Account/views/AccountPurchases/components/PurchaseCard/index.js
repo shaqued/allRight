@@ -6,21 +6,10 @@ import {
     CardMedia, CardActions, IconButton, Link
 } from '@material-ui/core';
 import { Share as ShareIcon } from '@material-ui/icons';
-import { getDisplayDate, convertDataToImage } from 'clientCommon/Util';
+import { getDisplayDate, convertDataToImage, manipulationOnImage } from 'clientCommon/Util';
 import Axios from 'axios';
 import MediaType from 'common/mediaType';
 import UsageType from 'common/usageType';
-
-// const UsageType = {
-//     onlyMe: 'אישי',
-//     single: 'בודד',
-//     multiple: 'מרובה'
-// };
-
-// const MediaType = {
-//     online: 'Online',
-//     offline: 'Offline'
-// };
 
 export default function ({ purchase }) {
     const classes = useStyles(),
@@ -48,7 +37,8 @@ export default function ({ purchase }) {
                         <CardMedia
                             className={classes.cover}
                             component="img"
-                            src={ip.image ? convertDataToImage(ip.image.data.data) : songPicture}
+                            //src={ip.image ? convertDataToImage(ip.image.data) : songPicture}
+                            src={ip.image ? manipulationOnImage(ip) : songPicture}
                         />
                     </Link>
                     <Grid container justify="space-between" alignContent='space-between' className={classes.cardContent}>

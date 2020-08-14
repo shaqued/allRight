@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import useStyles from './license-plan-dialog.css';
 import ContractSigning from './steps/contract-signing';
 import LicenseSelection from './steps/license-selection';
 import { Dialog, Stepper, Step, StepLabel, Typography, Button } from '@material-ui/core';
+import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
 
 export default ({ onClose, open, ip, selectedPriceSection }) => {
-    const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(0);
-    const steps = ["בחירת רישיון", "חתימת חוזה שימוש", "הוספה לסל"];
+    const classes = useStyles(),
+        [activeStep, setActiveStep] = useState(0),
+        [selectedRange, setSelectedRange] = useState({}),
+        steps = ["בחירת רישיון", "חתימת חוזה שימוש", "הוספה לסל"],
+        userStore = useContext(UserStoreContext);
 
     const getStepContent = stepIndex => {
         switch (stepIndex) {
             case 0:
-                return <LicenseSelection selectedPriceSection={selectedPriceSection} />;
+                return <LicenseSelection selectedPriceSection={selectedPriceSection} onSelect={setSelectedRange}/>;
             case 1:
                 return <ContractSigning ip={ip} />;
             case 2:
@@ -28,6 +31,15 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const handleFinish = async () => {
+        const cb = await userStore.AddToCart ({
+            ipId: ip._id,
+            range: selectedRange
+        });
+
+        handleClose(cb);
     };
 
     const handleReset = () => {
@@ -54,17 +66,17 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
                     })}
                 </Stepper>
                 <div>
-                    {activeStep === steps.length ? (
+                    {/* {activeStep === steps.length ? (
                         <div>
                             <Typography className={classes.instructions}>
-                                הוספה לסל התסיימה בהצלחה
+                                הקניה שלך התווספה לעגלת הקניות!
                             </Typography>
                             <Button onClick={handleReset} 
                                     className={classes.button}>
                                 איפוס
                             </Button>
                         </div>
-                    ) : (
+                    ) : ( */}
                             <div>
                                 <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                                 <div>
@@ -76,13 +88,13 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
                                     <Button
                                         variant="contained"
                                         color="primary"
-                                        onClick={handleNext}
+                                        onClick={activeStep === steps.length - 1 ? handleFinish : handleNext}
                                         className={classes.button}>
                                         {activeStep === steps.length - 1 ? 'סיום' : 'הבא'}
                                     </Button>
                                 </div>
                             </div>
-                        )}
+                        {/* )} */}
                 </div>
             </div>
         </Dialog>
