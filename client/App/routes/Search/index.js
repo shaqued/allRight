@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import history from '../../../history'
+import categories from '../../../assets/constants/categories'
 
 export default () => {
     const classes = useStyles();
@@ -23,7 +24,7 @@ export default () => {
     const [searchDisplay, setSearchDisplay] = useState(initQuery);
     const [query, setQuery] = useState({
         name: initQuery || '',
-        type: '',
+        tag: '',
         category: '',
         performer: initQuery || ''
     });
@@ -96,8 +97,8 @@ export default () => {
                         <TableRow>
                             <TableCell align="right" />
                             <TableCell align="right">{'שם היצירה'}</TableCell>
-                            <TableCell align="right">{'שם היוצר'}</TableCell>
-                            <TableCell align="right">{'אלבום'}</TableCell>
+                            <TableCell align="right">{'שם האמן'}</TableCell>
+                            <TableCell align="right">{'קטגוריה'}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -108,7 +109,7 @@ export default () => {
                                 </TableCell>
                                 <LinkedTableCell id={ip._id} value={ip.name} />
                                 <LinkedTableCell id={ip._id} value={ip.performer} />
-                                <LinkedTableCell id={ip._id} value={"פופ"} />
+                                <LinkedTableCell id={ip._id} value={categories[ip.category]} />
                             </TableRow>
                         ))}
                     </TableBody>

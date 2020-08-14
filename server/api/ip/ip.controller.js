@@ -6,6 +6,8 @@ import {Tags} from '../../constant/ipTag.const';
 import {Types} from '../../constant/ipType.const';
 import {getNameById} from '../user/user.controller';
 import Ip from './ip.model';
+import { common } from '@material-ui/core/colors';
+import mongoose from 'mongoose'
 
 const fs = require('fs-extra');
 
@@ -178,9 +180,19 @@ async function create (req, res) {
         };
     }
 
-    const newIp = await Ip.create(ip);
+    if (ip.tag) {
+        ip.tag = JSON.parse(ip.tag)
+    }
 
-    res.sendStatus(201).send({id: newIp._id});
+    ip.price = JSON.parse(ip.price)
+    ip.owners = JSON.parse(ip.owners)
+
+    if (!ip._id) {
+        ip._id = mongoose.Types.ObjectId();
+    }
+
+    const newIp = await Ip.findOneAndUpdate({ _id: ip._id }, ip, { upsert: true });
+    res.send(201);
 }
 
 async function update (req, res) {
@@ -247,8 +259,8 @@ async function addComment (req, res) {
         res.status(200);
     }
 }
-function tagsValidation (tags) {
-    for (const tag of tags) {
+function tagsValidation(tags) {
+    for (const tag of JSON.parse(tags)) {
         if (!Object.values(Tags).includes(tag)) {
             return false;
         }
@@ -260,7 +272,7 @@ function tagsValidation (tags) {
 function ownersValidation (owners) {
     let sum = 0;
 
-    for (const e of owners) {
+    for (const e of JSON.parse(owners)) {
         sum += e.percentageOfOwnership;
     }
 

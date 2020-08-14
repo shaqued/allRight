@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import SearchBar from '../../components/SearchBar'
 import { makeStyles, Box, Typography, Link } from '@material-ui/core';
 import useToggle from '../../../../hooks/use-toggle'
-import categories from './categories'
-import types from './types'
+import categories from '../../../../assets/constants/categories'
+import tags from '../../../../assets/constants/tags'
 import Select from './Select'
 
 export default ({ onSearch, setQuery, value }) => {
     const classes = useStyles();
-    const [type, setType] = useState('');
+    const [tag, setTag] = useState('');
     const [category, setCategory] = useState('');
     const { Toggle, isRightSelected: isByName } = useToggle();
 
@@ -21,15 +21,15 @@ export default ({ onSearch, setQuery, value }) => {
         setQuery(x => ({ ...x, category: value }));
     };
 
-    const handleTypeChange = ({ target: { value } }) => {
-        setType(value);
-        setQuery(x => ({ ...x, type: value }));
+    const handleTagChange = ({ target: { value } }) => {
+        setTag(value);
+        setQuery(x => ({ ...x, tag: value }));
     };
 
     const clearQuery = () => {
-        setType('');
+        setTag('');
         setCategory('');
-        setQuery(x => ({ ...x, category: '', type: '' }));
+        setQuery(x => ({ ...x, category: '', tag: '' }));
     };
 
     const handleInputChange = ({ target: { value } }) => setQuery(x => isByName ? ({ ...x, name: value, performer: '' }) : ({ ...x, performer: value, name: '' }))
@@ -53,13 +53,13 @@ export default ({ onSearch, setQuery, value }) => {
                         value={category} />
                 </Box>
                 <Box>
-                    <Typography>{"סוג היצירה"}</Typography>
+                    <Typography>{"תגית"}</Typography>
                     <Select
-                        placeholder={"כל הסוגים"}
-                        menuItems={types}
-                        onSelect={handleTypeChange}
+                        placeholder={"כל התגיות"}
+                        menuItems={tags}
+                        onSelect={handleTagChange}
                         className={classes.select}
-                        value={type} />
+                        value={tag} />
                 </Box>
                 <Link variant={'body1'} color={'textPrimary'} className={classes.text} component={'button'} onClick={clearQuery} gutterBottom>
                     {'ניקוי סינונים'}
