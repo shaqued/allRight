@@ -24,7 +24,7 @@ export default () => {
                         <Typography variant='body1' className={classes.text} gutterBottom>
                             {'מעוניינים להעלות את היצירות שלכם?'}
                         </Typography>
-                        <Link variant='body1' color='textSecondary' className={classes.text} gutterBottom>
+                        <Link href={'/signUp'} variant='body1' color='textSecondary' className={classes.text} gutterBottom>
                             {'הצטרפו אלינו בקליק'}
                         </Link>
                     </Box>

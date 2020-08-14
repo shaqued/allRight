@@ -4,7 +4,7 @@ import { MenuItem, FormControl, Typography, FormGroup, FormControlLabel, FormHel
 import categories from '../../../assets/constants/categories'
 import tagsList from '../../../assets/constants/tags'
 import Axios from "axios";
-import Navbar from '../../Shell/Navbar/Light'
+import Navbar from '../../Shell/Navbar'
 import Owners from "./Owners";
 import Price from "./Price";
 import EditIcon from '@material-ui/icons/Edit';
