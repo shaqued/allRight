@@ -30,7 +30,7 @@ export default ({ selectedPriceSection, onSelect }) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {selectedPriceSection.map((row) => {
+                        {selectedPriceSection.map((row, index) => {
                             const isItemSelected = isSelected(row);
 
                             return (
@@ -40,7 +40,7 @@ export default ({ selectedPriceSection, onSelect }) => {
                                     role="checkbox"
                                     aria-checked={isItemSelected}
                                     tabIndex={-1}
-                                    key={row.name}
+                                    key={index}
                                     selected={isItemSelected}>
                                     <TableCell padding="checkbox">
                                         <Checkbox

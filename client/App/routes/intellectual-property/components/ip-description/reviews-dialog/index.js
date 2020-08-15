@@ -135,8 +135,8 @@ export default ({ onClose, open, ip }) => {
                     </Card>
                 )}
                 {reviews &&
-                    reviews.map((review) => (
-                        <Card className={classes.root}>
+                    reviews.map((review, index) => (
+                        <Card className={classes.root} key={index}>
                             <CardHeader
                                 avatar={
                                     <Avatar className={classes.avatar}>

@@ -21,7 +21,7 @@ export const update = async (req) =>
         throw createError(403)
     }
 
-    return User.findByIdAndUpdate(updatedUser._id, {$set: updatedUser})
+    return User.findByIdAndUpdate(updatedUser._id, updatedUser)
 }
 
 module.exports = {
