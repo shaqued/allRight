@@ -19,5 +19,8 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%'
+  },
+  exitButton: {
+    alignItems: 'flex-start'
   }
 }));
