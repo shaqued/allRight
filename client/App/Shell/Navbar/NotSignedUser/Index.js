@@ -38,10 +38,10 @@ const useStyles = makeStyles((theme) => ({
         height: 'fit-content',
     },
     lightText: {
-        color: theme.palette.text.secondary
+        color: `${theme.palette.text.secondary}!important`
     },
     darkText: {
-        color: theme.palette.text.primary
+        color: `${theme.palette.text.primary}!important`
     },
     bold: {
         fontWeight: "bold"

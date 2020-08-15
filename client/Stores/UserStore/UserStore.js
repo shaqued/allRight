@@ -41,7 +41,7 @@ export class UserStore {
     }
 
     @action AddToCart = (cartItem) => {
-        this.UserData.cart.push(cartItem);;
+        this.UserData.cart.push(cartItem);
 
         // TODO: bring back after server bug fixed
         return axios.put(`/api/users`, {

@@ -38,7 +38,7 @@ export default ({ ip }) => {
                 </Typography>
             </Grid>
             {suggestedIps.map((tile) => (
-                <IpCard classes={classes} {...tile} key={`${tile._id}`} onClick={() => goToIp(tile._id)} />
+                <IpCard classes={classes} {...tile} key={tile._id} onClick={() => goToIp(tile._id)} />
             ))}
         </Box>
     );

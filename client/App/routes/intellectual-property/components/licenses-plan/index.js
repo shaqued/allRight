@@ -14,7 +14,7 @@ export default ({ ip }) => {
             success: "נוסף לעגלה בהצלחה!",
             error: "אוי לא, משהו השתבש. נסו שנית מאוחר יותר"
         },
-        [addToCartStatus, setAddToCartStatus] = useState(''),
+        [addToCartStatus, setAddToCartStatus] = useState('success'),
         [priceRange, setPriceRange] = useState([]);
 
     let plansDictionary = {
@@ -31,19 +31,13 @@ export default ({ ip }) => {
         setIsDialogOpen(true);
     };
 
-    const handleDialogClose = (cb) => {
+    const handleDialogClose = (response) => {
         setIsDialogOpen(false);
-        cb.then((res) => {
-            respone.status == 200 ? setDeleteStatus('success') : setDeleteStatus('error');
-            setShowSnackbar(true);
-        })
+        response.status == 200 ? setAddToCartStatus('success') : setAddToCartStatus('error');
+        setShowSnackbar(true);
     };
 
     const handleSnackClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-
         setShowSnackbar(false);
     };
     
@@ -78,8 +72,8 @@ export default ({ ip }) => {
             <CssBaseline />
             <Container maxWidth="md" component="main">
                 <Grid container spacing={5} alignItems="flex-end">
-                    {tiers.map((tier) => (
-                        <Grid item key={tier.title} xs={12} md={4}>
+                    {tiers.map((tier, index) => (
+                        <Grid item key={index} xs={12} md={4}>
                             <Card>
                                 <CardHeader
                                     title={tier.title}
@@ -95,8 +89,8 @@ export default ({ ip }) => {
                                         </Typography>
                                     </div>
                                     <ul>
-                                        {tier.description.map((line) => (
-                                            <Typography component="li" color="textPrimary" variant="body2" align="center" key={line}>
+                                        {tier.description.map((line, index) => (
+                                            <Typography component="li" color="textPrimary" variant="body2" align="center" key={index}>
                                                 {line}
                                             </Typography>
                                         ))}
