@@ -22,5 +22,10 @@ export default makeStyles((theme) => ({
   },
   exitButton: {
     alignItems: 'flex-start'
+  },
+  totalRating: {
+    alignSelf: 'end',
+    margin: '2%',
+    direction: 'ltr'
   }
 }));

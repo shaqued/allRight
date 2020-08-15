@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import useStyles from "./reviews-dialog.css";
 import { Rating } from "@material-ui/lab";
 import { UserStoreContext } from "stores/UserStore/UserStoreProvider";
+import {mean, ceil} from 'lodash';
 import {
   Dialog,
   Stepper,
@@ -22,15 +23,20 @@ import history from "../../../../../../history";
 
 export default ({ onClose, open, ip }) => {
   const classes = useStyles();
+
+  const calculateAverageScore = () => ceil(mean(reviews && reviews.map(x => x.scoring)), 2)
+
   const [writeReview, setwriteReview] = React.useState(false);
   const [reviews, setReviews] = React.useState(ip && ip.reviews);
+  const [totalScore, setTotalScore] = React.useState(calculateAverageScore());
   const [newScoring, setNewScoring] = React.useState(0);
   const [newComment, setNewComment] = React.useState("");
+  
   const userStore = useContext(UserStoreContext);
   const loggedUserInitials =
-    userStore.UserData.name.first[0] + userStore.UserData.name.last[0];
-    const loggedUserName =
-    userStore.UserData.name.first + " " + userStore.UserData.name.last;
+    userStore.UserData && (userStore.UserData.name.first[0] + userStore.UserData.name.last[0]);
+  const loggedUserName =
+    userStore.UserData && (userStore.UserData.name.first + " " + userStore.UserData.name.last);
 
   const handleCommentChange = ({ target: { value } }) => setNewComment(value);
   const handleScoringChange = ({ target: { value } }) => setNewScoring(value);
@@ -44,15 +50,20 @@ export default ({ onClose, open, ip }) => {
       const newReview = {
         user: userStore.UserData,
         comment: newComment,
-        scoring: newScoring,
+        scoring: parseInt(newScoring),
       };
 
-      const response = await Axios.put(`/api/ip/${ip._id}/addComment`, newReview);
+      const response = await Axios.put(
+        `/api/ip/${ip._id}/addComment`,
+        newReview
+      );
 
       if (response && response.status === 200) {
         toggleAddReview();
-        setReviews([...reviews, {...newReview, userName: loggedUserName}]);
-
+        setReviews([...reviews, { ...newReview, userName: loggedUserName }]);
+        setNewScoring(0);
+        setNewComment("");
+        setTotalScore(calculateAverageScore());
       }
     } catch (e) {
       alert("לא הצלחנו לשמור את התגובה, נסו שוב במועד מאוחד יותר");
@@ -72,6 +83,10 @@ export default ({ onClose, open, ip }) => {
 
   return (
     <Dialog onClose={onClose} aria-labelledby="simple-dialog-title" open={open}>
+      <Typography variant={"h2"} className={classes.root} gutterBottom>
+        {'ציון משוקלל: ' + totalScore}
+      </Typography>
+      <Rating value={totalScore} precision={0.5} className={classes.totalRating} readOnly/>
       <div className={classes.dialog}>
         {!writeReview ? null : (
           <Card className={classes.root}>
@@ -113,7 +128,8 @@ export default ({ onClose, open, ip }) => {
             </CardActions>
           </Card>
         )}
-        { reviews && reviews.map((review) => (
+        {reviews &&
+          reviews.map((review) => (
             <Card className={classes.root}>
               <CardHeader
                 avatar={
