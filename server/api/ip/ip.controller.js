@@ -4,7 +4,7 @@ import Deezer from 'deezer-web-api';
 import {Categories} from '../../constant/ipCategory.const';
 import {Tags} from '../../constant/ipTag.const';
 import {Types} from '../../constant/ipType.const';
-import {getNameById} from '../user/user.controller';
+import {getNameByIdForAddComment} from '../user/user.controller';
 import Ip from './ip.model';
 import { common } from '@material-ui/core/colors';
 import mongoose from 'mongoose'
@@ -244,7 +244,7 @@ async function addComment (req, res) {
     }
 
     // Getting user name
-    const name = await getNameById(req.body.user);
+    const name = await getNameByIdForAddComment(req.body.user);
     
     const comment = req.body;
 
