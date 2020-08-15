@@ -10,7 +10,8 @@ export const getAll = async () => User.find();
 
 export const update = async (req) => 
 {
-    const updatedUser  = req.body;
+    console.log(req.body);
+    const updatedUser  = req.body.user;
     
     if(req.user._id !== updatedUser._id) {
         throw createError(403)
