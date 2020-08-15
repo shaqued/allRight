@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import useStyles from "./reviews-dialog.css";
 import { Rating } from "@material-ui/lab";
 import { UserStoreContext } from "stores/UserStore/UserStoreProvider";
@@ -17,18 +17,20 @@ import {
   TextField,
   IconButton,
 } from "@material-ui/core";
-import { formatDate } from "../../../../../../common/Util";
 import Axios from "axios";
 import history from "../../../../../../history";
 
 export default ({ onClose, open, ip }) => {
   const classes = useStyles();
   const [writeReview, setwriteReview] = React.useState(false);
+  const [reviews, setReviews] = React.useState(ip && ip.reviews);
   const [newScoring, setNewScoring] = React.useState(0);
   const [newComment, setNewComment] = React.useState("");
   const userStore = useContext(UserStoreContext);
   const loggedUserInitials =
     userStore.UserData.name.first[0] + userStore.UserData.name.last[0];
+    const loggedUserName =
+    userStore.UserData.name.first + " " + userStore.UserData.name.last;
 
   const handleCommentChange = ({ target: { value } }) => setNewComment(value);
   const handleScoringChange = ({ target: { value } }) => setNewScoring(value);
@@ -39,14 +41,18 @@ export default ({ onClose, open, ip }) => {
 
   const addReview = async () => {
     try {
-      const response = await Axios.put(`/api/ip/${ip._id}/addComment`, {
-        user:  userStore.UserData._id,
+      const newReview = {
+        user: userStore.UserData,
         comment: newComment,
-        scoring: newScoring
-      });
+        scoring: newScoring,
+      };
+
+      const response = await Axios.put(`/api/ip/${ip._id}/addComment`, newReview);
 
       if (response && response.status === 200) {
         toggleAddReview();
+        setReviews([...reviews, {...newReview, userName: loggedUserName}]);
+
       }
     } catch (e) {
       alert("לא הצלחנו לשמור את התגובה, נסו שוב במועד מאוחד יותר");
@@ -81,7 +87,6 @@ export default ({ onClose, open, ip }) => {
                 " " +
                 userStore.UserData.name.last
               }
-              subheader={formatDate(new Date())}
             />
             <CardContent className={classes.cardContent}>
               <TextField
@@ -108,8 +113,7 @@ export default ({ onClose, open, ip }) => {
             </CardActions>
           </Card>
         )}
-        {ip.reviews &&
-          ip.reviews.map((review) => (
+        { reviews && reviews.map((review) => (
             <Card className={classes.root}>
               <CardHeader
                 avatar={
@@ -118,7 +122,6 @@ export default ({ onClose, open, ip }) => {
                   </Avatar>
                 }
                 title={review.userName}
-                subheader={formatDate(new Date(review.creationDate))}
               />
               <CardContent className={classes.cardContent}>
                 <Typography variant="body2" color="textPrimary" component="p">
