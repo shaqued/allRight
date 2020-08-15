@@ -195,7 +195,8 @@ async function create(req, res) {
 
   ip.price = JSON.parse(ip.price);
   ip.owners = JSON.parse(ip.owners);
-
+  ip.reviews = [];
+  
   if (!ip._id) {
     ip._id = mongoose.Types.ObjectId();
   }

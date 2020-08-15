@@ -24,7 +24,13 @@ import history from "../../../../../../history";
 export default ({ onClose, open, ip }) => {
   const classes = useStyles();
 
-  const calculateAverageScore = () => ceil(mean(reviews && reviews.map(x => x.scoring)), 2)
+  const calculateAverageScore = () => {
+    if (reviews && reviews.length != 0){
+      return ceil(mean(reviews.map(x => x.scoring)), 2);
+    } else {
+      return 0;
+    }
+  }
 
   const [writeReview, setwriteReview] = React.useState(false);
   const [reviews, setReviews] = React.useState(ip && ip.reviews);

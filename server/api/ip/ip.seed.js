@@ -21664,6 +21664,7 @@ export default {
             category: Categories.Pop,
             tag: [Tags.Happy],
             composer: 'מרגי וגולדשטיין',
+            reviews: [],
             performer: 'מרגי',
             writer: ' יהונתן מרגי, יונתן גולדשטיין וטליסמאן',
             owners: [{user: user3.id, percentageOfOwnership: 100}],
