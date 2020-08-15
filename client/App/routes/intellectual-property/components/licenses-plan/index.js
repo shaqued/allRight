@@ -68,7 +68,7 @@ export default ({ ip }) => {
     ];
 
     return (
-        <Grid container>
+        <Grid item container>
             <CssBaseline />
             <Container maxWidth="md" component="main">
                 <Grid container spacing={5} alignItems="flex-end">

@@ -40,7 +40,7 @@ export default () => {
 
             <Box className={classes.content}>
                 {ips.map(ip =>
-                    <IpCard classes={classes} {...ip} key={`${ip._id}`} onClick={() => goToIp(ip._id)} />
+                    <IpCard classes={classes} {...ip} key={ip._id} onClick={() => goToIp(ip._id)} />
                 )}
             </Box>
         </Box>
