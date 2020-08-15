@@ -15,7 +15,7 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
     const getStepContent = stepIndex => {
         switch (stepIndex) {
             case 0:
-                return <LicenseSelection selectedPriceSection={selectedPriceSection} onSelect={setSelectedRange}/>;
+                return <LicenseSelection selectedPriceSection={selectedPriceSection} onSelect={setSelectedRange} />;
             case 1:
                 return <ContractSigning ip={ip} />;
             case 2:
@@ -24,6 +24,7 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
                 return <div />;
         }
     }
+
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -34,7 +35,7 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
     };
 
     const handleFinish = async () => {
-        userStore.AddToCart ({
+        userStore.AddToCart({
             ipId: ip._id,
             range: selectedRange
         }).then((res) => handleClose(res));
@@ -49,9 +50,12 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
         onClose(res);
     };
 
+    const userStore = useContext(UserStoreContext);
+
     return (
-        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-            <div className={classes.dialog}>
+        <Dialog onClose={handleClose} open={open}>
+            {userStore.UserData ? 
+            (<div className={classes.dialog}>
                 <Stepper activeStep={activeStep}>
                     {steps.map((label) => {
                         const stepProps = {};
@@ -64,37 +68,52 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
                     })}
                 </Stepper>
                 <div>
-                    {/* {activeStep === steps.length ? (
+                    <Typography className={classes.instructions}>
+                        {getStepContent(activeStep)}
+                    </Typography>
+                    <div>
+                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                         <div>
-                            <Typography className={classes.instructions}>
-                                הקניה שלך התווספה לעגלת הקניות!
-                            </Typography>
-                            <Button onClick={handleReset} 
-                                    className={classes.button}>
-                                איפוס
+                            <Button disabled={activeStep === 0}
+                                onClick={handleBack}
+                                className={classes.button}>
+                                חזור
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={activeStep === steps.length - 1 ? handleFinish : handleNext}
+                                className={classes.button}>
+                                {activeStep === steps.length - 1 ? 'סיום' : 'הבא'}
                             </Button>
                         </div>
-                    ) : ( */}
-                            <div>
-                                <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                                <div>
-                                    <Button disabled={activeStep === 0} 
-                                            onClick={handleBack} 
-                                            className={classes.button}>
-                                        חזור
-                                    </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        onClick={activeStep === steps.length - 1 ? handleFinish : handleNext}
-                                        className={classes.button}>
-                                        {activeStep === steps.length - 1 ? 'סיום' : 'הבא'}
-                                    </Button>
-                                </div>
-                            </div>
-                        {/* )} */}
+                    </div>
                 </div>
-            </div>
+            </div>) : 
+            (<div>
+                <Typography variant="h2" className={classes.root} gutterBottom>
+                    {"רוצים לבצע רכישה?"}
+                </Typography>
+                <Typography variant="h2" className={classes.root} gutterBottom>
+                    {" התחברו או הירשמו בקליק"}
+                </Typography>
+                <Button
+                    component={Link}
+                    to="/signUp"
+                    color="primary"
+                    variant="contained"
+                    className={classes.button}
+                >
+                    {"הצטרפו אלינו"}
+                </Button>
+                <Button
+                    component={Link}
+                    to="/signIn"
+                    className={`${classes.darkText} ${classes.button}`}
+                >
+                    {"כניסת משתמשים"}
+                </Button>
+            </div>)}
         </Dialog>
     );
-}
+};

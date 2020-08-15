@@ -19,5 +19,13 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%'
+  },
+  exitButton: {
+    alignItems: 'flex-start'
+  },
+  totalRating: {
+    alignSelf: 'end',
+    margin: '2%',
+    direction: 'ltr'
   }
 }));

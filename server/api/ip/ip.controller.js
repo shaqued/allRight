@@ -1,37 +1,36 @@
-import createError from 'http-errors';
-import {body, validationResult} from 'express-validator/check';
-import Deezer from 'deezer-web-api';
-import {Categories} from '../../constant/ipCategory.const';
-import {Tags} from '../../constant/ipTag.const';
-import {Types} from '../../constant/ipType.const';
-import {getNameById} from '../user/user.controller';
-import Ip from './ip.model';
-import { common } from '@material-ui/core/colors';
-import mongoose from 'mongoose'
+import createError from "http-errors";
+import { body, validationResult } from "express-validator/check";
+import Deezer from "deezer-web-api";
+import { Categories } from "../../constant/ipCategory.const";
+import { Tags } from "../../constant/ipTag.const";
+import { Types } from "../../constant/ipType.const";
+import { getNameByIdForAddComment } from "../user/user.controller";
+import Ip from "./ip.model";
+import { common } from "@material-ui/core/colors";
+import mongoose from "mongoose";
 
-const fs = require('fs-extra');
+const fs = require("fs-extra");
 
 const SUGGESTED_SONGS_COUNT = 7;
 
 const DeezerClient = new Deezer();
 
-
-async function suggestedIps (req, res) {
+async function suggestedIps(req, res) {
     const ip = await getById(req, res);
 
     const ips = await Ip.find({
-        _id: {$ne: ip._id},
+        _id: { $ne: ip._id },
         $or: [
-            {performer: ip.performer},
-            {category: ip.category},
-            {tag: {$in: ip.tag}}
-        ]
+            { performer: ip.performer },
+            { category: ip.category },
+            { tag: { $in: ip.tag } },
+        ],
     }).lean();
 
     let count = SUGGESTED_SONGS_COUNT;
     const result = new Array(SUGGESTED_SONGS_COUNT);
 
-    let {length} = ips;
+    let { length } = ips;
 
     if (count > length) {
         return ips;
@@ -46,14 +45,14 @@ async function suggestedIps (req, res) {
         taken[x] = --length in taken ? taken[length] : length;
     }
 
-    result.forEach(x => {
+    result.forEach((x) => {
         let buff;
 
         let strImage;
 
         if (x.image) {
             buff = Buffer.from(x.image.data.buffer);
-            strImage = buff.toString('base64');
+            strImage = buff.toString("base64");
             x.image.data = strImage;
         }
     });
@@ -61,65 +60,74 @@ async function suggestedIps (req, res) {
     return result;
 }
 
-async function popularIps () {
-    const ips = await Ip.aggregate([{$sort: {purchasesCounter: -1}},
-    {$limit: 10}]);
+async function popularIps() {
+    const ips = await Ip.aggregate([
+        { $sort: { purchasesCounter: -1 } },
+        { $limit: 10 },
+    ]);
 
     return ips;
 }
 
-async function search (query) {
+async function search(query) {
     const ips = await Ip.aggregate([query]);
 
     return ips;
 }
 
-async function getAll (req, res) {
+async function getAll(req, res) {
     try {
-        if (req.query.popular === 'true') {
+        if (req.query.popular === "true") {
             return await popularIps();
-        }
-        else if (req.query.category || req.query.type || req.query.name || req.query.performer) {
+        } else if (
+            req.query.category ||
+            req.query.type ||
+            req.query.name ||
+            req.query.performer
+        ) {
             const orClause = [];
             const regularClause = [];
 
             if (req.query.category) {
-                regularClause.push({category: req.query.category});
+                regularClause.push({ category: req.query.category });
             }
 
             if (req.query.type) {
-                regularClause.push({type: req.query.type});
+                regularClause.push({ type: req.query.type });
             }
 
             if (req.query.tag) {
-                regularClause.push({tag: {$regex: `^${req.query.tag}`, $options: 'i'}});
+                regularClause.push({
+                    tag: { $regex: `^${req.query.tag}`, $options: "i" },
+                });
             }
 
             if (req.query.name) {
-                orClause.push({name: {$regex: req.query.name, $options: 'i'}});
+                orClause.push({ name: { $regex: req.query.name, $options: "i" } });
             }
 
             if (req.query.performer) {
-                orClause.push({performer: {$regex: req.query.performer, $options: 'i'}});
+                orClause.push({
+                    performer: { $regex: req.query.performer, $options: "i" },
+                });
             }
 
             if (orClause.length > 0) {
-                regularClause.push({$or: orClause});
+                regularClause.push({ $or: orClause });
             }
 
-            return await search({$match: {$and: regularClause}});
+            return await search({ $match: { $and: regularClause } });
         }
 
         const ips = await Ip.find();
 
         return ips;
-    }
- catch (error) {
+    } catch (error) {
         createError(error);
     }
 }
 
-async function getById (req, res) {
+async function getById(req, res) {
     const ip = await Ip.findById(req.params.id).lean();
 
     if (!ip) {
@@ -131,36 +139,37 @@ async function getById (req, res) {
 
     if (ip.image) {
         buff = Buffer.from(ip.image.data.buffer);
-        strImage = buff.toString('base64');
+        strImage = buff.toString("base64");
         ip.image.data = strImage;
     }
 
     return ip;
 }
 
-async function getOwnerIps (req, res) {
-    const ips = await Ip.find({owners: {$elemMatch: {user: req.params.id}}});
+async function getOwnerIps(req, res) {
+    const ips = await Ip.find({
+        owners: { $elemMatch: { user: req.params.id } },
+    });
 
     return ips;
 }
 
-async function getSample (ip) {
+async function getSample(ip) {
     try {
-        const res = await DeezerClient.infos.search('track', encodeURI(ip.name));
-        const track = res.data.find(x => x.artist.name === ip.performer);
+        const res = await DeezerClient.infos.search("track", encodeURI(ip.name));
+        const track = res.data.find((x) => x.artist.name === ip.performer);
 
         return track !== undefined ? track.preview : res.data[0].preview;
-    }
- catch (error) {
+    } catch (error) {
         console.log(error);
     }
 }
 
-async function create (req, res) {
+async function create(req, res) {
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors.array()});
+        res.status(422).json({ errors: errors.array() });
 
         return;
     }
@@ -175,31 +184,34 @@ async function create (req, res) {
         const img = fs.readFileSync(req.file.path);
 
         ip.image = {
-            contentType: 'image/jpeg',
-            data: img
+            contentType: "image/jpeg",
+            data: img,
         };
     }
 
     if (ip.tag) {
-        ip.tag = JSON.parse(ip.tag)
+        ip.tag = JSON.parse(ip.tag);
     }
 
-    ip.price = JSON.parse(ip.price)
-    ip.owners = JSON.parse(ip.owners)
+    ip.price = JSON.parse(ip.price);
+    ip.owners = JSON.parse(ip.owners);
+    ip.reviews = [];
 
     if (!ip._id) {
         ip._id = mongoose.Types.ObjectId();
     }
 
-    const newIp = await Ip.findOneAndUpdate({ _id: ip._id }, ip, { upsert: true });
+    const newIp = await Ip.findOneAndUpdate({ _id: ip._id }, ip, {
+        upsert: true,
+    });
     res.send(201);
 }
 
-async function update (req, res) {
+async function update(req, res) {
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors.array()});
+        res.status(422).json({ errors: errors.array() });
 
         return;
     }
@@ -209,53 +221,54 @@ async function update (req, res) {
         const img = fs.readFileSync(req.file.path);
 
         ip.image = {
-            contentType: 'image/jpeg',
-            data: img
+            contentType: "image/jpeg",
+            data: img,
         };
     }
 
-    const updated = await Ip.findByIdAndUpdate(req.params.id, ip, {new: true});
+    const updated = await Ip.findByIdAndUpdate(req.params.id, ip, { new: true });
 
     if (!updated) {
         res.status(404);
-    }
- else {
+    } else {
         res.status(200);
     }
 }
 
-async function destroy ({params: {id}}, res) {
+async function destroy({ params: { id } }, res) {
     const removed = await Ip.findByIdAndRemove(id);
 
     if (!removed) {
         res.status(404);
-    }
- else {
+    } else {
         res.status(200);
     }
 }
-async function addComment (req, res) {
+async function addComment(req, res) {
     const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
 
     if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors.array()});
+        res.status(422).json({ errors: errors.array() });
 
         return;
     }
 
     // Getting user name
-    const name = await getNameById(req.body.user);
-    
-    const comment = req.body;
+    const name = await getNameByIdForAddComment(req.body.user._id);
+
+    const comment = { ...req.body, user: req.body.user._id };
 
     comment.userName = `${name.first} ${name.last}`;
 
-    const updated = await Ip.findByIdAndUpdate(req.params.id, {$push: {reviews: comment}}, {new: true});
+    const updated = await Ip.findByIdAndUpdate(
+        req.params.id,
+        { $push: { reviews: comment } },
+        { new: true }
+    );
 
     if (!updated) {
         res.status(404);
-    }
-    else {
+    } else {
         res.status(200);
     }
 }
@@ -269,7 +282,7 @@ function tagsValidation(tags) {
     return true;
 }
 
-function ownersValidation (owners) {
+function ownersValidation(owners) {
     let sum = 0;
 
     for (const e of JSON.parse(owners)) {
@@ -279,76 +292,86 @@ function ownersValidation (owners) {
     return sum === 100;
 }
 
-function validate (method) {
+function validate(method) {
     switch (method) {
-        case 'create': {
+        case "create": {
             return [
-                body('name').exists(),
-                body('category').optional()
-                    .custom(item => {
+                body("name").exists(),
+                body("category")
+                    .optional()
+                    .custom((item) => {
                         return Object.values(Categories).includes(item);
                     }),
-                body('tag').optional()
-                    .custom(tags => {
+                body("tag")
+                    .optional()
+                    .custom((tags) => {
                         return tagsValidation(tags);
                     }),
-                body('performer').exists(),
-                body('composer').exists(),
-                body('writer').exists(),
-                body('owners').exists()
-                    .custom(owners => {
+                body("performer").exists(),
+                body("composer").exists(),
+                body("writer").exists(),
+                body("owners")
+                    .exists()
+                    .custom((owners) => {
                         return ownersValidation(owners);
                     }),
-                body('price').exists(),
-                body('about').optional(),
-                body('type').optional()
-                    .custom(item => {
+                body("price").exists(),
+                body("about").optional(),
+                body("type")
+                    .optional()
+                    .custom((item) => {
                         return Object.values(Types).includes(item);
-                    })
+                    }),
             ];
         }
-        case 'update': {
+        case "update": {
             return [
-                body('name').optional()
-                    .notEmpty(),
-                body('category').optional()
-                    .custom(item => {
+                body("name").optional().notEmpty(),
+                body("category")
+                    .optional()
+                    .custom((item) => {
                         return Object.values(Categories).includes(item);
                     }),
-                body('tag').optional()
-                    .custom(tags => {
+                body("tag")
+                    .optional()
+                    .custom((tags) => {
                         return tagsValidation(tags);
                     }),
-                body('owners').optional()
-                    .custom(owners => {
+                body("owners")
+                    .optional()
+                    .custom((owners) => {
                         return ownersValidation(owners);
                     }),
-                body('price').optional(),
-                body('about').optional(),
-                body('type').optional()
-                    .custom(item => {
+                body("price").optional(),
+                body("about").optional(),
+                body("type")
+                    .optional()
+                    .custom((item) => {
                         return Object.values(Types).includes(item);
-                    })
+                    }),
             ];
         }
-        case 'addComment':
-        { return [
-            body('user').exists(),
-            body('comment').exists(),
-            body('scoring').exists()
-        ]; }
+        case "addComment": {
+            return [
+                body("user").exists(),
+                body("comment").exists(),
+                body("scoring").exists(),
+            ];
+        }
     }
 }
 
-async function addPurchase (id) {
+async function addPurchase(id) {
     const ip = await Ip.findById(id);
 
-    const updated = await Ip.findByIdAndUpdate(id, {purchasesCounter: ip.purchasesCounter + 1},
-        {new: true});
+    const updated = await Ip.findByIdAndUpdate(
+        id,
+        { purchasesCounter: ip.purchasesCounter + 1 },
+        { new: true }
+    );
 }
 
-
-async function ipIdMiddleware (id) {
+async function ipIdMiddleware(id) {
     const ip = await Ip.findById(id);
 
     return ip;
@@ -365,5 +388,5 @@ module.exports = {
     ipIdMiddleware,
     addPurchase,
     getOwnerIps,
-    addComment
+    addComment,
 };
