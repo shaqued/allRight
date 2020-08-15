@@ -10,13 +10,10 @@ export default ({ ip }) => {
     const classes = useStyles(),
         [suggestedIps, setSuggestedIps] = useState([]);
 
-    // useEffect(() => {
-    //     fetch();
-    // }, [ip]);
-    
     useEffect(() => {
-        fetch();
-    }, []);
+        if (ip._id)
+            fetch();
+    }, [ip]);
 
     const goToIp = (id) => {
         history.push(`/ip/${id}`);

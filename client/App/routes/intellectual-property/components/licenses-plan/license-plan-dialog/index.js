@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import useStyles from './license-plan-dialog.css';
 import ContractSigning from './steps/contract-signing';
 import LicenseSelection from './steps/license-selection';
+import { Link } from "react-router-dom";
 import { Dialog, Stepper, Step, StepLabel, Typography, Button } from '@material-ui/core';
 import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
 
@@ -50,8 +51,6 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
         onClose(res);
     };
 
-    const userStore = useContext(UserStoreContext);
-
     return (
         <Dialog onClose={handleClose} open={open}>
             {userStore.UserData ? 
@@ -68,25 +67,20 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
                     })}
                 </Stepper>
                 <div>
-                    <Typography className={classes.instructions}>
-                        {getStepContent(activeStep)}
-                    </Typography>
+                    <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                     <div>
-                        <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                        <div>
-                            <Button disabled={activeStep === 0}
-                                onClick={handleBack}
-                                className={classes.button}>
-                                חזור
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={activeStep === steps.length - 1 ? handleFinish : handleNext}
-                                className={classes.button}>
-                                {activeStep === steps.length - 1 ? 'סיום' : 'הבא'}
-                            </Button>
-                        </div>
+                        <Button disabled={activeStep === 0}
+                            onClick={handleBack}
+                            className={classes.button}>
+                            חזור
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={activeStep === steps.length - 1 ? handleFinish : handleNext}
+                            className={classes.button}>
+                            {activeStep === steps.length - 1 ? 'סיום' : 'הבא'}
+                        </Button>
                     </div>
                 </div>
             </div>) : 

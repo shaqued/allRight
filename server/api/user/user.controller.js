@@ -13,8 +13,6 @@ async function getNameByIdForAddComment (id) {
 
 export const getAll = async () => User.find();
 
-export const getAll = async () => User.find();
-
 export const update = async (req) => 
 {
     const updatedUser  = req.body;
