@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import useStyles from "./reviews-dialog.css";
 import { Rating } from "@material-ui/lab";
 import { UserStoreContext } from "stores/UserStore/UserStoreProvider";
@@ -63,10 +63,6 @@ export default ({ onClose, open, ip }) => {
 
     return "";
   };
-
-    useEffect(() => {
-        () => {};
-    }, [ip]);
 
   return (
     <Dialog onClose={onClose} aria-labelledby="simple-dialog-title" open={open}>
