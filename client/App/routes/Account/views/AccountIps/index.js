@@ -38,7 +38,7 @@ export default function (props) {
                 {/* TODO: dagan change path to create ip path */}
                 <Button
                     component={Link}
-                    to='/'
+                    to='/ip/create'
                     color='primary'
                     variant='contained'
                     className={classes.button}

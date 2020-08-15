@@ -41,18 +41,18 @@ export class UserStore {
     }
 
     @action AddToCart = (cartItem) => {
-        this.UserData.cart.push(cartItem);
+        this.UserData.cart.push(cartItem);;
 
         // TODO: bring back after server bug fixed
-        // return axios.put(`/api/users/${this.UserData._id}`, {
-        //     user: this.UserData
-        // });
+        return axios.put(`/api/users`, {
+            user: this.UserData
+        });
     }
 
     @action ClearCart = () => {
         this.UserData.cart = [];
-        // return axios.put(`/api/users/${this.UserData._id}`, {
-        //     user: this.UserData
-        // });
+        return axios.put(`/api/users`, {
+            user: this.UserData
+        });
     }
 }

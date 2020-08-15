@@ -26,10 +26,10 @@ export default function (props) {
 
     const fetchUser = async () => {
         try {
-            const userIdForTesting = '5f33096ce62e83151c775a71';
+            // const userIdForTesting = '5f33096ce62e83151c775a71';
             // TODO: dagan change to original user id
-            //const { data } = await Axios.get(`/api/users/${ user.id }`);
-            const { data } = await Axios.get(`/api/users/${userIdForTesting}`);
+            const { data } = await Axios.get(`/api/users/${ userData._id }`);
+            // const { data } = await Axios.get(`/api/users/${userIdForTesting}`);
             setUserData(data);
         } catch (e) {
             console.log(e);
