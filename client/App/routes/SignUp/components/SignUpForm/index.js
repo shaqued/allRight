@@ -8,8 +8,8 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
-import genderOptions from '../../../../../../server/common/genderOptions'
-import {omit} from 'lodash';
+import genderOptions from '../../../../../../common/genderOptions'
+import { omit } from 'lodash';
 
 export default function SignUpForm(props) {
     const classes = useStyles(),
@@ -29,15 +29,17 @@ export default function SignUpForm(props) {
         setFormFields((formFields) => ({ ...formFields, [fieldName]: value }));
     };
 
-    const handleSubmit =  (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const user = {...formFields, name: {
-            first: formFields.firstName,
-            last: formFields.lastName
-        }};
+        const user = {
+            ...formFields, name: {
+                first: formFields.firstName,
+                last: formFields.lastName
+            }
+        };
 
         user.birthDate = new Date(user.birthDate).toISOString();
-        
+
         omit(user, ['firstName', 'lastName']);
 
         userStore.Register(user)

@@ -4,7 +4,7 @@ import { single as emailAddress } from 'email-address';
 import passportLocalMongoose from 'passport-local-mongoose';
 import { createSeedModel } from 'mongoose-plugin-seed';
 import seed from './user.seed';
-import genderOptions from '../../../server/common/genderOptions'
+import genderOptions from '../../../common/genderOptions'
 
 const UserSchema = new Schema({
     name: {
@@ -77,7 +77,7 @@ UserSchema.plugin(passportLocalMongoose, {
 UserSchema.methods.setPassword = pify(UserSchema.methods.setPassword);
 
 UserSchema.methods.toJSON = function () {
-    const obj = this.toObject();
+  const obj = this.toObject();
 
     delete obj.hash;
     delete obj.salt;
