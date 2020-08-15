@@ -36,18 +36,9 @@ export default observer((props) => {
                             <Typography variant="h3" gutterBottom>עגלת הקניות</Typography>
                         </Grid>
                         {UserData.cart.map((cartItem, index) => (
-                            //purchase.cartItems.map(cartItem => (
                             <Grid item sm={6} key={index}>
-                                {/* <CartItemCard purchase={{
-                                ...purchase,
-                                ...cartItem,
-                                cartItems: undefined,
-                                '_id': cartItem._id,
-                                purchaseId: purchase._id,
-                                }} /> */}
                                 <CartItemCard cartItem={cartItem} />
                             </Grid>
-                            //))
                         ))}
                     </Grid>
                     <Grid item sm={2}>

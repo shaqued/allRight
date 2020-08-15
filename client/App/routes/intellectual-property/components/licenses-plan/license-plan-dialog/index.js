@@ -56,11 +56,11 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
             {userStore.UserData ? 
             (<div className={classes.dialog}>
                 <Stepper activeStep={activeStep}>
-                    {steps.map((label) => {
+                    {steps.map((label, index) => {
                         const stepProps = {};
                         const labelProps = {};
                         return (
-                            <Step key={label} {...stepProps}>
+                            <Step key={index} {...stepProps}>
                                 <StepLabel {...labelProps}>{label}</StepLabel>
                             </Step>
                         );
