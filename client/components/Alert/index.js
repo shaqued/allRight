@@ -6,9 +6,9 @@ function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function ({ handleClose, severity, open, children }) {
-    return (<Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert variant="standard" onClose={handleClose} severity={severity}>
+export default function ({ onClose, severity, open, children }) {
+    return (<Snackbar open={open} autoHideDuration={6000} onClose={onClose}>
+        <Alert variant="filled" onClose={onClose} severity={severity}>
             {children}
         </Alert>
     </Snackbar>)

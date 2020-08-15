@@ -44,9 +44,9 @@ export default function ({ ip }) {
     };
 
     const handleSnackClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
+        // if (reason === 'clickaway') {
+        //     return;
+        // }
 
         setShowSnackbar(false);
     };

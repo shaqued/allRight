@@ -10,9 +10,10 @@ export const getAll = async () => User.find();
 
 export const update = async (req) => 
 {
-    console.log(req.body);
     const updatedUser  = req.body.user;
-    
+    console.log(updatedUser);
+    if (updatedUser.cart[0])    
+        console.log(updatedUser.cart[0].range);
     if(req.user._id !== updatedUser._id) {
         throw createError(403)
     }

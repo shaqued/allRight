@@ -27,6 +27,16 @@ export default createMuiTheme({
                 color: '#FFFFFF!important',
             },
         },
+        MuiAlert: {
+            icon: {
+                padding: "10px 0px 8px 8px",
+                marginRight: "0px",
+                fontSize: "1.05rem",
+            },
+            message: {
+                fontSize: "0.85rem",
+            }
+        },
         MuiAvatar: {
             root: {
                 color: '#FFFFFF!important',
