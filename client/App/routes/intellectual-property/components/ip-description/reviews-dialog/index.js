@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import useStyles from "./reviews-dialog.css";
 import { Rating } from "@material-ui/lab";
 import { UserStoreContext } from "stores/UserStore/UserStoreProvider";
@@ -39,17 +39,14 @@ export default ({ onClose, open, ip }) => {
 
   const addReview = async () => {
     try {
-      console.log("user " + userStore.UserData._id);
-      console.log("comment " + newComment);
-      console.log("score " + newScoring);
       const response = await Axios.put(`/api/ip/${ip._id}/addComment`, {
-        user:  JSON.stringify(userStore.UserData._id),
+        user:  userStore.UserData._id,
         comment: newComment,
-        scoring: newScoring,
+        scoring: newScoring
       });
 
-      if (response && response.status === 201) {
-        history.push("/");
+      if (response && response.status === 200) {
+        toggleAddReview();
       }
     } catch (e) {
       alert("לא הצלחנו לשמור את התגובה, נסו שוב במועד מאוחד יותר");
@@ -58,7 +55,6 @@ export default ({ onClose, open, ip }) => {
   };
 
   const getUserInitials = (userName) => {
-    console.log(ip.reviews);
     if (userName) {
       const fullName = userName.split(" ");
       const initials = fullName.shift().charAt(0) + fullName.pop().charAt(0);
@@ -67,6 +63,10 @@ export default ({ onClose, open, ip }) => {
 
     return "";
   };
+
+    useEffect(() => {
+        () => {};
+    }, [ip]);
 
   return (
     <Dialog onClose={onClose} aria-labelledby="simple-dialog-title" open={open}>
