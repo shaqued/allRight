@@ -1,4 +1,6 @@
 import 'dotenv-extended/config';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import createApp from './config/express/index.js';
 import seed from './config/mongoose';
 import mongoose from 'mongoose';

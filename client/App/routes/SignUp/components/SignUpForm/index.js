@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { UserStoreContext } from 'stores/UserStore/UserStoreProvider';
-import genderOptions from 'common/genderOptions'
+import genderOptions from '../../../../../../server/common/genderOptions'
 import {omit} from 'lodash';
 
 export default function SignUpForm(props) {

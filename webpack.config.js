@@ -42,8 +42,8 @@ module.exports = {
         htmlPlugin
     ],
     output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].[contenthash].bundle.js',
+        path: path.resolve(__dirname, 'dist/client'),
         publicPath: '/'
     },
     module: {

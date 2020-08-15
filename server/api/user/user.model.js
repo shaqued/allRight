@@ -4,7 +4,7 @@ import { single as emailAddress } from 'email-address';
 import passportLocalMongoose from 'passport-local-mongoose';
 import { createSeedModel } from 'mongoose-plugin-seed';
 import seed from './user.seed';
-import genderOptions from '../../../common/genderOptions'
+import genderOptions from '../../../server/common/genderOptions'
 
 const UserSchema = new Schema({
     name: {

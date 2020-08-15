@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/styles';
 import TextField from 'components/TextField';
 import GenderRadioButtons from 'components/RadioButtonsPicker';
 import PasswordInput from 'components/Registration/PasswordInput';
-import genderOptions from 'common/genderOptions';
+import genderOptions from '../../../../../../server/common/genderOptions';
 import Axios from 'axios';
 import Alert from 'components/Alert';
 
