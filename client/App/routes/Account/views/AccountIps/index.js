@@ -13,13 +13,14 @@ export default function (props) {
 
     useEffect(() => {
         fetchIps()
-    }, []);
+    }, [UserData]);
 
     const fetchIps = async () => {
         try {
+            if(!UserData) return;
             // TODO: dagan change back to /ownerIps/blabla
             // after the dependencies in the db will be ok:
-            const { data } = await Axios.get(`/api/ip/ownerIps/${user._id}`); 
+            const { data } = await Axios.get(`/api/ip/ownerIps/${UserData._id}`); 
             console.log('Account ips: ' + data);
             // until then:
             //const { data } = await Axios.get(`/api/ip`);
