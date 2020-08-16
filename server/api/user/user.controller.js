@@ -7,7 +7,7 @@ export const getById = async ({params: {id}}) => User.findById(id)
 export const getNameById = async ({params: {id}}) => User.findById(id).select('name');
 
 // DO NOT TOUCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! I KILL YOU !!!!!!
-async function getNameByIdForAddComment (id) {
+export async function getNameByIdForAddComment (id) {
     const user = await User.findById(id);
 
     return user.name;
@@ -24,8 +24,4 @@ export const update = async (req) =>
     }
 
     return User.findByIdAndUpdate(updatedUser._id, {$set: updatedUser})
-}
-
-module.exports = {
-    getNameByIdForAddComment
 }
