@@ -1,5 +1,5 @@
 import createError from "http-errors";
-import { body, validationResult } from "express-validator/check";
+import { body, validationResult } from "express-validator";
 import Deezer from "deezer-web-api";
 import { Categories } from "../../constant/ipCategory.const";
 import { Tags } from "../../constant/ipTag.const";
@@ -9,7 +9,7 @@ import Ip from "./ip.model";
 import { common } from "@material-ui/core/colors";
 import mongoose from "mongoose";
 
-const fs = require("fs-extra");
+const fs = require("fs");
 
 const SUGGESTED_SONGS_COUNT = 7;
 

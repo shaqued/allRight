@@ -20,7 +20,7 @@ module.exports = {
             common: path.resolve(__dirname, './common'),
             stores: path.resolve(__dirname, './client/Stores')
         },
-        extensions: ['*','.js','.jsx']
+        extensions: ['*', '.js', '.jsx']
     },
     entry: {
         app: './client/index.js'
@@ -42,7 +42,7 @@ module.exports = {
         htmlPlugin
     ],
     output: {
-        filename: '[name].[contenthash].bundle.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist/client'),
         publicPath: '/'
     },

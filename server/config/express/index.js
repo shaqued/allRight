@@ -16,6 +16,7 @@ import logger from 'env-bunyan';
 import staticGzip from 'express-static-gzip';
 import expressValidator from 'express-validator';
 import User from '../../api/user/user.model'
+import path from 'path'
 
 export default () => {
   const app = express();
@@ -28,13 +29,15 @@ export default () => {
   app.use(passport.initialize());
   app.use(passport.session());
 
-
-
-  app.use(staticGzip(join(resolve(), '..', '..', '..', 'client')));
+  app.use(express.static(path.join(__dirname, '../../../client')));
   app.use(compression());
 
   if (!inProduction) {
     app.use(morgan('dev'));
+  } else {
+    app.get('/*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../../../client/index.html'));
+    });
   }
 
   routes(app);
