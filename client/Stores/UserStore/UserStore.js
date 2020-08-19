@@ -44,9 +44,9 @@ export class UserStore {
         this.UserData.cart.push(cartItem);
 
         // TODO: bring back after server bug fixed
-        return axios.put(`/api/users`, {
-            user: this.UserData
-        });
+        // return axios.put(`/api/users`, {
+        //     user: this.UserData
+        // });
     }
 
     @action ClearCart = () => {

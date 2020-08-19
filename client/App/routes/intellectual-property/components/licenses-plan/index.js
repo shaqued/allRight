@@ -31,9 +31,9 @@ export default ({ ip }) => {
         setIsDialogOpen(true);
     };
 
-    const handleDialogClose = (response) => {
+    const handleDialogClose = (success) => {
         setIsDialogOpen(false);
-        response.status == 200 ? setAddToCartStatus('success') : setAddToCartStatus('error');
+        success ? setAddToCartStatus('success') : setAddToCartStatus('error');
         setShowSnackbar(true);
     };
 

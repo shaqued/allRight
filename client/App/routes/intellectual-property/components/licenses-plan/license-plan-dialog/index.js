@@ -36,19 +36,27 @@ export default ({ onClose, open, ip, selectedPriceSection }) => {
     };
 
     const handleFinish = async () => {
-        userStore.AddToCart({
-            ipId: ip._id,
-            range: selectedRange
-        }).then((res) => handleClose(res));
+        let success;
+        try {
+            userStore.AddToCart({
+                ipId: ip._id,
+                range: selectedRange
+            })
+            success = true;
+        } catch (e) {
+            console.log(e);
+            success = false;
+        }
+        handleClose(success);
     };
 
     const handleReset = () => {
         setActiveStep(0);
     };
 
-    const handleClose = (res) => {
+    const handleClose = (success) => {
         handleReset();
-        onClose(res);
+        onClose(success);
     };
 
     return (
