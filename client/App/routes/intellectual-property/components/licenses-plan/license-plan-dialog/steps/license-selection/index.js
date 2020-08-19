@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useStyles from './license-selction.css';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox } from '@material-ui/core';
-import usageType from 'common/usageType';
+import usageType from '../../../../../../../../../server/common/usageType';
 
 export default ({ selectedPriceSection, onSelect }) => {
     const classes = useStyles();

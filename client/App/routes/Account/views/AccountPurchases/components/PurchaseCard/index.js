@@ -8,8 +8,8 @@ import {
 import { Share as ShareIcon } from '@material-ui/icons';
 import { getDisplayDate, convertDataToImage, manipulationOnImage } from 'clientCommon/Util';
 import Axios from 'axios';
-import MediaType from 'common/mediaType';
-import UsageType from 'common/usageType';
+import MediaType from '../../../../../../../../server/common/mediaType';
+import UsageType from '../../../../../../../../server/common/usageType';
 
 export default function ({ purchase }) {
     const classes = useStyles(),
